@@ -20,7 +20,9 @@ export const ProfileHome = () => {
 
   const [ profile, setProfile ] = useState<Profile>()
 
-  const user = window.localStorage.getItem('user')
+  const user = localStorage.getItem('user')
+
+  
   
   const getProfile = async () => {
     try {

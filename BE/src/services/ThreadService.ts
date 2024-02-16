@@ -10,10 +10,14 @@ export default new class ThreadService {
         try {
             // const getThread = await this.threadRepository.createQueryBuilder("thread").getMany();
             const getThread = await this.threadRepository.find({
+                order: { created_at: "DESC" },
                 relations: { user:true },
             select:{
                 user: {
-                    id:true
+                    id:true,
+                    username: true,
+                    fullName: true,
+                    photo_profile: true
                 }
             }
             });
@@ -39,7 +43,8 @@ export default new class ThreadService {
                     user: {
                         id: true,
                         username: true,
-                        fullName: true
+                        fullName: true,
+                        photo_profile: true
                     }
                 }
             })

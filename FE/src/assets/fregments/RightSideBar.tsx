@@ -5,7 +5,7 @@ import { ProfileHome } from '../components/ProfileHome'
 import { CreateDev } from '../components/CreateDev'
 
 export const RightSideBar = () => {
-  const token = window.localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
 
   return (
     <Box

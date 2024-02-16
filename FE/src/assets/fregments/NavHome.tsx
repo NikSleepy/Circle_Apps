@@ -11,12 +11,12 @@ import { CreatePost } from '../components/CreatePost'
 export const NavHome = () => {
 const { isOpen,onOpen, onClose } = useDisclosure()
 
-const token = window.localStorage.getItem('token')
+const token = sessionStorage.getItem('token')
 // const user = window.localStorage.getItem('user')
 
 
 const logout = () => {
-    window.localStorage.removeItem('token')
+    sessionStorage.removeItem('token')
     window.location.reload()
 
 }
@@ -24,7 +24,7 @@ const logout = () => {
 
 
   return (
-        <Grid p={5} h={'100%'} w={'200px'} position={'fixed'}  >
+        <Grid p={5} h={'100vh'} w={'200px'} position={'fixed'}  >
             
             <Box h={'550px'} >
                 
@@ -56,14 +56,14 @@ const logout = () => {
                     <ModalContent bg={'#1d1d1d'} color={'white'} >
                         <ModalHeader>Created Post</ModalHeader>
                         <ModalBody   >
-                            <CreatePost/>
+                            <CreatePost />
                         </ModalBody>
 
                         <ModalFooter>
                             <Button colorScheme='none' mr={3} onClick={onClose}>
                             Close
                             </Button>
-                            <Button colorScheme='none'>Post</Button>
+                            {/* <Button colorScheme='none'>Post</Button> */}
                         </ModalFooter>
                     </ModalContent>
                 </Modal>

@@ -7,6 +7,8 @@ import { NavbarHp } from '../components/NavbarHpButtom'
 import { NavbarHpTop } from '../components/NavbarHpTop'
 
 export const Home = () => {
+
+
   return (
     <Box
     bg={'#1d1d1d'}

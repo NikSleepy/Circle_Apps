@@ -1,5 +1,4 @@
 export interface DataPost {
-    [x: string]: any;
     id:number,
     fullName:string,
     userName:string,
@@ -8,5 +7,5 @@ export interface DataPost {
     content:string,
     likes:number,
     replies:number,
-    postAt:string
+    created_at:string
 }

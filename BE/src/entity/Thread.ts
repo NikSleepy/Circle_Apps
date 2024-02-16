@@ -8,7 +8,7 @@ export class Thread {
     @PrimaryGeneratedColumn()
     id: number
     
-    @Column()
+    @Column({ nullable: true })
     content: string
 
     @Column({ nullable: true })

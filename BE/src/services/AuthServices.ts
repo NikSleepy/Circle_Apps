@@ -3,6 +3,7 @@ import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import * as bcrypt from "bcrypt"
 import * as jwt from "jsonwebtoken"
+import { log } from "console"
 // class untuk cetakan seuah fungsi
 // private agar tidak di baca di class lain
 // redonly agar tidak di ubah/ di masukin nilai lagi
@@ -11,7 +12,7 @@ import * as jwt from "jsonwebtoken"
 
 export default new class AuthService {
     private readonly AuthRepository: Repository<User> = AppDataSource.getRepository(User)
-    async register ( reqBody: any ): Promise<Object | string> {
+    async register( reqBody: any ): Promise<Object | string> {
         try {
             const checkUsername = await this.AuthRepository.count({ where: { username: reqBody.username }})
             if (checkUsername > 0) {
@@ -19,6 +20,7 @@ export default new class AuthService {
             }
 
             const hashedPassword = await bcrypt.hash(reqBody.password, 10)
+            
             const obj = this.AuthRepository.create({
                 username: reqBody.username,
                 fullName: reqBody.fullName,
@@ -39,11 +41,11 @@ export default new class AuthService {
 
 
 
-    async login ( reqBody: any ): Promise<Object | string> {
+    async login( reqBody: any ): Promise<Object | string> {
         
             const checkUsername = await this.AuthRepository.findOne({ where: { username: reqBody.username }})
             if ( !checkUsername ) {
-                throw new Error ( `Username ${reqBody.username} not found` ) 
+                throw new Error ( `Username ${reqBody.username} not found` )
             }
 
             const comparePassword = await  bcrypt.compare(reqBody.password, checkUsername.password)
@@ -58,7 +60,7 @@ export default new class AuthService {
                 email: checkUsername.email
             })
 
-            const token = jwt.sign({ obj }, 'SECRET_KEY', { expiresIn: '8h' })
+            const token = jwt.sign({ obj }, 'SECRET_KEY', { expiresIn: '3h' })
 
             return {
                 message: "Login Success dari services",

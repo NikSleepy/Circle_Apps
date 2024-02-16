@@ -15,7 +15,11 @@ interface Thread {
     image_thread:string,
     created_at:string,
     user:{
-        id:number
+        id:number,
+        username:string,
+        fullName:string,
+        photo_profile:string
+
     }
 }
 
@@ -25,15 +29,18 @@ export const CardHome = () => {
     const getPost = async () => {
         try {
             const response = await api.get('/thread')
+            
             setPost(response.data.data)
         } catch (error) {
             console.log(error)
         }
     }
 
+    
     useEffect(()=>{
         getPost();
     },[])
+  
     
 
   return (
@@ -58,25 +65,30 @@ export const CardHome = () => {
             display={{base:'none', sm:'none', md:'block',lg:'block', xl:'block'}}
             
             >
-                <CreatePost/>
+                <CreatePost />
             </Box>
 
 
         {/* bagian card */}
-
-        {/* { post?.map(( data, index ) => {
+        
+        { post?.map(( data, index ) => {
             return(
                 <Box key={index}>
                     <CardPost 
-                    id={data.id}
-                    content={data.content}
-                    image_thread={data.image_thread}
-                    created_at={data.created_at}
-                    user_id={data.user.id}
+                    id={data?.id}
+                    content={data?.content}
+                    image_thread={data?.image_thread}
+                    created_at={data?.created_at}
+                    user={data?.user?.id}
+                    username={data?.user?.username}
+                    fullName={data?.user?.fullName}
+                    photo_profile={data?.user?.photo_profile}
+
                      />
                 </Box>
             ) 
-        })} */}
+        })}
+    
         </Box>
   )
 }

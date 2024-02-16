@@ -18,17 +18,18 @@ export const Login = () => {
             try {
                 const response = await api.post('/login', formik.values)
                 
-                localStorage.setItem('token', response.data.token)
+                sessionStorage.setItem('token', response.data.token)
                 localStorage.setItem('user', response.data.user)
-                console.log( response.data);
+                // console.log( response.data);
                 
+                // console.log(localStorage.getItem('user'));
                 
                 if ( response.data.token ) {
                     navigate('/')
                 }
                 
-            } catch (error) {
-              alert("username or password not found")
+            } catch ( error ) {
+              alert("username atau password salah")
             }
             
 

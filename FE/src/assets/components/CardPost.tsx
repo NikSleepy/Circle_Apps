@@ -3,13 +3,30 @@ import { Box, Flex, Avatar, Text, Image, Button } from '@chakra-ui/react'
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { LiaComment } from "react-icons/lia";
-import { DataPost } from '../types/Type';
+
+interface Thread {
+    id:number,
+    content:string,
+    image_thread:string,
+    created_at:string,
+    user:number,
+    username:string,
+    fullName:string,
+    photo_profile:string
+
+    }
 
 
-export const CardPost = (  items  : DataPost ) => {
+export const CardPost = (  items  : Thread ) => {
     const [ like, setLike ] = useState<boolean>(false)
     
     
+    
+    const convertTime = ( time:string ) => {
+        const date = new Date(time)
+        const timeConvert = date.toLocaleString('id-ID', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})
+        return timeConvert
+    }
 
     const follow = () => {
         if (!like){
@@ -20,6 +37,7 @@ export const CardPost = (  items  : DataPost ) => {
     }
 
   return (
+    
     <Box 
         display='flex'
         borderBottom={'1px solid #b2b2b2'}
@@ -30,7 +48,7 @@ export const CardPost = (  items  : DataPost ) => {
          >
             <Flex  >
             <Avatar
-                src={`${items.picture}`}
+                src={items?.photo_profile}
             />
             </Flex>
 
@@ -40,16 +58,16 @@ export const CardPost = (  items  : DataPost ) => {
                 
                 >
                     <Box display={{ base: 'grid', sm: 'flex' }} gap={{base:'0px', sm:'5px'}} mb='5px'>
-                        <Text fontWeight={'bold'}>{items.userName} </Text>
-                        <Text color='#909090'> @{items.fullName} <span>&bull;</span> {items.postAt} </Text>
+                        <Text fontWeight={'bold'}>{items?.username} </Text>
+                        <Text color='#909090'> @{items?.fullName} <span>&bull;</span> {convertTime(items?.created_at)} </Text>
                     </Box>
 
                     <Text fontSize={'sm'}>
-                        {items.content}
+                        {items?.content}
                     </Text>
 
                     <Image
-                        src={`${items.image_thread}`}
+                        src={items?.image_thread}
                         w={'70%'}
                         my={5}
                         borderRadius={10}
@@ -59,11 +77,11 @@ export const CardPost = (  items  : DataPost ) => {
                     
                         <Button  colorScheme='#262626' onClick={follow}>
                         { like ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
-                        <Text color='#909090' ml={'5px'} mr={'20px'}>{items.likes} </Text>
+                        <Text color='#909090' ml={'5px'} mr={'20px'}>100 </Text>
                         </Button>
                         <Button colorScheme='#262626'>
                         <LiaComment size={20} />
-                        <Text color='#909090' ml={'5px'}>{items.replies} Replies</Text>
+                        <Text color='#909090' ml={'5px'}>150 Replies</Text>
                         </Button>
                     </Flex>
             </Box>

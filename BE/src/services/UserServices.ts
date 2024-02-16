@@ -8,7 +8,19 @@ export default new class UserService {
     private readonly userRepository: Repository<User> = AppDataSource.getRepository(User)
     async getUsers() {
         try {
-            const getuser = await this.userRepository.createQueryBuilder("user").getMany();
+            const getuser = await this.userRepository.find({
+                relations: {
+                    threads: true,
+                    replies: true,
+                    likes: true
+                },
+                select: {
+                    id: true,
+                    username: true,
+                    fullName: true,
+                    photo_profile: true
+                }
+            });
             return {
                 message: "Success to get users",
                 data: getuser
