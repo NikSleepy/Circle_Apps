@@ -20,9 +20,10 @@ export const Login = () => {
                 
                 sessionStorage.setItem('token', response.data.token)
                 localStorage.setItem('user', response.data.user)
-                // console.log( response.data);
+
+                console.log(sessionStorage.getItem('token'));
                 
-                // console.log(localStorage.getItem('user'));
+                
                 
                 if ( response.data.token ) {
                     navigate('/')

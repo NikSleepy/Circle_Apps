@@ -2,6 +2,8 @@ import * as express from "express"
 import AuthController from "../controllers/AuthController";
 import UserController from "../controllers/UserController";
 import ThreadController from "../controllers/ThreadController";
+import Auth from "../middlewares/Auth";
+import ReplyController from "../controllers/ReplyController";
 
 
 const router = express.Router()
@@ -14,10 +16,14 @@ router.get("/users/:id", UserController.getUserById)// mengambil 1 data user by 
 router.put("/users/update/:id", UserController.updateUser)// mengupdate data user sesuai id
 router.delete("/users/delete/:id", UserController.deleteUser)//menghapus data user sesuai id 
 
-router.post("/thread/post", ThreadController.createThread)
-router.get("/thread", ThreadController.getThreads)
-router.get("/thread/:id", ThreadController.getThreadById)
-router.delete("/thread/delete/:id", ThreadController.deleteThread)
+router.post("/thread/post",Auth.Auth, ThreadController.createThread)// post thread
+router.get("/thread", ThreadController.getThreads)// get all thred
+router.get("/thread/:id", ThreadController.getThreadById)// get thread by id
+router.delete("/thread/delete/:id", ThreadController.deleteThread) // delete thread
+
+router.post("/reply/post", Auth.Auth, ReplyController.createReplies)// post comment
+router.get("/reply", ReplyController.getAllReplies)// get comment
+router.delete("/reply/delete/:id", ReplyController.delete)// delete comment
 
 
 

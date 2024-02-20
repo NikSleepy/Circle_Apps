@@ -1,27 +1,27 @@
 import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { SlPicture } from 'react-icons/sl'
-// import { api } from '../libs/api'
+import { api } from '../libs/api'
 
 export const CreatePost = ( ) => {
   
-  const user = localStorage.getItem('user')
+ 
+  const token = sessionStorage.getItem('token')
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
 
   const formik = useFormik({
     initialValues: {
       content:"",
       image:"",
-      user:user
+      
     }, onSubmit: async () => {
       try {
-        const fromData = new FormData();
-        fromData.append('image', formik.values.image);
+
+        await api.post('/thread/post', formik.values, config)
+        console.log(formik.values);
         
-        // fromData.append('content', formik.values.content);
-        // await api.post('/thread/post', formik.values)
-
-        console.log(formik.values.image);
-
       } catch (error) {
         console.log(error);
         
@@ -61,7 +61,6 @@ export const CreatePost = ( ) => {
           id="image"
           name='image' 
           onChange={(e) => { formik.setFieldValue('image', e.target.files![0]) }} 
-          // value={formik.values.image}
           accept='image/jpg, image/jpeg, image/png'
           hidden/>  
           <Button bg={'#005e0e'} type='submit'>Post</Button>

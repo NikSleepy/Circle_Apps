@@ -3,6 +3,8 @@ import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import * as bcrypt from "bcrypt"
 import * as jwt from "jsonwebtoken"
+import * as dotenv from "dotenv"
+
 import { log } from "console"
 // class untuk cetakan seuah fungsi
 // private agar tidak di baca di class lain
@@ -18,9 +20,14 @@ export default new class AuthService {
             if (checkUsername > 0) {
                 return `Username ${reqBody.username} already exist`
             }
+            
+            const checkEmail = await this.AuthRepository.count({ where: { email: reqBody.email }})
+            if (checkEmail > 0) {
+                return `Email ${reqBody.email} already exist`
+            }
 
             const hashedPassword = await bcrypt.hash(reqBody.password, 10)
-            
+
             const obj = this.AuthRepository.create({
                 username: reqBody.username,
                 fullName: reqBody.fullName,
@@ -59,8 +66,9 @@ export default new class AuthService {
                 fullName: checkUsername.fullName,
                 email: checkUsername.email
             })
+           
 
-            const token = jwt.sign({ obj }, 'SECRET_KEY', { expiresIn: '3h' })
+            const token = jwt.sign({ obj }, process.env.SECRET_KEY, { expiresIn: '3h' })
 
             return {
                 message: "Login Success dari services",

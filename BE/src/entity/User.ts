@@ -39,7 +39,7 @@ export class User {
 
     @OneToMany(() => Reply, ( reply ) => reply.user, {
     })
-    replies: Reply[];
+    reply: Reply[];
     
     @ManyToMany(() => User, ( user ) => user.followings)
     @JoinTable({

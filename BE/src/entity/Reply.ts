@@ -14,17 +14,17 @@ export class Reply {
     @Column({ nullable: true })
     file_reply: string
 
-    @Column()
+    @Column({ default: () => "CURRENT_TIMESTAMP" })
     created_at: Date
 
-    @ManyToOne(() => User, (user) => user.replies,{
+    @ManyToOne(() => User, (user) => user.reply,{
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
     })
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @ManyToOne(() => Thread, (thread) => thread.replies,{
+    @ManyToOne(() => Thread, (thread) => thread.reply,{
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
     })

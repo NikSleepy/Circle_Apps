@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box} from '@chakra-ui/react'
 // import React from 'react'
 import { CardHome } from '../fregments/CardHome'
 import { NavHome } from '../fregments/NavHome'
@@ -19,17 +19,20 @@ export const Home = () => {
         <NavbarHpTop/>
       </Box>
 
-      <Flex>
+      <Box display={'flex'}>
         <Box w={'250px'} display={{base:'none', sm:'none', md:'block',lg:'block'}} >
           <NavHome/>
         </Box>
         <Box>
           <CardHome/>
         </Box>
-        <Box display={{md:'block',lg:'block'}}>
+        <Box display={{base:'none', sm:'none',md:'block',lg:'block'}}  >
+          <Box>
+
           <RightSideBar/>
+          </Box>
         </Box>
-      </Flex>
+      </Box>
 
       <Box display={{base:'circle', sm:'circle', md:'none',lg:'none'}} position={'fixed'} w={'full'} zIndex={9999} bottom={0}>
         <NavbarHp/>

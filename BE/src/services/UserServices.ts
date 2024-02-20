@@ -11,7 +11,7 @@ export default new class UserService {
             const getuser = await this.userRepository.find({
                 relations: {
                     threads: true,
-                    replies: true,
+                    reply: true,
                     likes: true
                 },
                 select: {
