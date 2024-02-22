@@ -5,7 +5,7 @@ import { IoLogInOutline } from 'react-icons/io5'
 import { MdPersonSearch } from 'react-icons/md'
 import { PiHeartStraight } from 'react-icons/pi'
 import { TbLogout2 } from 'react-icons/tb'
-import { CreatePost } from '../components/CreatePost'
+import { CreatePost } from '../elements/CreatePost'
 import { Link } from 'react-router-dom'
 // templateAreas={`"top" "buttom`} gridTemplateRows={`'80%' '20%'`}
 

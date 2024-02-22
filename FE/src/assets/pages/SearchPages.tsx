@@ -1,6 +1,6 @@
 
 import { Layout } from '../layout/Layout'
-import { Search } from '../fregmentsHomePages/Search'
+import { Search } from '../components/Search'
 
 export const SearchPages = () => {
   return (

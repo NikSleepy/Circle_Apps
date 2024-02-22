@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react'
-import { NavbarHpTop } from '../components/NavbarHpTop'
-import { NavbarHp } from '../components/NavbarHpButtom'
-import { NavHome } from '../fregmentsHomePages/NavHome'
-import { RightSideBar } from '../fregmentsHomePages/RightSideBar'
+import { NavbarHpTop } from '../elements/NavbarHpTop'
+import { NavbarHp } from '../elements/NavbarHpButtom'
+import { NavHome } from '../components/NavHome'
+import { RightSideBar } from '../components/RightSideBar'
 // import { Outlet } from 'react-router-dom'
 
 export const Layout = ({children}:{children:React.ReactNode}) => {

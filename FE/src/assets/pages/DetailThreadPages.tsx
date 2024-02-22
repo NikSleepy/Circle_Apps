@@ -1,6 +1,6 @@
 
 import { Layout } from '../layout/Layout'
-import { DetailThreads } from '../fregmentsHomePages/DetailThreads'
+import { DetailThreads } from '../components/DetailThreads'
 
 export const DetailThreadPages = () => {
   return (

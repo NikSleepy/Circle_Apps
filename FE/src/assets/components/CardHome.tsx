@@ -1,8 +1,8 @@
 //code untuk extention buat sebuah function "rafc"
 
 import { Box, Text } from '@chakra-ui/react'
-import { CardPost } from '../components/CardThread';
-import { CreatePost } from '../components/CreatePost';
+import { CardPost } from '../elements/CardThread';
+import { CreatePost } from '../elements/CreatePost';
 import { useEffect, useState } from 'react';
 // import { DataPost } from '../types/Type';
 // import Dummy from '../datas/dummy.json'

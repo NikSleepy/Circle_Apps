@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react'
-import { NavFollow } from '../components/NavFollow'
+import { NavFollow } from '../elements/NavFollow'
 
 
 

@@ -1,5 +1,5 @@
 import { Box,  Flex,  Text, Link, Button } from '@chakra-ui/react'
-import { InputDataProfile } from '../components/InputDataProfile'
+import { InputDataProfile } from '../elements/InputDataProfile'
 import { BiArrowBack } from 'react-icons/bi'
 // import { useState } from 'react'
 // import axios from 'axios'

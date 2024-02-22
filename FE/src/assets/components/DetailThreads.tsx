@@ -5,7 +5,7 @@ import { FaHeart } from "react-icons/fa"
 import { LiaComment } from "react-icons/lia"
 import { Link, useParams } from "react-router-dom"
 import { api } from "../libs/api"
-import { PostReplys } from "../components/PostReplys"
+import { PostReplys } from "../elements/PostReplys"
 
 interface DataProps {
     id: number,

@@ -4,6 +4,9 @@ import App from './App.tsx'
 import './index.css'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux'
+import { rootReducer } from './store/rootReducer.ts'
+import { configureStore } from '@reduxjs/toolkit'
 
 const theme = extendTheme({
   styles: {
@@ -15,11 +18,17 @@ const theme = extendTheme({
   },
 })
 
+const store = configureStore( {
+  reducer: rootReducer
+})
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Router>
       <ChakraProvider theme={theme}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </ChakraProvider>
     </Router>
   </React.StrictMode>,

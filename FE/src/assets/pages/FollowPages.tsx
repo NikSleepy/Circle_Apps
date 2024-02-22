@@ -1,6 +1,6 @@
 
 import { Layout } from '../layout/Layout'
-import { Follows } from '../fregmentsHomePages/Follows'
+import { Follows } from '../components/Follows'
 
 export const FollowPages = () => {
   return (

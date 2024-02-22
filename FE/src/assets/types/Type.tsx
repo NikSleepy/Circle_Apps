@@ -1,11 +1,14 @@
-export interface DataPost {
+export interface IThread {
     id:number,
-    fullName:string,
-    userName:string,
-    picture:string,
-    image:string,
     content:string,
-    likes:number,
-    replies:number,
-    created_at:string
+    image_thread:string,
+    created_at:string,
+    numberOfReply:number,
+    user:{
+        id:number,
+        username:string,
+        fullName:string,
+        photo_profile:string
+
+    },
 }

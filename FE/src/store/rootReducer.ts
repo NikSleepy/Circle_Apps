@@ -1,12 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { AuthSlice } from "./slice/AuthSlice";
+import { ThreadSlice } from "./slice";
 
-export const { AUTH_LOGIN, } = AuthSlice.actions;
 
-export const authReducer = AuthSlice.reducer
+export const { STATE_THREAD } = ThreadSlice.actions
 
-const roootReducer = combineReducers({
-    auth: authReducer
+export const threadReducer = ThreadSlice.reducer
+
+export const rootReducer = combineReducers({
+    thread: threadReducer
 })
-
-export default roootReducer;
