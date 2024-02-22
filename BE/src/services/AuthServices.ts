@@ -32,7 +32,11 @@ export default new class AuthService {
                 username: reqBody.username,
                 fullName: reqBody.fullName,
                 email: reqBody.email,
-                password: hashedPassword
+                password: hashedPassword,
+                photo_profile: reqBody.photo_profile,
+                photo_cover: reqBody.photo_cover,
+                description: reqBody.description,
+                
             })
 
             const resRegist = await this.AuthRepository.save(obj)

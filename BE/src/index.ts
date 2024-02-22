@@ -3,6 +3,7 @@ import { AppDataSource } from "./data-source"
 import router from "./routes"
 import cors = require("cors")
 import 'dotenv/config'
+import Cloudinary from "./libs/Cloudinary"
 
 // then dan catch identik dengan janji
 AppDataSource.initialize()
@@ -15,6 +16,8 @@ AppDataSource.initialize()
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"]
     }))
+
+    Cloudinary.config();
 
     app.use(express.json())//unutk membuat data di get berbentuk json
     app.use("/api/v1", router)

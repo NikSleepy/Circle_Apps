@@ -1,0 +1,39 @@
+import { Repository } from "typeorm"
+import { Like } from "../entity/Like"
+import { AppDataSource } from "../data-source"
+import { Request, Response } from "express"
+
+
+
+
+
+export default new class LikeService {
+    private readonly likeRepository: Repository<Like> = AppDataSource.getRepository(Like)
+
+    async createLike( req: Request, res: Response ):Promise<Response> {
+        try {
+             const data = req.body
+             const getUser = await this.likeRepository.findOne({
+                 where: {
+                     id: data.id
+                 }
+             })
+
+             if ( getUser){
+                await this.likeRepository.delete(getUser.id)
+                return res.status(200).json({message: "Success to delete like"})
+             }
+             const like = await this.likeRepository.create({
+                 thread: data.thread,
+                 user: res.locals.loginSession.obj.id
+             })
+
+
+             const result = await this.likeRepository.save(like)
+            return res.status(200).json(result)
+        } catch (error) {
+            return res.status(500).json({ message: "Something went wrong in service",error })
+        }
+    }
+    
+}

@@ -3,6 +3,7 @@ import { Box, Flex, Avatar, Text, Image, Button } from '@chakra-ui/react'
 import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { LiaComment } from "react-icons/lia";
+import { Link } from 'react-router-dom';
 
 interface Thread {
     id:number,
@@ -12,7 +13,9 @@ interface Thread {
     user:number,
     username:string,
     fullName:string,
-    photo_profile:string
+    photo_profile:string,
+    reply:number
+
 
     }
 
@@ -36,6 +39,8 @@ export const CardPost = (  items  : Thread ) => {
         }
     }
 
+   
+    
   return (
     
     <Box 
@@ -56,10 +61,11 @@ export const CardPost = (  items  : Thread ) => {
                 w='90%'
                 ml='10px'
                 
+                
                 >
                     <Box display={{ base: 'grid', sm: 'flex' }} gap={{base:'0px', sm:'5px'}} mb='5px'>
                         <Text fontWeight={'bold'}>{items?.username} </Text>
-                        <Text color='#909090'> @{items?.fullName} <span>&bull;</span> {convertTime(items?.created_at)} </Text>
+                        <Text color='#909090'>@{items?.fullName} <span>&bull;</span> {convertTime(items?.created_at)} </Text>
                     </Box>
 
                     <Text fontSize={'sm'}>
@@ -73,15 +79,19 @@ export const CardPost = (  items  : Thread ) => {
                         borderRadius={10}
                     />
 
-                    <Flex mt='7px'>
+                    <Flex mt='7px' ml={-19}>
                     
                         <Button  colorScheme='#262626' onClick={follow}>
                         { like ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
                         <Text color='#909090' ml={'5px'} mr={'20px'}>100 </Text>
                         </Button>
                         <Button colorScheme='#262626'>
-                        <LiaComment size={20} />
-                        <Text color='#909090' ml={'5px'}>150 Replies</Text>
+                            <Link to={`/thread/${items?.id}`}>
+                                <Flex>
+                                    <LiaComment size={20} />
+                                    <Text color='#909090' ml={'5px'}>{items?.reply} Replies</Text>
+                                </Flex>
+                            </Link>
                         </Button>
                     </Flex>
             </Box>

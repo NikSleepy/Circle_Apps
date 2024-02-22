@@ -1,41 +1,53 @@
 import { Box, Button, Flex, Link, Text  } from '@chakra-ui/react'
 import { InputDataProfile } from '../components/InputDataProfile'
 import { BiArrowBack } from 'react-icons/bi'
-import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import { api } from '../libs/api'
+// import { useNavigate } from 'react-router-dom'
+// import { useFormik } from 'formik'
+// import { api } from '../libs/api'
 
 export const Login = () => {
   
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    // const toast = useToast();
 
-    const formik = useFormik({ 
-        initialValues: {
-            username:"",
-            password:""
-        }, onSubmit: async () => {
+    // const formik = useFormik({ 
+    //     initialValues: {
+    //         username:"",
+    //         password:""
+    //     }, onSubmit: async () => {
             
-            try {
-                const response = await api.post('/login', formik.values)
+    //         try {
+    //             const response = await api.post('/login', formik.values)
                 
-                sessionStorage.setItem('token', response.data.token)
-                localStorage.setItem('user', response.data.user)
+    //             sessionStorage.setItem('token', response.data.token)
+    //             localStorage.setItem('user', response.data.user)
+    //             // const token = sessionStorage.getItem('token')
+    //             toast({
+    //                 title: 'Login Success',
+    //                 description: "welcome bro",
+    //                 status: 'success',
+    //                 duration:4000,
+    //                 isClosable: true,
+    //                 position: 'top',
 
-                console.log(sessionStorage.getItem('token'));
+    //             })
+                
+            
                 
                 
                 
-                if ( response.data.token ) {
-                    navigate('/')
-                }
+    //             navigate('/')
+              
                 
-            } catch ( error ) {
-              alert("username atau password salah")
-            }
+    //         } catch ( error ) {
+    //           toast
+    //         }
             
 
-        },
-    })
+    //     },
+    // })
+
+
 
 
 
@@ -84,10 +96,16 @@ export const Login = () => {
 
 
 
-                <form onSubmit={formik.handleSubmit}>
-                <InputDataProfile name='username' type='text' placeholder='username' onChange={formik.handleChange} />
-                <InputDataProfile name='password' type='password' placeholder='password' onChange={formik.handleChange} />
-                <Button w={'100%'} borderRadius={'20px'} my={'10px'} bg={'#04a51e'} type='submit' >Login</Button>
+                <form 
+                // onSubmit={formik.handleSubmit}
+                >
+                <InputDataProfile name='username' type='text' placeholder='username' 
+                // onChange={formik.handleChange}
+                 />
+                <InputDataProfile name='password' type='password' placeholder='password' 
+                // onChange={formik.handleChange}
+                 />
+                <Button w={'100%'} borderRadius={'20px'} my={'10px'} bg={'#04a51e'} type='submit'  >Login</Button>
                 </form>
 
                 <Flex gap={2} >

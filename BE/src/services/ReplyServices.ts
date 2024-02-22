@@ -21,7 +21,7 @@ export default new class ReplyService {
             })
 
             const result = await this.replyRepository.save(reply)
-            console.log(result.thread)
+            
             return res.status(200).json(result)
         } catch (error) {
             return res.status(500).json({ message: "Something went wrong in service",error })

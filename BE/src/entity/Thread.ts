@@ -17,6 +17,7 @@ export class Thread {
     @Column({ default: () => "CURRENT_TIMESTAMP" })
     created_at: Date
 
+
     @ManyToOne(() => User, (user) => user.threads, {
     })
     user: User

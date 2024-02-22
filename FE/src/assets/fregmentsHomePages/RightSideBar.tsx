@@ -12,6 +12,7 @@ export const RightSideBar = () => {
         p={4}
         w={{ base:0, md:'0px', lg:'400px'}}
         display={{ base:'none', md:'none', lg:'none', xl:'inline-block'}}
+        
         >
           { token && <ProfileHome /> }
         

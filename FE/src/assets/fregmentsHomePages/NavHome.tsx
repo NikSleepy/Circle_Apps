@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Grid, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react'
 import { CgProfile } from 'react-icons/cg'
 import { IoIosHome } from 'react-icons/io'
 import { IoLogInOutline } from 'react-icons/io5'
@@ -6,6 +6,7 @@ import { MdPersonSearch } from 'react-icons/md'
 import { PiHeartStraight } from 'react-icons/pi'
 import { TbLogout2 } from 'react-icons/tb'
 import { CreatePost } from '../components/CreatePost'
+import { Link } from 'react-router-dom'
 // templateAreas={`"top" "buttom`} gridTemplateRows={`'80%' '20%'`}
 
 export const NavHome = () => {
@@ -17,31 +18,61 @@ const token = sessionStorage.getItem('token')
 
 const logout = () => {
     sessionStorage.removeItem('token')
-    window.location.reload()
+    
 
 }
 
 
 
   return (
-        <Grid p={5} h={'100vh'} w={'200px'} position={'fixed'}  >
+        <Grid p={5} h={'100vh'} w={'100%'}  >
             
-            <Box h={'550px'} >
+            <Box h={'100vh'} position={'fixed'} >
                 
                 <Text fontSize={'5xl'} fontWeight={'bold'} color='#04a51e' mb={'20px'}>circle</Text>
                 
-                <Link fontSize={'sm'} display={'flex'} gap={3} my={2} href='/' > <IoIosHome size={25} color='white'/> Home</Link>
+                <Link to={'/'} >
+                    <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
+
+                     <IoIosHome size={25} color='white'/>
+                     <Text  >Home</Text>
+                    </Flex>
+
+                </Link>
+
+                <Link to={'/search'} >
+                    <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
+
+                    <MdPersonSearch size={25} color='white'/> 
+                     <Text  >Search</Text>
+                    </Flex>
+
+                </Link>
+
+                <Link to={'/follow'} >
+                    <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
+
+                    <PiHeartStraight size={25} color='white'/>
+                     <Text  >Follows</Text>
+                    </Flex>
+
+                </Link>
+
+                <Link to={'/search'} >
+                    <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
+
+                    <CgProfile size={25} color='white'/>
+                     <Text  >Profile</Text>
+                    </Flex>
+
+                </Link>
                     
-                <Link fontSize={'sm'} display={'flex'} gap={3} my={2}> <MdPersonSearch size={25} color='white'/> Search</Link>
-                    
-                <Link fontSize={'sm'} display={'flex'} gap={3} my={2}> <PiHeartStraight size={25} color='white'/> Follows</Link>
-                    
-                <Link fontSize={'sm'} display={'flex'} gap={3} my={2}> <CgProfile size={25} color='white'/> Profile</Link>
+                
 
                 <Button
                     bg={'#04a51e'}
                     color={'white'}
-                    w={'90%'}
+                    w={'100%'}
                     borderRadius={'20px'}
                     my={6}
                     p={3}
@@ -68,24 +99,31 @@ const logout = () => {
                     </ModalContent>
                 </Modal>
 
+
+                <Box display={'flex'} h={'50px'} alignItems={'end'} mt={200}  >
+                { token ? 
+                            <Link to='/login'  onClick={logout}>
+                                <Flex display={'flex'}  gap={3} paddingBottom={'20px'}>
+                                 <TbLogout2 size={'30px'} />   
+                                 <Text fontSize={'lg'}>Logout</Text>
+                                </Flex>
+                             </Link>
+                             :
+                             <Link to='/login'  >
+                                <Flex display={'flex'}  gap={3} paddingBottom={'20px'}>
+                                    <IoLogInOutline size={'30px'} />   
+                                    <Text fontSize={'lg'}>Login</Text>
+                                </Flex>
+                            </Link>
+                }
+                
+                </Box>
+
             </Box>
            
 
             
-            <Box display={'flex'} h={'50px'} alignItems={'end'} >
-                { token ? 
-                            <Link href='/login' display={'flex'}  gap={3} paddingBottom={'20px'} onClick={logout}>
-                                 <TbLogout2 size={'30px'} />   
-                                 <Text fontSize={'lg'}>Logout</Text>
-                             </Link>
-                             :
-                             <Link href='/login' display={'flex'}  gap={3} paddingBottom={'20px'}>
-                                <IoLogInOutline size={'30px'} />   
-                                <Text fontSize={'lg'}>Login</Text>
-                            </Link>
-                }
-                
-            </Box>
+
             
         </Grid>
         

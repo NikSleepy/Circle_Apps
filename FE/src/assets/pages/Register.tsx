@@ -62,8 +62,10 @@ export const Register = () => {
         } catch (error) {
           console.log('error', error)
         }
-      }
+      } 
     })
+
+
   return (
     <Box 
     bg={'#1d1d1d'}

@@ -14,13 +14,14 @@ interface Thread {
     content:string,
     image_thread:string,
     created_at:string,
+    numberOfReply:number,
     user:{
         id:number,
         username:string,
         fullName:string,
         photo_profile:string
 
-    }
+    },
 }
 
 export const CardHome = () => {
@@ -31,23 +32,31 @@ export const CardHome = () => {
             const response = await api.get('/thread')
             
             setPost(response.data.data)
+            
         } catch (error) {
             console.log(error)
         }
     }
-
+    
+    
+    
+    // function hitungPanjangArray<T>(arr: T[]): number {
+        
+    //     return arr.length;
+    // }
     
     useEffect(()=>{
         getPost();
+        
     },[])
   
+    ;
     
-
   return (
         <Box
-        w={{ base:'100%', md:'100%', lg:'700px'}}
-        borderX={'1px solid #b2b2b2'}
-       
+        // w={{ base:'100%', md:'100%', lg:'700px'}}
+        h={'100%'}
+        
         >
             <Text 
                     display={{base:'none', sm:'none', md:'block',lg:'block', xl:'block'}}
@@ -83,8 +92,12 @@ export const CardHome = () => {
                     username={data?.user?.username}
                     fullName={data?.user?.fullName}
                     photo_profile={data?.user?.photo_profile}
-
+                    reply={data?.numberOfReply}
+                    
+                    
                      />
+                     
+                     
                 </Box>
             ) 
         })}

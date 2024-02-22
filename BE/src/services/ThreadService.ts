@@ -2,6 +2,7 @@ import { Repository } from "typeorm"
 import { Thread } from "../entity/Thread"
 import { AppDataSource } from "../data-source"
 import { Request, Response } from "express"
+import { array } from "joi"
 
 
 export default new class ThreadService {
@@ -22,10 +23,14 @@ export default new class ThreadService {
     async getAllThread( req: Request, res: Response ):Promise<Response> {
         try {
             // const getThread = await this.threadRepository.createQueryBuilder("thread").getMany();
-            
+
             const getThread = await this.threadRepository.find({
                 order: { created_at: "DESC" },
-                relations: { reply: true },
+                relations: [  
+                    "user",
+                    "reply",
+                    "reply.user",
+                    ],
             select:{
                 user: {
                     id:true,
@@ -33,21 +38,38 @@ export default new class ThreadService {
                     fullName: true,
                     photo_profile: true
                 },
-                reply: {
+                reply: 
+                {
                     id: true,
                     content: true,
-                    created_at: true,
-                    file_reply: true
-                },
+
+                }
+                ,
                 likes: {
                     id: true
                     
                 }
             }
             });
+
+             
+            const Threads = getThread.map((thread) => {
+
+                
+                return {
+                    id: thread.id,
+                    content: thread.content,
+                    created_at: thread.created_at,
+                    image_thread: thread.image_thread,
+                    user: thread.user,
+                    numberOfReply: thread.reply.length
+                }
+            })
+
+           
             return res.status(200).json({
                 message: "Success to get thread",
-                data: getThread
+                data: Threads
             })
         } catch (error) {
             throw error
@@ -89,10 +111,22 @@ export default new class ThreadService {
                 }
 
             })
-            console.log(getThread)
+
+            const ThreadId = {
+                id: getThread.id,
+                content: getThread.content,
+                created_at: getThread.created_at,
+                image_thread: getThread.image_thread,
+                user: getThread.user,
+                reply: getThread.reply,
+                numberOfReply: getThread.reply.length
+
+            }
+            
+            
             return {
                 message: "Success to get thread",
-                data: getThread
+                data: ThreadId
             }
             
         } catch (erorr) {
