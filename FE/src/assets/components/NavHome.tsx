@@ -5,7 +5,7 @@ import { IoLogInOutline } from 'react-icons/io5'
 import { MdPersonSearch } from 'react-icons/md'
 import { PiHeartStraight } from 'react-icons/pi'
 import { TbLogout2 } from 'react-icons/tb'
-import { CreatePost } from '../elements/CreatePost'
+import { CreatePost } from '../atom/CreatePost'
 import { Link } from 'react-router-dom'
 // templateAreas={`"top" "buttom`} gridTemplateRows={`'80%' '20%'`}
 
@@ -100,7 +100,7 @@ const logout = () => {
                 </Modal>
 
 
-                <Box display={'flex'} h={'50px'} alignItems={'end'} mt={200}  >
+                <Box display={'flex'} h={'50px'} alignItems={'end'} mt={240}  >
                 { token ? 
                             <Link to='/login'  onClick={logout}>
                                 <Flex display={'flex'}  gap={3} paddingBottom={'20px'}>

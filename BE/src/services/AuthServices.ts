@@ -3,9 +3,7 @@ import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import * as bcrypt from "bcrypt"
 import * as jwt from "jsonwebtoken"
-import * as dotenv from "dotenv"
-
-import { log } from "console"
+// import * as dotenv from "dotenv"
 import { Request } from "express-serve-static-core"
 import { Response } from "express"
 import { loginSchema } from "../utils/validator/AuthValidator"
@@ -63,7 +61,6 @@ export default new class AuthService {
             if ( !checkUsername ) {
                 // throw new Error ( `Username ${value.username} not found` )
                 return res.status(404).json({
-                    code:1000,
                     error: `Username not found`
                 })
             }

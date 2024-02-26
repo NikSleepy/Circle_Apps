@@ -1,8 +1,8 @@
 
 import { Box } from '@chakra-ui/react'
-import { Follwer } from '../elements/Follwer'
-import { ProfileHome } from '../elements/ProfileHome'
-import { CreateDev } from '../elements/CreateDev'
+import { Follwer } from '../atom/Follwer'
+import { ProfileHome } from '../atom/ProfileHome'
+import { CreateDev } from '../atom/CreateDev'
 
 export const RightSideBar = () => {
   const token = sessionStorage.getItem('token')

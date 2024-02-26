@@ -1,20 +1,16 @@
 import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
-// import { useFormik } from 'formik'
-import { SlPicture } from 'react-icons/sl'
-import { api } from '../libs/api'
-import { useState } from 'react'
 
-interface IFrom {
-  content: string,
-  image_thread: File | null
-}
+import { SlPicture } from 'react-icons/sl'
+import { useCreateThread } from '../../feature/threads/hooks/useCreateThread'
+
+
 export const CreatePost = ( ) => {
   
- 
-  const token = sessionStorage.getItem('token')
-  const config = {
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
-  }
+  //================= use formik ======================
+  // const token = sessionStorage.getItem('token')
+  // const config = {
+  //   headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
+  // }
 
   // const formik = useFormik({
   //   initialValues: {
@@ -35,36 +31,41 @@ export const CreatePost = ( ) => {
   // });
 
   // console.log(formik.values.image)
-
+ // ==================== use State ==============================
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //   const { name, value } = e.target;
     //   setFile((prevFile) => ({ ...prevFile, [name]: value }));
     // }
-    const [ file, setFile ] = useState<IFrom>(
-      {
-        content:"",
-        image_thread: null,
-      }
-    )
+  //   const [ file, setFile ] = useState<IFrom>(
+  //     {
+  //       content:"",
+  //       image_thread: null,
+  //     }
+  //   )
   
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      const response = await api.post('/thread/post', file, config)
-      console.log(response);
-      console.log(file);
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   try {
+  //     const response = await api.post('/thread/post', file, config)
+  //     console.log(response);
+  //     console.log(file);
       
       
       
-    } catch (error) {
-      console.log(error);
+  //   } catch (error) {
+  //     console.log(error);
       
-    }
-  }
+  //   }
+  // }
   
 
+  const { handleChange, handleSubmit, handleChangeFile } = useCreateThread()
+
   return (
-    <form onSubmit={handleSubmit} >         
+    <form 
+    // onSubmit={handleSubmit}
+    onSubmit={handleSubmit}
+     >         
       <Flex 
           p={'3vh'}  
           gap={'2vh'} 
@@ -78,7 +79,8 @@ export const CreatePost = ( ) => {
           border={'none'} 
           // onChange={formik.handleChange} 
           // value={formik.values.content}
-          onChange={(e)=> setFile((prevFile)=>({...prevFile, content: e.target.value}))} 
+          // onChange={(e)=> setFile((prevFile)=>({...prevFile, content: e.target.value}))} 
+          onChange={handleChange}
           ></Input>
 
           <FormLabel htmlFor="image">
@@ -89,7 +91,8 @@ export const CreatePost = ( ) => {
           id="image"
           name='image' 
           // onChange={(e) => { formik.setFieldValue('image', e.target.files![0]) }} 
-          onChange={(e)=> setFile((prevFile)=>({...prevFile, image_thread: e.target.files![0]}))}
+          // onChange={(e)=> setFile((prevFile)=>({...prevFile, image_thread: e.target.files![0]}))}
+          onChange={handleChangeFile}
           accept='image/jpg, image/jpeg, image/png'
           hidden/>  
           <Button bg={'#005e0e'} type='submit'>Post</Button>

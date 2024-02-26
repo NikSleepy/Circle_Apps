@@ -42,7 +42,7 @@ import { api } from "../../assets/libs/api";
 const config = {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
 }
-
+// console.log(config)
 export const getThread = createAsyncThunk(
     'thread/fetchByIdStatus',
     async () => {

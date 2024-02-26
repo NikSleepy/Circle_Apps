@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react'
-import { NavbarHpTop } from '../elements/NavbarHpTop'
-import { NavbarHp } from '../elements/NavbarHpButtom'
+import { NavbarHpTop } from '../atom/NavbarHpTop'
+import { NavbarHp } from '../atom/NavbarHpButtom'
 import { NavHome } from '../components/NavHome'
 import { RightSideBar } from '../components/RightSideBar'
 // import { Outlet } from 'react-router-dom'

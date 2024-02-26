@@ -1,20 +1,11 @@
 import { Box,  Flex,  Text, Link, Button } from '@chakra-ui/react'
-import { InputDataProfile } from '../elements/InputDataProfile'
+import { InputDataProfile } from '../atom/InputDataProfile'
 import { BiArrowBack } from 'react-icons/bi'
-// import { useState } from 'react'
-// import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import { api } from '../libs/api'
+import { useRegister } from '../../feature/auth/hooks/useRegister'
 
-// interface Loggedin {
-//   username:string,
-//   fullName:string,
-//   email:string,
-//   password:string
-// }
 
 export const Register = () => {
+  // =============================== use useState =============================================
 //   const [ register, setRegister ] = useState<Loggedin>({
 //     username:"",
 //     fullName:"",
@@ -41,29 +32,33 @@ export const Register = () => {
       //       console.log("eror di posting register",error)
       //     }
       // }
-    const navigate = useNavigate();
 
-    const formik = useFormik({
-      initialValues: {
-        username: '',
-        fullName: '',
-        email: '',
-        password: ''
-      }, onSubmit: async () => {
-        try {
-          const response = await api.post('/register', formik.values)
-          // console.log('response', response.data)
+    //=================== use formik ================================================
+    // const navigate = useNavigate();
+
+    // const formik = useFormik({
+    //   initialValues: {
+    //     username: '',
+    //     fullName: '',
+    //     email: '',
+    //     password: ''
+    //   }, onSubmit: async () => {
+    //     try {
+    //       const response = await api.post('/register', formik.values)
+    //       // console.log('response', response.data)
           
-          if (response.data.data){
-            navigate('/login')
-          } else {
-            alert(`${response.data}`)
-          }
-        } catch (error) {
-          console.log('error', error)
-        }
-      } 
-    })
+    //       if (response.data.data){
+    //         navigate('/login')
+    //       } else {
+    //         alert(`${response.data}`)
+    //       }
+    //     } catch (error) {
+    //       console.log('error', error)
+    //     }
+    //   } 
+    // })
+
+    const { handleChange, handleSubmit } = useRegister()
 
 
   return (
@@ -110,11 +105,30 @@ export const Register = () => {
 
 
 
-                <form onSubmit={formik.handleSubmit}>
-                  <InputDataProfile name='username' type='text' placeholder='username' onChange={formik.handleChange}/>
-                  <InputDataProfile name='fullName' type='text' placeholder='Full Name' onChange={formik.handleChange} />
-                  <InputDataProfile name='email' type='email' placeholder='Email' onChange={formik.handleChange} />
-                  <InputDataProfile name='password' type='password' placeholder='password' onChange={formik.handleChange} />
+                <form
+                // onSubmit={formik.handleSubmit}
+                onSubmit={handleSubmit}
+                >
+                  <InputDataProfile name='username' type='text' placeholder='username'
+                  //  onChange={formik.handleChange}
+                  onChange={handleChange}
+                   />
+
+                  <InputDataProfile name='fullName' type='text' placeholder='Full Name'
+                  //  onChange={formik.handleChange} 
+                  onChange={handleChange}
+                   />
+
+                  <InputDataProfile name='email' type='email' placeholder='Email' 
+                  // onChange={formik.handleChange} 
+                  onChange={handleChange}
+                  />
+
+                  <InputDataProfile name='password' type='password' placeholder='password'
+                  //  onChange={formik.handleChange} 
+                  onChange={handleChange}
+                   />
+
                   <Button w={'100%'} borderRadius={'20px'} my={'10px'} bg={'#04a51e'} type='submit' color={'white'}>Create</Button>
                 </form>
 

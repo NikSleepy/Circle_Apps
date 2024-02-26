@@ -54,11 +54,10 @@ export default new class ThreadService {
                 },
                 
                 
-                
             }
             });
 
-            console.log(user)
+            // console.log(user)
              
             const Threads = getThread.map((thread) => {
 

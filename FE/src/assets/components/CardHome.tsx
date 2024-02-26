@@ -1,8 +1,8 @@
 //code untuk extention buat sebuah function "rafc"
 
 import { Box, Text } from '@chakra-ui/react'
-import { CardPost } from '../elements/CardThread';
-import { CreatePost } from '../elements/CreatePost';
+import { CardPost } from '../atom/CardThread';
+import { CreatePost } from '../atom/CreatePost';
 import { useEffect } from 'react';
 // import { DataPost } from '../types/Type';
 // import Dummy from '../datas/dummy.json'
@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { getThread } from '../../store/slice';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 // import { STATE_THREAD } from "../../store/rootReducer";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // interface Thread {
 //     id:number,
 //     content:string,
@@ -31,7 +31,7 @@ import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 
 export const CardHome = () => {
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // const [ post, setPost ] = useState<Thread[]>([]) 
     const threads = useSelector((state: RootState) => state.thread)
     // console.log(`first`, threads)
@@ -40,11 +40,10 @@ export const CardHome = () => {
     // const config = {
     //     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
     // }
-    // const token = sessionStorage.getItem('token')
-    // if (!token){
-
-    //     navigate('/login')
-    // }
+    const token = sessionStorage.getItem('token')
+    if (!token){
+        navigate('/login')
+    }
     // const getPost = async () => {
     //     try {
     //         const response = await api.get('/thread',config)
