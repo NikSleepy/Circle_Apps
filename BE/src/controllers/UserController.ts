@@ -42,6 +42,11 @@ export default new class UserController {
         }
     }
 
+    userLogin( req:Request, res:Response ) {
+        UserServices.userLogin(req,res)
+    }
+    
+
     async deleteUser( req: Request, res: Response ):Promise<Response> {
         try {
             const id = req.params

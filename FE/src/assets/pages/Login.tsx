@@ -17,11 +17,25 @@ export const Login = () => {
         }, onSubmit: async () => {
             
             try {
-                const response = await api.post('/login', formik.values)
+                const response = await api.post('/login', formik.values).then(res => {return res.data}).catch(function (error) {
+                    // console.log(error.response.data);
+                    toast({
+                        title: `${error.response.data.error} please check again`,
+                        status: 'error',
+                        duration: 2000,
+                        position: 'top',
+                    })
+                  });
                 
-                sessionStorage.setItem('token', response.data.token)
-                localStorage.setItem('user', response.data.user)
+                
+                // console.log(response.token);
+                sessionStorage.setItem('token', response.token)
+                localStorage.setItem('user', response.user)
                 // const token = sessionStorage.getItem('token')
+                const token = sessionStorage.getItem('token')
+                //   console.log(token);
+                  
+
                 toast({
                     title: 'Login Success',
                     description: "welcome bro",
@@ -36,11 +50,13 @@ export const Login = () => {
                 
                 
                 
-                navigate('/')
+                if (token ){
+                    navigate('/')
+                }
               
                 
             } catch ( error ) {
-              toast
+                console.log(error)
             }
             
 

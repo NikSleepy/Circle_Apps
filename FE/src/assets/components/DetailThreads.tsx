@@ -5,36 +5,16 @@ import { FaHeart } from "react-icons/fa"
 import { LiaComment } from "react-icons/lia"
 import { Link, useParams } from "react-router-dom"
 import { api } from "../libs/api"
-import { PostReplys } from "../elements/PostReplys"
+import { PostReplys } from "../elements/CreateReplys"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/type"
+import { useDispatch } from "react-redux"
+import { STATE_THREAD_BY_ID } from "../../store/rootReducer"
 
-interface DataProps {
-    id: number,
-    content: string,
-    created_at: string,
-    image_thread: string,
-    numberOfReply: number,
-    reply:  {
-        id: number;
-        content: string;
-        created_at: string;
-        user: {
-            id: number;
-            fullName: string;
-            username: string;
-            photo_profile: string;
-        };
-    }[],
-    user: {
-        id: number,
-        fullName: string,
-        username: string,
-        photo_profile: string
-    }
-}
 
 export const DetailThreads = () => {
     const [ like, setLike ] = useState<boolean>(false)
-    const [ data, setData ] = useState<DataProps>()
+    // const [ data, setData ] = useState<DataProps>()
     const follow = () => {
         if (!like){
             setLike(true)
@@ -44,10 +24,13 @@ export const DetailThreads = () => {
     }
     const { id } = useParams()
 
+    const threadById = useSelector((state: RootState) => state.threadById)
+    const dispatch = useDispatch()
     const getThreadById = async () => {
         try {
             const response = await api.get(`/thread/${id}`)
-            setData(response.data.data)
+            dispatch(STATE_THREAD_BY_ID(response.data.data))
+            // setData(response.data.data)
             
         } catch (error) {
             console.log(error)
@@ -88,18 +71,19 @@ export const DetailThreads = () => {
             <Flex mb={'20px'} >
             <Avatar
                 // src={items?.photo_profile}
-                src=""
+                src={threadById?.user?.photo_profile}
                 mr={'10px'}
             />
                  <Box  gap={{base:'0px', sm:'5px'}} mb='5px'>
                         <Text fontWeight={'bold'}>
                            
-                            {data?.user?.fullName}
+                            {/* {data?.user?.fullName} */}
+                            {threadById?.user?.fullName}
                         </Text>
                         <Text color='#909090'>
 
-                            {data?.user?.fullName}
-                             
+                            {/* {data?.user?.fullName} */}
+                             {threadById?.user?.username}
                         </Text>
                     </Box>
             </Flex>
@@ -112,12 +96,14 @@ export const DetailThreads = () => {
                    
 
                     <Text fontSize={'sm'}>
-                        {data?.content}
+                        {/* {data?.content} */}
+                        {threadById?.content}
                         
                     </Text>
 
                     <Image
-                        src={data?.image_thread}
+                        // src={data?.image_thread}
+                        src={threadById?.image_thread}
 
                         w={'70%'}
                         my={5}
@@ -128,13 +114,15 @@ export const DetailThreads = () => {
                     
                         <Button  colorScheme='#262626' onClick={follow}>
                         { like ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
-                        <Text color='#909090' ml={'5px'} mr={'20px'}>100 </Text>
+                        <Text color='#909090' ml={'5px'} mr={'20px'}>{threadById?.likes} </Text>
                         </Button>
                         <Button colorScheme='#262626'>
-                            <Link to={`/thread/`}>
+                            <Link to={'/'}>
                                 <Flex>
                                     <LiaComment size={20} />
-                                    <Text color='#909090' ml={'5px'}>{data?.numberOfReply} Replies</Text>
+                                    <Text color='#909090' ml={'5px'}>
+                                        {/* {data?.numberOfReply} */}
+                                        {threadById?.numberOfReply} Replies</Text>
                                 </Flex>
                             </Link>
                         </Button>
@@ -144,7 +132,7 @@ export const DetailThreads = () => {
         <PostReplys/>
 
 
-        {data?.reply?.map((items) => (
+        {threadById?.reply?.map((items) => (
                     <Box 
                     display='flex'
                     borderBottom={'1px solid #b2b2b2'}

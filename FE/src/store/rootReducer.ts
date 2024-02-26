@@ -1,11 +1,16 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { ThreadSlice } from "./slice";
+import { ThreadByIdSlice, } from "./slice";
+import ThreadSlice from "./slice/ThreadSlice";
 
 
-export const { STATE_THREAD } = ThreadSlice.actions
+// export const { STATE_THREAD,  } = ThreadSlice.actions
+export const { STATE_THREAD_BY_ID } = ThreadByIdSlice.actions
 
-export const threadReducer = ThreadSlice.reducer
+
+export const threadByIdReducer = ThreadByIdSlice.reducer
 
 export const rootReducer = combineReducers({
-    thread: threadReducer
+    threadById: threadByIdReducer,
+    thread: ThreadSlice
 })
+

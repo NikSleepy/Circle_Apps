@@ -6,7 +6,7 @@ import { api } from '../libs/api'
 interface PostReplysProps {
     thread: number,
     content: string,
-    image: string,
+    image: File | null,
 }
 export const PostReplys = () => {
     const {id} = useParams()
@@ -14,14 +14,14 @@ export const PostReplys = () => {
     const [ post, setPost ] = React.useState<PostReplysProps>({
         thread: Number(id),
         content: '',
-        image: '',
+        image: null,
     })
 
     
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setPost(( prevPost ) => ({ ...prevPost, [name]:value }))
-    }
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const { name, value } = e.target;
+    //     setPost(( prevPost ) => ({ ...prevPost, [name]:value }))
+    // }
 
     const auth = sessionStorage.getItem('token');
 
@@ -29,18 +29,19 @@ export const PostReplys = () => {
         e.preventDefault();
         try {
             
-        const response = await api.post('/reply/post', post, {
+         await api.post('/reply/post', post, {
             headers: {
                 Authorization: `Bearer ${auth}`
             }
         })
-        console.log(response);
+        // console.log(response);
 
         } catch ( error ) {
             console.log(error);
         }
     }
 
+    
   return (
     <form onSubmit={handleSubmit} >         
     <Flex 
@@ -55,8 +56,9 @@ export const PostReplys = () => {
         type="text" 
         placeholder="What is Happening!? " 
         border={'none'} 
-        onChange={handleChange}
-        value={post.content}
+        // onChange={handleChange}
+        // value={post.content}
+        onChange={(e) => { setPost((data)=> ({ ...data, content: e.target.value })) }}
         ></Input>
 
         <FormLabel htmlFor="image">
@@ -69,6 +71,7 @@ export const PostReplys = () => {
         // onChange={handleChange}
         // value={post.image}
         // onChange={(e) => { formik.setFieldValue('image', e.target.files![0]) }} 
+        onChange={(e) => { setPost((data)=> ({ ...data, image: e.target.files![0] })) }}
         accept='image/jpg, image/jpeg, image/png'
         hidden/>  
         <Button bg={'#005e0e'} type='submit'>Post</Button>

@@ -14,7 +14,8 @@ interface Thread {
     username:string,
     fullName:string,
     photo_profile:string,
-    reply:number
+    reply:number,
+    likes:number,
 
 
     }
@@ -22,6 +23,10 @@ interface Thread {
 
 export const CardPost = (  items  : Thread ) => {
     const [ like, setLike ] = useState<boolean>(false)
+    
+    // console.log(items);
+    
+    // console.log(items?.image_thread);
     
     
     
@@ -71,19 +76,20 @@ export const CardPost = (  items  : Thread ) => {
                     <Text fontSize={'sm'}>
                         {items?.content}
                     </Text>
-
+                    
                     <Image
-                        src={items?.image_thread}
-                        w={'70%'}
-                        my={5}
-                        borderRadius={10}
-                    />
+                            src={items?.image_thread}
+                            
+                            w={'70%'}
+                            my={5}
+                            borderRadius={10}
+                        />
 
                     <Flex mt='7px' ml={-19}>
                     
                         <Button  colorScheme='#262626' onClick={follow}>
                         { like ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
-                        <Text color='#909090' ml={'5px'} mr={'20px'}>100 </Text>
+                        <Text color='#909090' ml={'5px'} mr={'20px'}>{items?.likes} </Text>
                         </Button>
                         <Button colorScheme='#262626'>
                             <Link to={`/thread/${items?.id}`}>

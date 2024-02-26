@@ -1,6 +1,7 @@
 import { Repository } from "typeorm"
 import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
+import { Request, Response } from "express"
 
 
 
@@ -58,6 +59,15 @@ export default new class UserService {
         }
         
     } 
+
+    async userLogin( req:Request, res:Response):Promise<Response> {
+        const id = res.locals.loginSession.obj.id
+        const user = await this.userRepository.findOneBy({
+            id
+        })
+        return res.status(200).json(user)
+
+    }
 
     async deleteUser( id: any ) {
         try {

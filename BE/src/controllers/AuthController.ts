@@ -27,19 +27,22 @@ export default new class AuthController {
         }
     }
 
-    async login ( req: Request, res: Response ) {
-        try {
-            const data = req.body
-            const { error, value } = loginSchema.validate(data)
-            if ( error ) return res.status(400).json(
-                error.details[0].message
-            )
+    // async login ( req: Request, res: Response ) {
+    //     try {
+    //         const data = req.body
+    //         const { error, value } = loginSchema.validate(data)
+    //         if ( error ) return res.status(400).json(
+    //             error.details[0].message
+    //         )
 
-            const response = await AuthService.login(value)
+    //         const response = await AuthService.login(value)
             
-            return res.status(200).json(response)
-        } catch ( error ) {
-            return res.status(500).json(error)
-        }
+    //         return res.status(200).json(response)
+    //     } catch ( error ) {
+    //         return res.status(500).json(error)
+    //     }
+    // }
+    login(req:Request, res:Response) {
+        AuthService.login(req,res)
     }
 }

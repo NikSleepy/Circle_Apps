@@ -23,14 +23,17 @@ export default new class ThreadService {
     async getAllThread( req: Request, res: Response ):Promise<Response> {
         try {
             // const getThread = await this.threadRepository.createQueryBuilder("thread").getMany();
-
+            const user = res.locals.loginSession.obj.id
             const getThread = await this.threadRepository.find({
                 order: { created_at: "DESC" },
                 relations: [  
                     "user",
                     "reply",
                     "reply.user",
+                    "user.followings",
+                    "likes",
                     ],
+                
             select:{
                 user: {
                     id:true,
@@ -48,10 +51,14 @@ export default new class ThreadService {
                 likes: {
                     id: true
                     
-                }
+                },
+                
+                
+                
             }
             });
 
+            console.log(user)
              
             const Threads = getThread.map((thread) => {
 
@@ -62,7 +69,8 @@ export default new class ThreadService {
                     created_at: thread.created_at,
                     image_thread: thread.image_thread,
                     user: thread.user,
-                    numberOfReply: thread.reply.length
+                    numberOfReply: thread.reply.length,
+                    likes: thread.likes.length
                 }
             })
 
@@ -88,6 +96,7 @@ export default new class ThreadService {
                 "user",
                 "reply",
                 "reply.user",
+                "likes"
                 ]
                 , select:{
                     user: {
@@ -107,6 +116,9 @@ export default new class ThreadService {
                             fullName: true,
                             photo_profile: true
                         }
+                    },
+                    likes: {
+                        id: true
                     }
                 }
 
@@ -119,7 +131,8 @@ export default new class ThreadService {
                 image_thread: getThread.image_thread,
                 user: getThread.user,
                 reply: getThread.reply,
-                numberOfReply: getThread.reply.length
+                numberOfReply: getThread.reply.length,
+                likes: getThread.likes.length
 
             }
             

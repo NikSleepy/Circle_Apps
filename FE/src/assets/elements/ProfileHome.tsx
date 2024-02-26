@@ -20,14 +20,20 @@ export const ProfileHome = () => {
 
   const [ profile, setProfile ] = useState<Profile>()
 
-  const user = localStorage.getItem('user')
-
+  // const user = localStorage.getItem('user')
+  const token = sessionStorage.getItem('token')
+  // console.log(token);
   
+  const config = {
+    headers: { Authorization: `Bearer ${token} `}
+}
   
   const getProfile = async () => {
     try {
-      const response = await api.get(`/users/${user}`)
-      setProfile(response.data.data)
+      const response = await api.get(`/users/client`,config)
+      // console.log("profile",response.data);
+      
+      setProfile(response.data)
       
     } catch (error) {
       console.log(error)
