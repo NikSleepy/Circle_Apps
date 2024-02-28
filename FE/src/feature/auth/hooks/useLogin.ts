@@ -35,6 +35,7 @@ export const useLogin = () => {
 
             if ( sessionStorage.getItem('token')) {
                 navigate('/')
+                
             }
 
             toast({

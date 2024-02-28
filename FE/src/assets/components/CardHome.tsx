@@ -31,26 +31,19 @@ import { useNavigate } from 'react-router-dom';
 
 export const CardHome = () => {
 
-    const navigate = useNavigate()
     // const [ post, setPost ] = useState<Thread[]>([]) 
-    const threads = useSelector((state: RootState) => state.thread)
     // console.log(`first`, threads)
-    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
     // const dispatch = useDispatch()
     // const config = {
-    //     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
+        //     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
     // }
-    const token = sessionStorage.getItem('token')
-    if (!token){
-        navigate('/login')
-    }
     // const getPost = async () => {
-    //     try {
-    //         const response = await api.get('/thread',config)
+        //     try {
+            //         const response = await api.get('/thread',config)
     //         dispatch(STATE_THREAD(response.data.data))
     //         // setPost(response.data.data)
     //         // console.log("ini dari card home",response.data.data);
-            
+    
             
     //     } catch (error) {
     //         console.log(error)
@@ -62,13 +55,21 @@ export const CardHome = () => {
     
     // function hitungPanjangArray<T>(arr: T[]): number {
         
-    //     return arr.length;
-    // }
-    
-    useEffect(()=>{
-        dispatch(getThread())
+        //     return arr.length;
+        // }
         
-    },[])
+        const navigate = useNavigate()
+        const threads = useSelector((state: RootState) => state.thread)
+        const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+        const token = sessionStorage.getItem('token')
+        
+
+        if (!token){
+            navigate('/login')
+        }
+        useEffect(() => {
+            dispatch(getThread())
+        },[])
   
     ;
     

@@ -1,51 +1,64 @@
 import { Avatar, Box, Button, Flex, HStack, Image, Text, useColorModeValue } from "@chakra-ui/react";
-import {  useState } from "react";
-import { api } from "../libs/api";
-import React from "react";
+import {  useEffect } from "react";
+// import { api } from "../libs/api";
+// import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/type";
+import { useDispatch } from "react-redux";
+import { Action, ThunkDispatch } from "@reduxjs/toolkit";
+import { userLogin } from "../../store/slice/UserSlice";
 
-interface Profile {
-  id: number,
-  username: string,
-  fullName: string,
-  password: string,
-  email: string,
-  description: string,
-  photo_cover: string,
-  photo_profile: string
-}
+// interface Profile {
+//   id: number,
+//   username: string,
+//   fullName: string,
+//   password: string,
+//   email: string,
+//   description: string,
+//   photo_cover: string,
+//   photo_profile: string
+// }
 export const ProfileHome = () => {
   const boxBg = useColorModeValue("#262626 !important", "#111c44 !important");
   const mainText = useColorModeValue("white", "white");
   const secondaryText = useColorModeValue("#686868", "#686868");
 
-  const [ profile, setProfile ] = useState<Profile>()
+  // const [ profile, setProfile ] = useState<Profile>()
 
   // const user = localStorage.getItem('user')
-  const token = sessionStorage.getItem('token')
-  // console.log(token);
+//   const token = sessionStorage.getItem('token')
+//   // console.log(token);
   
-  const config = {
-    headers: { Authorization: `Bearer ${token} `}
-}
+//   const config = {
+//     headers: { Authorization: `Bearer ${token} `}
+// }
   
-  const getProfile = async () => {
-    try {
-      const response = await api.get(`/users/client`,config)
-      // console.log("profile",response.data);
+//   const getProfile = async () => {
+//     try {
+//       const response = await api.get(`/users/client`,config)
+//       // console.log("profile",response.data);
       
-      setProfile(response.data)
+//       setProfile(response.data)
       
-    } catch (error) {
-      console.log(error)
-    }
+//     } catch (error) {
+//       console.log(error)
+//     }
     
-  }
+//   }
 
-  React.useEffect (() => {
-    getProfile();
+//   React.useEffect (() => {
+//     getProfile();
     
-  },[])
+//   },[])
   
+  const user = useSelector((state: RootState) => state.user.data)
+  const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+  
+  useEffect(() => {
+    dispatch(userLogin())
+  },[])
+
+
 
   return (
     <Flex
@@ -59,14 +72,16 @@ export const ProfileHome = () => {
       >
         
         <Text fontWeight={'bold'} mb={3}>My Profile</Text>
-        { profile?.photo_cover ?
+        { user?.photo_cover ?
           <Image
-          src={profile?.photo_cover}
+          src={user?.photo_cover}
           objectFit={'cover'}
           w={'100%'}
           h={'80px'}
           borderRadius='10px'
         /> :
+
+
         <Image
           
           src="https://i.ibb.co/xmP2pS6/Profile.png"
@@ -80,7 +95,7 @@ export const ProfileHome = () => {
         <Flex flexDirection='column'>
         <Box>
           <Avatar
-            src={profile?.photo_profile}
+            src={user?.photo_profile}
             border='5px solid red'
             mx='20px'
             borderColor={boxBg}
@@ -109,18 +124,18 @@ export const ProfileHome = () => {
             fontWeight='600'
             color={mainText}
             fontSize='xl'>
-            {profile?.fullName}
+            {user?.fullName}
           </Text>
           <Text
             color={secondaryText}
             fontSize='sm'
             fontWeight='500'>
-            @{profile?.username}
+            @{user?.username}
           </Text>
           <Text 
           fontSize={'sm'}
           >
-            {profile?.description}
+            {user?.description}
           </Text>
 
           <HStack>

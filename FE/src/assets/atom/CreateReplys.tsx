@@ -1,45 +1,41 @@
 import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
-import React from 'react'
 import { SlPicture } from 'react-icons/sl'
-import { useParams } from 'react-router-dom'
-import { api } from '../libs/api'
-interface PostReplysProps {
-    thread: number,
-    content: string,
-    image: File | null,
-}
+import { useReply } from '../../feature/threads/hooks/useReply'
+
 export const PostReplys = () => {
-    const {id} = useParams()
+    // const {id} = useParams()
     
-    const [ post, setPost ] = React.useState<PostReplysProps>({
-        thread: Number(id),
-        content: '',
-        image: null,
-    })
+    // const [ post, setPost ] = React.useState<PostReplysProps>({
+    //     thread: Number(id),
+    //     content: '',
+    //     image: null,
+    // })
 
     
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target;
-    //     setPost(( prevPost ) => ({ ...prevPost, [name]:value }))
+    // // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // //     const { name, value } = e.target;
+    // //     setPost(( prevPost ) => ({ ...prevPost, [name]:value }))
+    // // }
+
+    // const auth = sessionStorage.getItem('token');
+
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     try {
+            
+    //      await api.post('/reply/post', post, {
+    //         headers: {
+    //             Authorization: `Bearer ${auth}`
+    //         }
+    //     })
+    //     // console.log(response);
+
+    //     } catch ( error ) {
+    //         console.log(error);
+    //     }
     // }
 
-    const auth = sessionStorage.getItem('token');
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            
-         await api.post('/reply/post', post, {
-            headers: {
-                Authorization: `Bearer ${auth}`
-            }
-        })
-        // console.log(response);
-
-        } catch ( error ) {
-            console.log(error);
-        }
-    }
+    const { handleChange, handleChangeFile, handleSubmit } = useReply();
 
     
   return (
@@ -56,9 +52,9 @@ export const PostReplys = () => {
         type="text" 
         placeholder="What is Happening!? " 
         border={'none'} 
-        // onChange={handleChange}
+        onChange={handleChange}
         // value={post.content}
-        onChange={(e) => { setPost((data)=> ({ ...data, content: e.target.value })) }}
+        // onChange={(e) => { setPost((data)=> ({ ...data, content: e.target.value })) }}
         ></Input>
 
         <FormLabel htmlFor="image">
@@ -68,10 +64,10 @@ export const PostReplys = () => {
         type="file" 
         id="image"
         name='image' 
-        // onChange={handleChange}
+        onChange={handleChangeFile}
         // value={post.image}
         // onChange={(e) => { formik.setFieldValue('image', e.target.files![0]) }} 
-        onChange={(e) => { setPost((data)=> ({ ...data, image: e.target.files![0] })) }}
+        // onChange={(e) => { setPost((data)=> ({ ...data, image: e.target.files![0] })) }}
         accept='image/jpg, image/jpeg, image/png'
         hidden/>  
         <Button bg={'#005e0e'} type='submit'>Post</Button>

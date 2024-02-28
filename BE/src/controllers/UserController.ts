@@ -6,15 +6,17 @@ import { updateUserSchema } from "../utils/validator/UserValidator"
 export default new class UserController {
     
 
-    async getUsers( req: Request, res: Response ):Promise<Response> {
-        try {
-            const response = await UserServices.getUsers();
-            return res.status(200).json(response)
+    async getUsers( req:Request, res: Response ) {
 
-        } catch (error) {
+        UserServices.getUsers( req, res)
+        // try {
+        //     const response = await UserServices.getUsers();
+        //     return res.status(200).json(response)
 
-            throw error
-        }
+        // } catch (error) {
+
+        //     throw error
+        // }
         
     }
 

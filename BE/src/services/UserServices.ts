@@ -1,4 +1,4 @@
-import { Repository } from "typeorm"
+import { Equal, Not, Repository } from "typeorm"
 import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import { Request, Response } from "express"
@@ -6,29 +6,75 @@ import { Request, Response } from "express"
 
 
 export default new class UserService {
-    private readonly userRepository: Repository<User> = AppDataSource.getRepository(User)
-    async getUsers() {
+    private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User)
+    async getUsers( req: Request, res: Response ) {
         try {
-            const getuser = await this.userRepository.find({
-                relations: {
-                    threads: true,
-                    reply: true,
-                    likes: true
+            const user_id = res.locals.loginSession.obj.id
+            const getuser = await this.UserRepository.find({
+                where: {
+                    id: Not(user_id)
+                },
+                relations:{
+                    followers:true,
+                    followings:true
                 },
                 select: {
                     id: true,
                     username: true,
                     fullName: true,
-                    photo_profile: true
+                    photo_profile: true,
+                    followings:{
+                        id:true
+                    },
+                    followers:{
+                        id:true
+                    }
                 }
             });
-            return {
-                message: "Success to get users",
-                data: getuser
-            }
+
+
+
+
+  
+
+            // console.log("follower",follower)
+            const following = await this.UserRepository.find({
+                where: {
+                    followers: { id:user_id }
+                },
+            })
+            // console.log("following",following)
             
+            
+            const mapping = getuser.map((item) => {
+                
+                let a = false;
+                
+                following.map((data)=>{
+                    if(item.id === data.id){
+                        a=true;
+                    }
+
+                })
+                // if(following)
+                return {
+                    id:item.id,
+                    username:item.username,
+                    fullName:item.fullName,
+                    photo_profile:item.photo_profile,
+                    isFollow: a
+
+                }
+            })
+            // console.log(getuser)
+            return res.status(200).json({
+                message: "Success to get users",
+                data: mapping
+            })
         } catch (error) {
-            throw error
+            return res.status(400).json({
+                message:`error in getUser ${error}`
+            })
         }
         
     }
@@ -36,7 +82,7 @@ export default new class UserService {
     async getUserById( id: any ) {
         try {
             
-            const getuser = await this.userRepository.createQueryBuilder("user").where(id).getOneOrFail();
+            const getuser = await this.UserRepository.createQueryBuilder("user").where(id).getOneOrFail();
             return {
                 message: "Success to get user",
                 data: getuser
@@ -49,7 +95,7 @@ export default new class UserService {
 
     async updateUser( data: object, id: any) {
         try {
-            const updateUser = await this.userRepository.createQueryBuilder().update(User).set(data).where(id).execute();
+            const updateUser = await this.UserRepository.createQueryBuilder().update(User).set(data).where(id).execute();
             return {
                 message: "Success to update user",
                 data: updateUser
@@ -62,16 +108,17 @@ export default new class UserService {
 
     async userLogin( req:Request, res:Response):Promise<Response> {
         const id = res.locals.loginSession.obj.id
-        const user = await this.userRepository.findOneBy({
+        const user = await this.UserRepository.findOneBy({
             id
         })
+        // console.log(user)
         return res.status(200).json(user)
 
     }
 
     async deleteUser( id: any ) {
         try {
-            const deleteUser = await this.userRepository.createQueryBuilder().delete().from(User).where(id).execute();
+            const deleteUser = await this.UserRepository.createQueryBuilder().delete().from(User).where(id).execute();
             return {
                 message: "Success to delete user",
                 data: deleteUser

@@ -31,7 +31,7 @@ export const useCreateThread = () => {
         e.preventDefault();
         try {
             const response = await api.post('/thread/post', data, config)
-            console.log("data nih dari useState:", data)
+            // console.log("data nih dari useState:", data)
 
             toast({
                 title:'success upload thread',

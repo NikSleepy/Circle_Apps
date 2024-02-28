@@ -13,4 +13,8 @@ export default new class FollowController {
     getFollowers(req: Request, res: Response) {
         FollowerServices.getFollowers(req, res)
     }
+
+    // getAllFollowers( req: Request, res: Response ) {
+    //     FollowerServices.getAllFollowers(req, res)
+    // }
 }

@@ -1,33 +1,40 @@
 import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
 // import { DataPost } from "../types/Type"
 // import Dummy from '../datas/dummy.json'
-import { api } from "../libs/api"
-interface Followers {
-  id:number
-  fullName:string
-  username:string
-  photo_profile:string
-  replies:string[]
-  likes:string[]
-}
+// import { api } from "../libs/api"
+import { useGetFollows } from "../../feature/follows/hooks/useGetFollows"
+// interface Followers {
+//   id:number
+//   fullName:string
+//   username:string
+//   photo_profile:string
+//   replies:string[]
+//   likes:string[]
+// }
 export const Follwer = () => {
-    const [ follows, setFollows ] = useState<Followers[]>([])
+    // const [ follows, setFollows ] = useState<Followers[]>([])
 
-    const followers = async () => {
-      try {
-        const response = await api.get('/users')
-        setFollows(response.data.data)
+    // const token = sessionStorage.getItem('token')
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}` }
+    // }
+    // const followers = async () => {
+    //   try {
+    //     const response = await api.get('/users', config)
+    //     setFollows(response.data.data)
         
-      } 
-      catch (error) {
-        console.log(error);
-      }
-    }
+    //   } 
+    //   catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+    // // console.log(follows)
 
-    useEffect(() => {
-        followers()
-    },[])
+    // useEffect(() => {
+    //     followers()
+    // },[])
+    const { follows } = useGetFollows()
 
   return (
     <Box
@@ -62,7 +69,9 @@ export const Follwer = () => {
             color={'white'}
             border={'1px solid '}
             _hover={{ color:'black', bg:'white'}}>
-                Follows
+
+              {items?.isFollow ? 'Follows' : 'unfollows' }
+                
             </Button>
         </HStack>
         ))}

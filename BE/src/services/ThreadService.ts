@@ -61,7 +61,6 @@ export default new class ThreadService {
              
             const Threads = getThread.map((thread) => {
 
-                
                 return {
                     id: thread.id,
                     content: thread.content,

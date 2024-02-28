@@ -1,15 +1,17 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 import { BiArrowBack } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import { CardUserFollow } from './CardUserFollow'
+import { useGetFollows } from '../../feature/follows/hooks/useGetFollows'
 
 
 export const NavFollow = () => {
+  const { follows } = useGetFollows()
+  // console.log( follows)
   return (
     <Box 
-    bg={'#1d1d1d'}
     w={'100%'}
     display={{ base: 'none',sm: 'none' , md:'block', lg:'block', xl:'block'}}
-    borderBottom={'1px solid #b2b2b2'}
     >   
           <Link to={'/'} >
             <Flex p={'10px'} gap={3}  display={{ base: 'none',sm: 'none' , md:'flex', lg:'flex', xl:'flex'}}>
@@ -18,10 +20,44 @@ export const NavFollow = () => {
             </Flex>
           </Link>
         
-        <Flex gap={150} justifyContent={'center'} alignItems={'center'} p={'10px'}>
-            <Text > For You </Text>
-            <Text > Following </Text>
-        </Flex>
+   
+          <Tabs variant={'unStyled'} align='center'  isFitted >
+            <TabList>
+              <Tab>Followings</Tab>
+              <Tab>Followers</Tab>
+            </TabList>
+            <TabIndicator
+            h={'2px'}
+            bg={'#00b7f4'}/>
+            <TabPanels>
+              <TabPanel>
+                {follows?.map((items)=> (
+                  <CardUserFollow
+                  username={items?.username}
+                  fullName={items?.fullName}
+                  id={items.id}
+                  photo_profile={items.photo_profile}
+                  isFollow={items.isFollow}
+                  />
+                ))}
+                
+              </TabPanel>
+              <TabPanel>
+              {follows?.map((items)=> (
+                  <CardUserFollow
+                  username={items?.username}
+                  fullName={items?.fullName}
+                  id={items.id}
+                  photo_profile={items.photo_profile}
+                  isFollow={items.isFollow}
+                  />
+                ))}
+              </TabPanel>
+            </TabPanels>
+
+          </Tabs>
+
+        
     </Box>
   )
 }

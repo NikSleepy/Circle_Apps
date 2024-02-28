@@ -46,7 +46,6 @@ export const DetailThreads = () => {
 
     useEffect(() => {
         getThreadById();
-        
     })
     // console.log(data);
     

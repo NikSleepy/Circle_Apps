@@ -13,14 +13,23 @@ export default new class LikeService {
     async createLike( req: Request, res: Response ):Promise<Response> {
         try {
              const data = req.body
+             const user_id = res.locals.loginSession.obj.id
              const getUser = await this.likeRepository.findOne({
                  where: {
-                     id: data.id
+                     user:{
+                       id: user_id
+                     },
+                     thread: {
+                        id:data.thread
+                     }
                  }
              })
+            //  console.log("like services",getUser)
+            // console.log('data', data.thread)
+            // console.log("user_id",user_id)
 
              if ( getUser){
-                await this.likeRepository.delete(getUser.id)
+                await this.likeRepository.delete(getUser)
                 return res.status(200).json({message: "Success to delete like"})
              }
              const like = await this.likeRepository.create({

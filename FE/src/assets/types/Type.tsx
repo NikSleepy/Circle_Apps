@@ -44,3 +44,17 @@ export interface IThreadById {
         }
     
 }
+
+export interface IProfile {
+    data : {
+        id: number,
+        username: string,
+        fullName: string,
+        password: string,
+        email: string,
+        description: string,
+        photo_cover: string,
+        photo_profile: string
+    }
+
+  }

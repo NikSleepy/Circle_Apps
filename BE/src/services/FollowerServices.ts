@@ -12,8 +12,8 @@ export default new class FollewerService {
             const data = req.body
             const user_id= res.locals.loginSession.obj.id
 
-            console.log(data)
-            console.log(user_id)
+            // console.log(data)
+            // console.log(user_id)
 
             //validate data
             // const { error, value } = followingSchema.validate(req.body);
@@ -33,7 +33,7 @@ export default new class FollewerService {
                     followings: true
                 }
             });
-            console.log("user login",user)
+            // console.log("user login",user)
 
             const userToFollow = await this.UserRepository.findOne({
                 where: {
@@ -41,13 +41,19 @@ export default new class FollewerService {
                 },
             })
 
-            console.log("user to follow",userToFollow)
+            if( user.id === userToFollow.id ){
+                return res.status(400).json({
+                    message:"can't following my self"
+                })
+            }
+            // console.log("user to follow",userToFollow)
 
             if (!user || !userToFollow) {
                 return res.status(404).json({
                     code: 404, message: 'User not found'
                 })
             }
+            
 
             const isAlreadyFollowing = user.followings.some(
                 (followUser) => followUser.id === data.user_id
@@ -85,17 +91,52 @@ export default new class FollewerService {
                 where: {
                     id: user_id
                 },
-                relations: ['user_following']
+                relations: {
+                    followings:true
+                }
             })
+            const following = await this.UserRepository.find({
+                where: {
+                    followers: { id:user_id }
+                },
+            })
+
+            // const isFollowed =  user.followers.some( (followers) => followers.id === user_id)
+
+            // console.log(isFollowed)
+            const followings = user.followings.map((item) => {
+
+                let a = false;
+                
+                following.map((data)=>{
+                    if(item.id === data.id){
+                        a=true;
+                    }
+
+                })
+
+                
+                return {
+                    id: item.id,
+                    username: item.username,
+                    fullName: item.fullName,
+                    photo: item.photo_profile,
+                    followings:a
+                }
+            })
+
+            
 
             if (!user) {
                 return res.status(404).json({
                     code: 404, message: 'User not found'
                 })
             }
+
+           
             return res.status(200).json({
                 code: 200,
-                data: user.followings
+                data: followings
             })
         } catch (error) {
             return res.status(500).json({
@@ -112,17 +153,43 @@ export default new class FollewerService {
                 where: {
                     id: user_id
                 },
-                relations: ['user_following']
+                relations: {
+                    followers:true
+                }
             })
+            console.log("followers",user)
 
             if (!user) {
                 return res.status(404).json({
                     code: 404, message: 'User not found'
                 })
             }
+
+            const following = await this.UserRepository.find({
+                where: {
+                    followers: { id:user_id }
+                },
+            })
+            const followers = user.followers.map((item) => {
+                                
+                let a = false;
+                
+                following.map((data)=>{
+                    if(item.id === data.id){
+                        a = true;
+                    }
+                })
+                return {
+                    id:item.id,
+                    username: item.username,
+                    fullName: item.fullName,
+                    photo: item.photo_profile,
+                    followers:a
+                }
+            })
             return res.status(200).json({
                 code: 200,
-                data: user.followers
+                data: followers 
 
             })
         } catch ( errror ) {
@@ -132,4 +199,6 @@ export default new class FollewerService {
             })
         }
     }
+
+
 }
