@@ -36,6 +36,7 @@ export const DetailThreads = () => {
             console.log(error)
         }
     }
+    
     // console.log(data)
 
     const convertTime = ( time:string ) => {

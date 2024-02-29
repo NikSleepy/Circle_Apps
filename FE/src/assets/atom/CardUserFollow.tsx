@@ -26,7 +26,8 @@ export const CardUserFollow = (props:Followers) => {
                 </Box>
             </Box>
 
-            <Button
+            {props?.isFollow ?  
+            <Button 
             ml={'auto'} 
             mr={'-9px'}
             borderRadius={'20px'}
@@ -35,8 +36,27 @@ export const CardUserFollow = (props:Followers) => {
             color={'white'}
             border={'1px solid '}
             _hover={{ color:'black', bg:'white'}}>
-                {props?.isFollow ? 'follow' : 'usfollow'}
+
+              unfollows
+                
             </Button>
+
+            :
+            
+            <Button 
+            ml={'auto'} 
+            mr={'-9px'}
+            borderRadius={'20px'}
+            h={'30px'}
+            bg={'none'}
+            color={'white'}
+            border={'1px solid '}
+            _hover={{ color:'black', bg:'white'}}>
+
+              follows
+                
+            </Button>
+            }
     </HStack>
   )
 }

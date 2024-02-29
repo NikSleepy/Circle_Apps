@@ -41,11 +41,14 @@ export class User {
     })
     reply: Reply[];
     
-    @ManyToMany(() => User, ( user ) => user.followings)
+    @ManyToMany(() => User, ( user ) => user.followings, {
+        onUpdate: 'CASCADE',
+        onDelete:'CASCADE'
+    })
     @JoinTable({
         name: 'user_following',
         joinColumn: {
-            name: 'user_id',
+            name: 'follower_id',
             referencedColumnName: 'id'
         },
         inverseJoinColumn: {

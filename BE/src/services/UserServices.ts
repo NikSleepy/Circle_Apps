@@ -12,11 +12,12 @@ export default new class UserService {
             const user_id = res.locals.loginSession.obj.id
             const getuser = await this.UserRepository.find({
                 where: {
-                    id: Not(user_id)
+                    id: Not(user_id),
+
                 },
                 relations:{
                     followers:true,
-                    followings:true
+                
                 },
                 select: {
                     id: true,
@@ -26,11 +27,13 @@ export default new class UserService {
                     followings:{
                         id:true
                     },
-                    followers:{
-                        id:true
-                    }
+
                 }
             });
+            
+
+
+
 
 
 
@@ -40,36 +43,74 @@ export default new class UserService {
             // console.log("follower",follower)
             const following = await this.UserRepository.find({
                 where: {
-                    followers: { id:user_id }
+                    id: user_id,
+                    followings: {
+                        id: Not(user_id)
+                    },
+
+
+
                 },
+                select:{
+                    id:true,
+                    username:true,
+                    fullName:true,
+                    photo_profile:true
+                }
             })
+
+            const map = following.filter((items) => items.followings === user_id)
+            // console.log(following)
+
+            // const mapping = getuser.map((items) => {
+            //     const tt = following.filter((data)=>{
+            //         items.id != data.followers
+            //     })
+                
+            //     return {
+            //         id: items.id,
+            //         username:items.username,
+            //         fullName:items.fullName,
+            //         photo_profile:items.photo_profile,
+            //         isFollow:false
+            //     }
+            // })
+
+
+
+
+            
+            // const filter = getuser.filter((data) => {
+            //     return data.followers != user_id
+            // })
             // console.log("following",following)
             
             
-            const mapping = getuser.map((item) => {
+            // const mapping = getuser.map((item) => {
                 
-                let a = false;
+            //     let a = false;
                 
-                following.map((data)=>{
-                    if(item.id === data.id){
-                        a=true;
-                    }
+            //     following.map((data)=>{
+            //         if(item.id === data.id){
+            //             a=true;
+            //         }
 
-                })
-                // if(following)
-                return {
-                    id:item.id,
-                    username:item.username,
-                    fullName:item.fullName,
-                    photo_profile:item.photo_profile,
-                    isFollow: a
 
-                }
-            })
+            //     })
+            //     // if(following)
+            //     return {
+            //         id:item.id,
+            //         username:item.username,
+            //         fullName:item.fullName,
+            //         photo_profile:item.photo_profile,
+            //         isFollow: a
+
+            //     }
+            // })
             // console.log(getuser)
             return res.status(200).json({
                 message: "Success to get users",
-                data: mapping
+                data: map
             })
         } catch (error) {
             return res.status(400).json({

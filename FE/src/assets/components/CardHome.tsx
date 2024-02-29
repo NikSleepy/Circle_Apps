@@ -3,31 +3,12 @@
 import { Box, Text } from '@chakra-ui/react'
 import { CardPost } from '../atom/CardThread';
 import { CreatePost } from '../atom/CreatePost';
-import { useEffect } from 'react';
-// import { DataPost } from '../types/Type';
-// import Dummy from '../datas/dummy.json'
-// import { api } from '../libs/api';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store/type';
-import { useDispatch } from 'react-redux';
-import { getThread } from '../../store/slice';
-import { Action, ThunkDispatch } from '@reduxjs/toolkit';
-// import { STATE_THREAD } from "../../store/rootReducer";
-import { useNavigate } from 'react-router-dom';
-// interface Thread {
-//     id:number,
-//     content:string,
-//     image_thread:string,
-//     created_at:string,
-//     numberOfReply:number,
-//     user:{
-//         id:number,
-//         username:string,
-//         fullName:string,
-//         photo_profile:string
+import { useEffect } from 'react';
+import { useFecthThread } from '../../feature/threads/hooks/useFecthThread';
 
-//     },
-// }
+
 
 export const CardHome = () => {
 
@@ -57,22 +38,13 @@ export const CardHome = () => {
         
         //     return arr.length;
         // }
-        
-        const navigate = useNavigate()
-        const threads = useSelector((state: RootState) => state.thread)
-        const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
-        const token = sessionStorage.getItem('token')
-        
-
-        if (!token){
-            navigate('/login')
-        }
-        useEffect(() => {
-            dispatch(getThread())
-        },[])
+    const { getPost} = useFecthThread()
+    const threads = useSelector((state:RootState) => state.thread)
   
-    ;
     
+    useEffect(()=>{
+        getPost();
+    },[getPost])
   return (
         <Box
         // w={{ base:'100%', md:'100%', lg:'700px'}}
@@ -102,7 +74,7 @@ export const CardHome = () => {
         {/* bagian card */}
 
         
-        { threads?.thread?.map(( data, index ) => {
+        { threads?.map(( data, index ) => {
             return(
                 <Box key={index}>
                     <CardPost 

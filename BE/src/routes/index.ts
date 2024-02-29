@@ -30,7 +30,7 @@ router.delete("/reply/delete/:id", ReplyController.delete)// delete comment
 
 router.post("/thread/like", Auth.Auth, LikeController.createLike)// create likes
 
-router.post("/user/following", Auth.Auth, FollowConroller.followUser)// create following
+router.post("/user/following/:id", Auth.Auth, FollowConroller.followUser)// create following
 router.get("/followings", Auth.Auth, FollowConroller.getFollowings) // get following
 router.get("/followers", Auth.Auth, FollowConroller.getFollowers)// get followers
 

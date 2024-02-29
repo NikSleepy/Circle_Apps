@@ -2,6 +2,8 @@ import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
 
 import { SlPicture } from 'react-icons/sl'
 import { useCreateThread } from '../../feature/threads/hooks/useCreateThread'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/type'
 
 
 export const CreatePost = ( ) => {
@@ -60,6 +62,7 @@ export const CreatePost = ( ) => {
   
 
   const { handleChange, handleSubmit, handleChangeFile } = useCreateThread()
+  const user = useSelector((state: RootState) => state.user.data)
 
   return (
     <form 
@@ -71,7 +74,7 @@ export const CreatePost = ( ) => {
           gap={'2vh'} 
           w={'100%'}>
           <Avatar
-              src="https://cdn.pixabay.com/photo/2020/10/11/19/51/cat-5646889_640.jpg"/>
+              src={`${user.photo_profile}`}/>
           <Input 
           name='content' 
           type="text" 

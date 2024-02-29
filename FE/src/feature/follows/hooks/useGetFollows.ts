@@ -35,6 +35,7 @@ export const useGetFollows = () => {
 
     return {
 
-        follows
+        follows,
+        followers
     }
 }

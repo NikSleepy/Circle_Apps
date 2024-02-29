@@ -9,7 +9,8 @@ export default new class FollewerService {
 
     async followUser( req: Request, res: Response): Promise<Response> {
         try {
-            const data = req.body
+            const id = req.params
+            const data = parseInt(id.id)
             const user_id= res.locals.loginSession.obj.id
 
             // console.log(data)
@@ -24,6 +25,8 @@ export default new class FollewerService {
             //         message: 'Invalid input. Please provide a valid user_id.'
             //     });
             // }
+            // console.log("user yg mau di follow",data)
+            // console.log("user login",user_id)
 
             const user = await this.UserRepository.findOne({
                 where: {
@@ -37,7 +40,7 @@ export default new class FollewerService {
 
             const userToFollow = await this.UserRepository.findOne({
                 where: {
-                    id: data.user_id
+                    id: data
                 },
             })
 
@@ -56,7 +59,7 @@ export default new class FollewerService {
             
 
             const isAlreadyFollowing = user.followings.some(
-                (followUser) => followUser.id === data.user_id
+                (followUser) => followUser.id === data
 
             );
 

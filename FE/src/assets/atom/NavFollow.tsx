@@ -33,6 +33,7 @@ export const NavFollow = () => {
               <TabPanel>
                 {follows?.map((items)=> (
                   <CardUserFollow
+                  key={items.id}
                   username={items?.username}
                   fullName={items?.fullName}
                   id={items.id}
@@ -45,6 +46,7 @@ export const NavFollow = () => {
               <TabPanel>
               {follows?.map((items)=> (
                   <CardUserFollow
+                  key={items.id}
                   username={items?.username}
                   fullName={items?.fullName}
                   id={items.id}

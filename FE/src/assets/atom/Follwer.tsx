@@ -4,6 +4,7 @@ import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react"
 // import Dummy from '../datas/dummy.json'
 // import { api } from "../libs/api"
 import { useGetFollows } from "../../feature/follows/hooks/useGetFollows"
+import { usePostFollows } from "../../feature/follows/hooks/usePostFollows"
 // interface Followers {
 //   id:number
 //   fullName:string
@@ -34,7 +35,8 @@ export const Follwer = () => {
     // useEffect(() => {
     //     followers()
     // },[])
-    const { follows } = useGetFollows()
+    const { follows, followers } = useGetFollows()
+    const { handleSubmit} = usePostFollows()
 
   return (
     <Box
@@ -60,6 +62,8 @@ export const Follwer = () => {
                 <Text>{items.username}</Text>
                 <Text color={'#686868'}>@{items.fullName}</Text>
             </Box>
+
+            {items?.isFollow ?  
             <Button 
             ml={'auto'} 
             mr={'-9px'}
@@ -68,11 +72,30 @@ export const Follwer = () => {
             bg={'none'}
             color={'white'}
             border={'1px solid '}
-            _hover={{ color:'black', bg:'white'}}>
+            _hover={{ color:'black', bg:'white'}}
+            onClick={()=> {handleSubmit(items.id),followers()}}>
 
-              {items?.isFollow ? 'Follows' : 'unfollows' }
+              unfollows
                 
             </Button>
+
+            :
+
+            <Button 
+            ml={'auto'} 
+            mr={'-9px'}
+            borderRadius={'20px'}
+            h={'30px'}
+            bg={'none'}
+            color={'white'}
+            border={'1px solid '}
+            _hover={{ color:'black', bg:'white'}}
+            onClick={()=> {handleSubmit(items.id),followers()}}>
+
+              follows
+                
+            </Button>
+            }
         </HStack>
         ))}
 
