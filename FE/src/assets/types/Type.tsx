@@ -55,6 +55,8 @@ export interface IProfile {
         description: string,
         photo_cover: string,
         photo_profile: string
-    }
+    },
+    isLoading: boolean,
+    isError:boolean
 
   }

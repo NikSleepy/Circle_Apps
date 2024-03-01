@@ -31,7 +31,6 @@ export const DetailThreads = () => {
             const response = await api.get(`/thread/${id}`)
             dispatch(STATE_THREAD_BY_ID(response.data.data))
             // setData(response.data.data)
-            
         } catch (error) {
             console.log(error)
         }
@@ -50,6 +49,7 @@ export const DetailThreads = () => {
     })
     // console.log(data);
     
+
 
   return (
     <Box>
@@ -129,6 +129,7 @@ export const DetailThreads = () => {
                     </Flex>
             </Box>
         </Box>
+
         <PostReplys/>
 
 

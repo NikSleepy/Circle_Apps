@@ -2,6 +2,8 @@ import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { api } from "../../../assets/libs/api"
+// import { useDispatch } from "react-redux"
+// import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
 
 interface ITypes {
     thread:number,
@@ -22,6 +24,7 @@ export const useReply = () => {
         content:"",
         file_reply: null
     })
+    // const dispatch = useDispatch()
 
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
         
@@ -35,16 +38,18 @@ export const useReply = () => {
     const handleSubmit = async ( e: React.FormEvent ) => {
         e.preventDefault();
         try {
-            await api.post('/reply/post', data, config)
+             await api.post('/reply/post', data, config)
             // console.log(data)
-
+            
             toast({
                 title:`success upload reply `,
                 duration:2000,
                 position:'top',
                 status:'success'
             })
-
+            // dispatch(STATE_THREAD_BY_ID())
+            // window.location.reload()
+            
 
         } catch (error) {
             toast({

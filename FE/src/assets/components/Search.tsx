@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
+import { Avatar, Box, Button, Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { BiArrowBack } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Text } from '@chakra-ui/react'
@@ -19,11 +19,14 @@ export const Search = () => {
             </Flex>
           </Link>
         <Flex>
-            <InputGroup m={'10px'} size={'lg'}>
+            <InputGroup m={'10px'} size={'lg'} gap={3}>
                 <InputLeftElement pointerEvents='none' >
                     <Avatar src="https://cdn.pixabay.com/photo/2020/10/11/19/51/cat-5646889_640.jpg" size={'sm'} />
                 </InputLeftElement>
                 <Input type='text' placeholder='Search' />
+                <Button
+                color={'revert-layer'}
+                >Search</Button>
             </InputGroup>
         </Flex>
 

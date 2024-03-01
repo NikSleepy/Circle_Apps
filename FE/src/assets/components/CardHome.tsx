@@ -3,24 +3,43 @@
 import { Box, Text } from '@chakra-ui/react'
 import { CardPost } from '../atom/CardThread';
 import { CreatePost } from '../atom/CreatePost';
+// import { useFecthThread } from '../../feature/threads/hooks/useFecthThread';
+// import { useDispatch } from 'react-redux';
+// import { api } from '../libs/api';
+// import { STATE_THREAD } from '../../store/rootReducer';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../store/type';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/type';
-import { useEffect } from 'react';
-import { useFecthThread } from '../../feature/threads/hooks/useFecthThread';
+import { useDispatch } from 'react-redux';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import { dataThreads } from '../../store/slice';
+import { useNavigate } from 'react-router-dom';
+import { userLogin } from '../../store/slice/UserSlice';
+
+
 
 
 
 export const CardHome = () => {
+    const navigate = useNavigate()
+
+    if( !sessionStorage.getItem('token')){
+        navigate('/login')
+    }
 
     // const [ post, setPost ] = useState<Thread[]>([]) 
-    // console.log(`first`, threads)
+
+    // const thread = useSelector((state:RootState) => state.thread)
+    // // // console.log(`first`, threads)
     // const dispatch = useDispatch()
     // const config = {
-        //     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
+    //         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
     // }
     // const getPost = async () => {
-        //     try {
-            //         const response = await api.get('/thread',config)
+    //         try {
+    //         const response = await api.get('/thread',config)
     //         dispatch(STATE_THREAD(response.data.data))
     //         // setPost(response.data.data)
     //         // console.log("ini dari card home",response.data.data);
@@ -30,21 +49,25 @@ export const CardHome = () => {
     //         console.log(error)
     //     }
     // }
-    // console.log(threads)
-    
+    const threads = useSelector((state:RootState) => state.thread.thread)
+    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+  
+    useEffect(() => {
+      dispatch(dataThreads())
+      dispatch(userLogin())
+    },[])
+    // console.log("cardHome",threads)
+    // const { getPost} = useFecthThread()
+    // useEffect(()=>{
+    //     getPost()
+    // },[])
     
     
     // function hitungPanjangArray<T>(arr: T[]): number {
         
-        //     return arr.length;
-        // }
-    const { getPost} = useFecthThread()
-    const threads = useSelector((state:RootState) => state.thread)
-  
-    
-    useEffect(()=>{
-        getPost();
-    },[getPost])
+    //         return arr.length;
+    //     }
+
   return (
         <Box
         // w={{ base:'100%', md:'100%', lg:'700px'}}

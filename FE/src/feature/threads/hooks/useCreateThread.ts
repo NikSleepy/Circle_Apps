@@ -1,6 +1,12 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { api } from "../../../assets/libs/api"
+import { useDispatch } from "react-redux"
+import { dataThreads } from "../../../store/slice"
+import { Action, ThunkDispatch } from "@reduxjs/toolkit"
+import { RootState } from "../../../store/type"
+
+
 
 interface ITypes {
     content: string,
@@ -13,6 +19,8 @@ export const useCreateThread = () => {
         content:"",
         image_thread:null
     })
+    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+    
 
     const token = sessionStorage.getItem('token')
     const config = {
@@ -32,7 +40,8 @@ export const useCreateThread = () => {
         try {
             const response = await api.post('/thread/post', data, config)
             // console.log("data nih dari useState:", data)
-
+            // dispatch(STATE_THREAD(CardHome))
+            dispatch(dataThreads())
             toast({
                 title:'success upload thread',
                 status:'success',

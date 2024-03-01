@@ -30,7 +30,9 @@ const intitialUser: IProfile = {
         description: "",
         photo_cover: "",
         photo_profile: ""
-    }
+    },
+    isLoading:false,
+    isError:false
 
 }
 
@@ -41,6 +43,12 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(userLogin.fulfilled, (state, action) => {
             state.data = action.payload
+        })
+        builder.addCase(userLogin.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(userLogin.rejected, (state) => {
+            state.isError = true
         })
     }
 })

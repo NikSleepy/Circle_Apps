@@ -2,7 +2,8 @@ import { useState } from "react"
 import { api } from "../../../assets/libs/api"
 import {  useToast } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
-// interface propsLogin { username:string, password:string }
+
+
 export const useLogin = () => {
     const navigate = useNavigate()
     const toast = useToast()
@@ -10,6 +11,8 @@ export const useLogin = () => {
         username:"",
         password:""
     })
+
+    
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -34,8 +37,7 @@ export const useLogin = () => {
             sessionStorage.setItem('token', response.token)
 
             if ( sessionStorage.getItem('token')) {
-                navigate('/')
-                
+                navigate('/') 
             }
 
             toast({
@@ -47,6 +49,8 @@ export const useLogin = () => {
                 position: 'top',
             
             })
+
+           
 
         } catch (error) {
             console.log(error)
