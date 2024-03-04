@@ -1,4 +1,4 @@
-import { Repository } from "typeorm"
+import { Not, Repository } from "typeorm"
 import { User } from "../entity/User"
 import { AppDataSource } from "../data-source"
 import { Request, Response } from "express";
@@ -160,7 +160,7 @@ export default new class FollewerService {
                     followers:true
                 }
             })
-            console.log("followers",user)
+            // console.log("followers",user)
 
             if (!user) {
                 return res.status(404).json({
@@ -168,16 +168,16 @@ export default new class FollewerService {
                 })
             }
 
-            const following = await this.UserRepository.find({
+            const followers = await this.UserRepository.find({
                 where: {
                     followers: { id:user_id }
                 },
             })
-            const followers = user.followers.map((item) => {
+            const follower = user.followers.map((item) => {
                                 
                 let a = false;
                 
-                following.map((data)=>{
+                followers.map((data)=>{
                     if(item.id === data.id){
                         a = true;
                     }
@@ -192,13 +192,38 @@ export default new class FollewerService {
             })
             return res.status(200).json({
                 code: 200,
-                data: followers 
+                data: follower
 
             })
         } catch ( errror ) {
             return res.status(500).json({
                 code: 500,
                 message: 'Internal server error in getFollowers service'
+            })
+        }
+    }
+
+    async getNotFollowings ( req: Request, res: Response ): Promise<Response> {
+        try {
+            const user_id = res.locals.loginSession.obj.id
+            const user = await this.UserRepository.find({
+                where:{
+                    // id:Not(user_id),
+                    followers:{  id: Not(user_id) }
+
+                }
+            })
+            // console.log()
+            
+            // const Alluser = await this.UserRepository.find()
+
+            return res.status(200).json({
+                message:'get Followings Success',
+                data:user
+            })
+        } catch (error) {
+            return res.status(400).json({
+                message:'get user not followings erorr'
             })
         }
     }

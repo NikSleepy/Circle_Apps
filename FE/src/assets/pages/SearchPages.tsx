@@ -1,6 +1,6 @@
 
 import { Layout } from '../layout/Layout'
-import { Search } from '../components/Search'
+import { Search } from '../../feature/search/components/Search'
 
 export const SearchPages = () => {
   return (

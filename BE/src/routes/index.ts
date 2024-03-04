@@ -33,6 +33,7 @@ router.post("/thread/like", Auth.Auth, LikeController.createLike)// create likes
 router.post("/user/following/:id", Auth.Auth, FollowConroller.followUser)// create following
 router.get("/followings", Auth.Auth, FollowConroller.getFollowings) // get following
 router.get("/followers", Auth.Auth, FollowConroller.getFollowers)// get followers
+router.get("/not/followings", Auth.Auth, FollowConroller.getNotFollowings)// get not followings
 
 
 export default router;

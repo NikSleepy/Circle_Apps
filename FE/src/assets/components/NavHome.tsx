@@ -58,7 +58,7 @@ const logout = () => {
 
                 </Link>
 
-                <Link to={'/search'} >
+                <Link to={'/myprofile'} >
                     <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
 
                     <CgProfile size={25} color='white'/>

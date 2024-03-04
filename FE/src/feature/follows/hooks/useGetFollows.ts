@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { api } from "../../../assets/libs/api"
+import { useDispatch } from "react-redux"
+import { STATE_USERALL } from "../../../store/rootReducer"
 
 interface Followers {
     id:number
@@ -12,6 +14,8 @@ interface Followers {
 export const useGetFollows = () => {
     const [ follows, setFollows ] = useState<Followers[]>([])
 
+    const dispatch = useDispatch()
+
     const token = sessionStorage.getItem('token')
     const config = {
       headers: { Authorization: `Bearer ${token}` }
@@ -21,6 +25,7 @@ export const useGetFollows = () => {
         const response = await api.get('/users', config)
         setFollows(response.data.data)
         // console.log(response.data.data)
+        dispatch(STATE_USERALL(response.data.data))
         
       } 
       catch (error) {
