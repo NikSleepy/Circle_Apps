@@ -60,3 +60,12 @@ export interface IProfile {
     isError:boolean
 
   }
+
+export interface IFollowers {
+    id:number
+    fullName:string
+    username:string
+    photo:string
+    followers:boolean
+
+  }

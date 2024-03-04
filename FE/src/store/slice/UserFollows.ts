@@ -4,8 +4,8 @@ interface IFollowers {
     id:number
     fullName:string
     username:string
-    photo_profile:string
-    isFollow:boolean
+    photo:string
+    followings:boolean
 
   }
 
@@ -22,8 +22,8 @@ export const SearchSlice = createSlice({
                     id:item.id,
                     username:item.username,
                     fullName:item.fullName,
-                    photo_profile:item.photo_profile,
-                    isFollow:item.isFollow
+                    photo_profile:item.photo,
+                    isFollow:item.followings
                 }
             })
             // console.log("slice",data)

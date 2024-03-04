@@ -35,6 +35,7 @@ export const Follwer = () => {
     // useEffect(() => {
     //     followers()
     // },[])
+    
     const { follows, followers } = useGetFollows()
     const { handleSubmit} = usePostFollows()
 

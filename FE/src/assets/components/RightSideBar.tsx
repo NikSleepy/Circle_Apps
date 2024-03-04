@@ -1,6 +1,6 @@
 
 import { Box } from '@chakra-ui/react'
-import { Follwer } from '../atom/Follwer'
+import { Follwer } from '../atom/SugestForYou'
 import { ProfileHome } from '../atom/ProfileHome'
 import { CreateDev } from '../atom/CreateDev'
 

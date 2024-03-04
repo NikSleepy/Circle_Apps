@@ -1,26 +1,17 @@
-import { Box, Flex, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
-import { BiArrowBack } from 'react-icons/bi'
-import { Link } from 'react-router-dom'
-import { CardUserFollow } from './CardUserFollow'
-import { useGetFollows } from '../../feature/follows/hooks/useGetFollows'
+import { Box, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Followings } from './Followings'
+import { Followers } from './Followers'
 
 
 export const NavFollow = () => {
-  const { follows } = useGetFollows()
+  // const { follows } = useGetFollows()
   // console.log( follows)
   return (
     <Box 
     w={'100%'}
     display={{ base: 'none',sm: 'none' , md:'block', lg:'block', xl:'block'}}
     >   
-          <Link to={'/'} >
-            <Flex p={'10px'} gap={3}  display={{ base: 'none',sm: 'none' , md:'flex', lg:'flex', xl:'flex'}}>
-                    <BiArrowBack  size={30}/>
-                    <Text fontSize={'xl'} fontWeight={'bold'}>Back</Text>
-            </Flex>
-          </Link>
-        
-   
+
           <Tabs variant={'unStyled'} align='center'  isFitted >
             <TabList>
               <Tab>Followings</Tab>
@@ -31,29 +22,14 @@ export const NavFollow = () => {
             bg={'#00b7f4'}/>
             <TabPanels>
               <TabPanel>
-                {follows?.map((items)=> (
-                  <CardUserFollow
-                  key={items.id}
-                  username={items?.username}
-                  fullName={items?.fullName}
-                  id={items.id}
-                  photo_profile={items.photo_profile}
-                  isFollow={items.isFollow}
-                  />
-                ))}
+
+                <Followings/>
                 
               </TabPanel>
               <TabPanel>
-              {follows?.map((items)=> (
-                  <CardUserFollow
-                  key={items.id}
-                  username={items?.username}
-                  fullName={items?.fullName}
-                  id={items.id}
-                  photo_profile={items.photo_profile}
-                  isFollow={items.isFollow}
-                  />
-                ))}
+
+                <Followers/>
+
               </TabPanel>
             </TabPanels>
 

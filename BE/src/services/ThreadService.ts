@@ -3,10 +3,12 @@ import { Thread } from "../entity/Thread"
 import { AppDataSource } from "../data-source"
 import { Request, Response } from "express"
 import { array } from "joi"
+import { Like } from "../entity/Like"
 
 
 export default new class ThreadService {
     private readonly threadRepository: Repository<Thread> = AppDataSource.getRepository(Thread)
+    private readonly likeRepository: Repository<Like> = AppDataSource.getRepository(Like)
     
     async createThread( data:object ) {
         try {
@@ -49,17 +51,37 @@ export default new class ThreadService {
                 }
                 ,
                 likes: {
-                    id: true
+                    id: true,
+                    thread:{
+                        id:true
+                    }
                     
                 },
                 
                 
             }
             });
+            const like = await this.likeRepository.find({
+                where:user,
+                relations: {
+                    thread: true
+                }
+            })
+            // console.log(like)
 
-            // console.log(user)
              
             const Threads = getThread.map((thread) => {
+                let fate = false;
+                // console.log("thread",thread.id)
+                like.map((items) => {
+                    // console.log("likes",items?.thread?.id)
+                    
+                    if (thread.id === items.thread.id ){
+                        fate = true;
+                    }
+                    
+                })
+                
 
                 return {
                     id: thread.id,
@@ -68,7 +90,8 @@ export default new class ThreadService {
                     image_thread: thread.image_thread,
                     user: thread.user,
                     numberOfReply: thread.reply.length,
-                    likes: thread.likes.length
+                    likes: thread.likes.length,
+                    isLikes: fate
                 }
             })
 

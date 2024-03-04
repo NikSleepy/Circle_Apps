@@ -1,19 +1,38 @@
 import { Avatar, Box, Button, HStack, Text } from '@chakra-ui/react'
+import { useGetFollowings } from '../../feature/followings/hooks/useGetFollowings'
+import { usePostFollows } from '../../feature/follows/hooks/usePostFollows'
+import { useGetFollowers } from '../../feature/followers/hooks/useGetFollowers'
 interface Followers {
     id:number
     fullName:string
     username:string
-    photo_profile:string
-    isFollow:boolean
+    photo:string
+    followings:boolean
   }
 
 export const CardUserFollow = (props:Followers) => {
+  const {  followers } = useGetFollowings()
+  const { handleGet} = useGetFollowers()
+  const { handleSubmit } = usePostFollows()
+  // console.log("dari followings",props)
+
+  const handleFollowButtonClick = async () => {
+    try {
+        await handleSubmit(props.id); 
+         handleGet();
+         followers(); // panggil refetch setelah tindakan berhasil dilakukan
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+  console.log("card user",props.followings, props.username)
 
 
   return (
     <HStack my={4} px={5}>
         <Avatar
-        src={`${props.photo_profile}`}
+        src={`${props.photo}`}
         size={'md'}
         />
 
@@ -26,7 +45,7 @@ export const CardUserFollow = (props:Followers) => {
                 </Box>
             </Box>
 
-            {props?.isFollow ?  
+ 
             <Button 
             ml={'auto'} 
             mr={'-9px'}
@@ -35,28 +54,14 @@ export const CardUserFollow = (props:Followers) => {
             bg={'none'}
             color={'white'}
             border={'1px solid '}
-            _hover={{ color:'black', bg:'white'}}>
+            _hover={{ color:'black', bg:'white'}}
+            onClick={handleFollowButtonClick}>
 
-              unfollows
+              {props?.followings ? "unfollows" : "follow"}
                 
             </Button>
 
-            :
-            
-            <Button 
-            ml={'auto'} 
-            mr={'-9px'}
-            borderRadius={'20px'}
-            h={'30px'}
-            bg={'none'}
-            color={'white'}
-            border={'1px solid '}
-            _hover={{ color:'black', bg:'white'}}>
 
-              follows
-                
-            </Button>
-            }
     </HStack>
   )
 }
