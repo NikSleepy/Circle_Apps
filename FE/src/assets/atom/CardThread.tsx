@@ -1,9 +1,9 @@
 
 import { Box, Flex, Avatar, Text, Image, Button } from '@chakra-ui/react'
-import { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { LiaComment } from "react-icons/lia";
 import { Link } from 'react-router-dom';
+import { useThreadLikes } from '../../feature/threads/hooks/useThreadLikes';
 
 interface Thread {
     id:number,
@@ -16,19 +16,15 @@ interface Thread {
     photo_profile:string,
     reply:number,
     likes:number,
-
+    isLikes:boolean
 
     }
 
 
 export const CardPost = (  items  : Thread ) => {
-    const [ like, setLike ] = useState<boolean>(false)
+    // const [ like, setLike ] = useState<boolean>(false)
     
-    // console.log(items);
-    
-    // console.log(items?.image_thread);
-    
-    
+    const { handleLikes } = useThreadLikes()
     
     const convertTime = ( time:string ) => {
         const date = new Date(time)
@@ -36,13 +32,13 @@ export const CardPost = (  items  : Thread ) => {
         return timeConvert
     }
 
-    const follow = () => {
-        if (!like){
-            setLike(true)
-        } else {
-            setLike(false)
-        }
-    }
+    // const follow = () => {
+    //     if (!like){
+    //         setLike(true)
+    //     } else {
+    //         setLike(false)
+    //     }
+    // }
 
    
     
@@ -87,8 +83,8 @@ export const CardPost = (  items  : Thread ) => {
 
                     <Flex mt='7px' ml={-19}>
                     
-                        <Button  colorScheme='#262626' onClick={follow}>
-                        { like ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
+                        <Button  colorScheme='#262626' onClick={()=> handleLikes(items.id)}>
+                        { items.isLikes ? <FaHeart size={20} color='red' /> : <FaHeart size={20} /> }
                         <Text color='#909090' ml={'5px'} mr={'20px'}>{items?.likes} </Text>
                         </Button>
                         <Button colorScheme='#262626'>

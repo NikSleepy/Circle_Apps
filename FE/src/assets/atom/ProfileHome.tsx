@@ -8,52 +8,16 @@ import { useDispatch } from "react-redux";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { userLogin } from "../../store/slice/UserSlice";
 
-// interface Profile {
-//   id: number,
-//   username: string,
-//   fullName: string,
-//   password: string,
-//   email: string,
-//   description: string,
-//   photo_cover: string,
-//   photo_profile: string
-// }
+
 export const ProfileHome = () => {
   const boxBg = useColorModeValue("#262626 !important", "#111c44 !important");
   const mainText = useColorModeValue("white", "white");
   const secondaryText = useColorModeValue("#686868", "#686868");
 
-  // const [ profile, setProfile ] = useState<Profile>()
 
-  // const user = localStorage.getItem('user')
-//   const token = sessionStorage.getItem('token')
-//   // console.log(token);
-  
-//   const config = {
-//     headers: { Authorization: `Bearer ${token} `}
-// }
-  
-//   const getProfile = async () => {
-//     try {
-//       const response = await api.get(`/users/client`,config)
-//       // console.log("profile",response.data);
-      
-//       setProfile(response.data)
-      
-//     } catch (error) {
-//       console.log(error)
-//     }
-    
-//   }
-
-//   React.useEffect (() => {
-//     getProfile();
-    
-//   },[])
   
   const user = useSelector((state: RootState) => state.user.data)
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
-  
   useEffect(() => {
     dispatch(userLogin())
   },[])
@@ -139,9 +103,9 @@ export const ProfileHome = () => {
           </Text>
 
           <HStack>
-            <Text>100</Text>
+            <Text>{user.followings}</Text>
             <Text color={secondaryText} fontSize='sm'>Following</Text>
-            <Text>300</Text>
+            <Text>{user.followers}</Text>
             <Text color={secondaryText} fontSize='sm'>Followers</Text>
           </HStack>
         </Flex>

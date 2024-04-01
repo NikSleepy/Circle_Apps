@@ -24,11 +24,8 @@ export default new class LikeService {
                      }
                  }
              })
-            //  console.log("like services",getUser)
-            // console.log('data', data.thread)
-            // console.log("user_id",user_id)
 
-             if ( getUser){
+             if ( getUser ){
                 await this.likeRepository.delete(getUser)
                 return res.status(200).json({message: "Success to delete like"})
              }

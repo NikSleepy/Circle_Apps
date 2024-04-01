@@ -1,39 +1,12 @@
 import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
 import { SlPicture } from 'react-icons/sl'
 import { useReply } from '../../feature/threads/hooks/useReply'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/type'
 
 export const PostReplys = () => {
-    // const {id} = useParams()
-    
-    // const [ post, setPost ] = React.useState<PostReplysProps>({
-    //     thread: Number(id),
-    //     content: '',
-    //     image: null,
-    // })
 
-    
-    // // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // //     const { name, value } = e.target;
-    // //     setPost(( prevPost ) => ({ ...prevPost, [name]:value }))
-    // // }
-
-    // const auth = sessionStorage.getItem('token');
-
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     try {
-            
-    //      await api.post('/reply/post', post, {
-    //         headers: {
-    //             Authorization: `Bearer ${auth}`
-    //         }
-    //     })
-    //     // console.log(response);
-
-    //     } catch ( error ) {
-    //         console.log(error);
-    //     }
-    // }
+    const user = useSelector((state:RootState)=> state.user.data)
 
     const { handleChange, handleChangeFile, handleSubmit } = useReply();
 
@@ -46,7 +19,7 @@ export const PostReplys = () => {
         w={'100%'}
         borderBottom={'1px solid #b2b2b2'}>
         <Avatar
-            src="https://cdn.pixabay.com/photo/2020/10/11/19/51/cat-5646889_640.jpg"/>
+            src={user.photo_profile}/>
         <Input 
         name='content' 
         type="text" 

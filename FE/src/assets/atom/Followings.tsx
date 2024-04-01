@@ -1,19 +1,19 @@
 
-import { useGetFollowings } from '../../feature/followings/hooks/useGetFollowings'
+// import { useGetFollowings } from '../../feature/followings/hooks/useGetFollowings'
 import { Box} from '@chakra-ui/react'
 import { CardUserFollow } from './CardUserFollow'
-// import { useSelector } from 'react-redux'
-// import { RootState } from '../../store/type'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/type'
+// import { useEffect } from 'react'
 
 export const Followings = () => {
-    const {  followers, followings  } = useGetFollowings()
-    // const followings = useSelector((state:RootState) => state.follows)
+    // const {  followers } = useGetFollowings()
+    const followings = useSelector((state:RootState) => state.follow)
     // const data = useSelector((state:RootState) => state.follows)
     // console.log("data di folow redux", followings)  
-    useEffect(() => {
-        followers()
-    },[]);
+    // useEffect(() => {
+    //     followers()
+    // },[followings]);
     
   return (
     <Box>
@@ -24,8 +24,8 @@ export const Followings = () => {
             id={items.id}
             username={items.username}
             fullName={items.fullName}
-            photo={items.photo}
-            followings={items.followings}/>
+            photo_profile={items.photo_profile}
+            isFollow={items.isFollow}/>
             
         ))}
     </Box>

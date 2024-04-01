@@ -1,43 +1,18 @@
-import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react"
-// import { useEffect, useState } from "react"
-// import { DataPost } from "../types/Type"
-// import Dummy from '../datas/dummy.json'
-// import { api } from "../libs/api"
+import { Box,Text } from "@chakra-ui/react"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/type"
+import { useEffect } from "react"
 import { useGetFollows } from "../../feature/follows/hooks/useGetFollows"
-import { usePostFollows } from "../../feature/follows/hooks/usePostFollows"
-// interface Followers {
-//   id:number
-//   fullName:string
-//   username:string
-//   photo_profile:string
-//   replies:string[]
-//   likes:string[]
-// }
+import { CardUserFollow } from "./CardUserFollow"
+
 export const Follwer = () => {
-    // const [ follows, setFollows ] = useState<Followers[]>([])
 
-    // const token = sessionStorage.getItem('token')
-    // const config = {
-    //   headers: { Authorization: `Bearer ${token}` }
-    // }
-    // const followers = async () => {
-    //   try {
-    //     const response = await api.get('/users', config)
-    //     setFollows(response.data.data)
-        
-    //   } 
-    //   catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // // console.log(follows)
-
-    // useEffect(() => {
-    //     followers()
-    // },[])
+    const follows = useSelector((state : RootState)=> state.follows ) 
+    const { follow } = useGetFollows()
     
-    const { follows, followers } = useGetFollows()
-    const { handleSubmit} = usePostFollows()
+    useEffect(()=> {
+      follow()
+    },[])
 
   return (
     <Box
@@ -53,56 +28,17 @@ export const Follwer = () => {
             
         >Suggested for you</Text>
 
-        { follows?.map(( items ) => (
-            <HStack my={4} key={items.id}>
-            <Avatar
-            src={`${items.photo_profile}`}
-            size={'md'}
-            />
-            <Box fontSize={'sm'}>
-                <Text>{items.username}</Text>
-                <Text color={'#686868'}>@{items.fullName}</Text>
-            </Box>
-
-            {items?.isFollow ?  
-            <Button 
-            ml={'auto'} 
-            mr={'-9px'}
-            borderRadius={'20px'}
-            h={'30px'}
-            bg={'none'}
-            color={'white'}
-            border={'1px solid '}
-            _hover={{ color:'black', bg:'white'}}
-            onClick={()=> {handleSubmit(items.id),followers()}}>
-
-              unfollows
-                
-            </Button>
-
-            :
-
-            <Button 
-            ml={'auto'} 
-            mr={'-9px'}
-            borderRadius={'20px'}
-            h={'30px'}
-            bg={'none'}
-            color={'white'}
-            border={'1px solid '}
-            _hover={{ color:'black', bg:'white'}}
-            onClick={()=> {handleSubmit(items.id),followers()}}>
-
-              follows
-                
-            </Button>
-            }
-        </HStack>
+        {follows.map((items, index )=> (
+          <CardUserFollow
+          key={index}
+          id={items.id}
+          username={items.username}
+          fullName={items.fullName}
+          photo_profile={items.photo_profile}
+          isFollow={items.isFollow}
+          />
         ))}
 
-        
-        
-        
     </Box>
   )
 }

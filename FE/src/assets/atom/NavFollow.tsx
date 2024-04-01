@@ -3,7 +3,7 @@ import { Followings } from './Followings'
 import { Followers } from './Followers'
 
 
-export const NavFollow = () => {
+export const  NavFollow = () => {
   // const { follows } = useGetFollows()
   // console.log( follows)
   return (
@@ -11,13 +11,13 @@ export const NavFollow = () => {
     w={'100%'}
     display={{ base: 'none',sm: 'none' , md:'block', lg:'block', xl:'block'}}
     >   
-
           <Tabs variant={'unStyled'} align='center'  isFitted >
             <TabList>
               <Tab>Followings</Tab>
               <Tab>Followers</Tab>
             </TabList>
             <TabIndicator
+            w={'50%'}
             h={'2px'}
             bg={'#00b7f4'}/>
             <TabPanels>

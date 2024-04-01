@@ -2,37 +2,48 @@ import { Avatar, Box, Button, HStack, Text } from '@chakra-ui/react'
 import { useGetFollowings } from '../../feature/followings/hooks/useGetFollowings'
 import { usePostFollows } from '../../feature/follows/hooks/usePostFollows'
 import { useGetFollowers } from '../../feature/followers/hooks/useGetFollowers'
+import { useGetFollows } from '../../feature/follows/hooks/useGetFollows'
+import { useGetAllUser } from '../../feature/search/hooks/useGetAllUser'
+import { useDispatch } from 'react-redux'
+import { Action, ThunkDispatch } from '@reduxjs/toolkit'
+import { RootState } from '../../store/type'
+import { userLogin } from '../../store/slice/UserSlice'
 interface Followers {
     id:number
     fullName:string
     username:string
-    photo:string
-    followings:boolean
+    photo_profile:string
+    isFollow:boolean
   }
 
 export const CardUserFollow = (props:Followers) => {
   const {  followers } = useGetFollowings()
   const { handleGet} = useGetFollowers()
   const { handleSubmit } = usePostFollows()
+  const { follow } = useGetFollows()
+  const { searchFollow } = useGetAllUser()
   // console.log("dari followings",props)
 
+  const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+  
+  
   const handleFollowButtonClick = async () => {
     try {
         await handleSubmit(props.id); 
-         handleGet();
-         followers(); // panggil refetch setelah tindakan berhasil dilakukan
+        follow();
+        handleGet();
+        searchFollow();
+        dispatch(userLogin());
+        followers(); // panggil refetch setelah tindakan berhasil dilakukan
     } catch (error) {
         console.log(error);
     }
 }
 
-  console.log("card user",props.followings, props.username)
-
-
   return (
     <HStack my={4} px={5}>
         <Avatar
-        src={`${props.photo}`}
+        src={`${props.photo_profile}`}
         size={'md'}
         />
 
@@ -57,7 +68,7 @@ export const CardUserFollow = (props:Followers) => {
             _hover={{ color:'black', bg:'white'}}
             onClick={handleFollowButtonClick}>
 
-              {props?.followings ? "unfollows" : "follow"}
+              {props?.isFollow ? "unfollows" : "follow"}
                 
             </Button>
 

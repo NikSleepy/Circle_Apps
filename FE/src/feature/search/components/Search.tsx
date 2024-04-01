@@ -5,17 +5,23 @@ import { Text } from '@chakra-ui/react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/type'
 import { CardUserFollow } from '../../../assets/atom/CardUserFollow'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useGetAllUser } from '../hooks/useGetAllUser'
 
 export const Search = () => {
   const [ state, setState ] = useState('')
-  const follows = useSelector((state:RootState) => state.follows)
+  const {searchFollow } = useGetAllUser()
+  const follows = useSelector((state:RootState) => state.userAll)
 
   const filter = state ? follows?.filter((data) => data.username.toLowerCase().includes(state.toLowerCase())): follows;
-
+  // console.log(filter)
   const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value)
   }
+
+  useEffect(()=> {
+    searchFollow()
+  },[])
   
   return (
     <Box
@@ -38,6 +44,7 @@ export const Search = () => {
                 </InputLeftElement>
                 <Input type='text' placeholder='Search'  onChange={handleChange}/>
                 <Button
+                rounded={15}
                 color={'revert-layer'}
                 >Search</Button>
             </InputGroup>

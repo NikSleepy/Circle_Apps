@@ -123,8 +123,8 @@ export default new class FollewerService {
                     id: item.id,
                     username: item.username,
                     fullName: item.fullName,
-                    photo: item.photo_profile,
-                    followings:a
+                    photo_profile: item.photo_profile,
+                    isFollow:a
                 }
             })
 
@@ -186,8 +186,8 @@ export default new class FollewerService {
                     id:item.id,
                     username: item.username,
                     fullName: item.fullName,
-                    photo: item.photo_profile,
-                    followers:a
+                    photo_profile: item.photo_profile,
+                    isFollow:a
                 }
             })
             return res.status(200).json({

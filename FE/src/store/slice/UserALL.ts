@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-
 interface IFollowers {
     id:number
     fullName:string
@@ -10,14 +9,14 @@ interface IFollowers {
 
   }
 
-  const initialFollowState: IFollowers[] = []
+const initialUserAllState: IFollowers[] = []
 
-  export const FollowSlice = createSlice({
-    name:'follow',
-    initialState:initialFollowState,
+export const UserAll = createSlice({
+    name:'userAll',
+    initialState:initialUserAllState,
     reducers: {
-        STATE_FOLLOW: ( _, action ) => {
-            const data: IFollowers[] = action.payload.map((items:IFollowers)=> {
+        STATE_USER_ALL: (_, action )=> {
+            const data: IFollowers[] = action.payload.map((items: IFollowers)=> {
                 return {
                     id:items.id,
                     username:items.username,
@@ -26,8 +25,7 @@ interface IFollowers {
                     isFollow:items.isFollow
                 }
             })
-
             return data
         }
     }
-  }) 
+})

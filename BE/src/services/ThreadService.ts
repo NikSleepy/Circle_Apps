@@ -61,25 +61,30 @@ export default new class ThreadService {
                 
             }
             });
+
             const like = await this.likeRepository.find({
-                where:user,
-                relations: {
-                    thread: true
+                where:{
+                    user:{
+                        id:user
+                    }
+                },
+                relations:["thread","user"],
+                select:{
+                    id:true,
+                    thread:{
+                        id:true
+                    },
                 }
             })
-            // console.log(like)
 
              
             const Threads = getThread.map((thread) => {
                 let fate = false;
-                // console.log("thread",thread.id)
+
                 like.map((items) => {
-                    // console.log("likes",items?.thread?.id)
-                    
-                    if (thread.id === items.thread.id ){
+                    if (thread?.id === items?.thread?.id){
                         fate = true;
                     }
-                    
                 })
                 
 

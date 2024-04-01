@@ -5,6 +5,7 @@ export interface IThread {
     created_at:string,
     numberOfReply:number,
     likes:number,
+    isLikes:boolean,
     user:{
         id:number,
         username:string,
@@ -50,11 +51,12 @@ export interface IProfile {
         id: number,
         username: string,
         fullName: string,
-        password: string,
         email: string,
         description: string,
         photo_cover: string,
-        photo_profile: string
+        photo_profile: string,
+        followers:number,
+        followings:number
     },
     isLoading: boolean,
     isError:boolean

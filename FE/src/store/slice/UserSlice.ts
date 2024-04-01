@@ -12,8 +12,7 @@ export const userLogin = createAsyncThunk(
     async () => {
         try {
             const response = await API.get('users/client', config)
-            
-            return response.data
+            return response.data[0]
         } catch (error) {
             console.log(error)
         }
@@ -25,11 +24,12 @@ const intitialUser: IProfile = {
         id: 0,
         username: "",
         fullName: "",
-        password: "",
         email: "",
         description: "",
         photo_cover: "",
-        photo_profile: ""
+        photo_profile: "",
+        followers:0,
+        followings:0
     },
     isLoading:false,
     isError:false

@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import { CardUserFollow } from './CardUserFollow'
 import { Box } from '@chakra-ui/react'
-import { useGetFollowers } from '../../feature/followers/hooks/useGetFollowers'
+// import { useGetFollowers } from '../../feature/followers/hooks/useGetFollowers'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/type'
 
 export const Followers = () => {
-    
+    const followers = useSelector((state: RootState)=> state.followers)
   
-    const { followers, handleGet } = useGetFollowers()
-    console.log("di followers", followers)
-    useEffect(() => {
-        handleGet()
-    },[])
+    // const { handleGet } = useGetFollowers()
+    // console.log("di followers", followers)
+    // useEffect(() => {
+    //     handleGet()
+    // },[followers])
+
   return (
     <Box>
       {/* <Text>bang</Text> */}
@@ -20,8 +23,8 @@ export const Followers = () => {
             id={items.id}
             username={items.username}
             fullName={items.fullName}
-            photo={items.photo}
-            followings={items.followers}/>
+            photo_profile={items.photo_profile}
+            isFollow={items.isFollow}/>
             
         ))}
     </Box>

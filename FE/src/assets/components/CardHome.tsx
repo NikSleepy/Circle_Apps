@@ -16,7 +16,6 @@ import { useDispatch } from 'react-redux';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { dataThreads } from '../../store/slice';
 import { useNavigate } from 'react-router-dom';
-import { userLogin } from '../../store/slice/UserSlice';
 
 
 
@@ -29,44 +28,13 @@ export const CardHome = () => {
         navigate('/login')
     }
 
-    // const [ post, setPost ] = useState<Thread[]>([]) 
-
-    // const thread = useSelector((state:RootState) => state.thread)
-    // // // console.log(`first`, threads)
-    // const dispatch = useDispatch()
-    // const config = {
-    //         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')} `}
-    // }
-    // const getPost = async () => {
-    //         try {
-    //         const response = await api.get('/thread',config)
-    //         dispatch(STATE_THREAD(response.data.data))
-    //         // setPost(response.data.data)
-    //         // console.log("ini dari card home",response.data.data);
-    
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
     const threads = useSelector((state:RootState) => state.thread.thread)
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
-  
+
     useEffect(() => {
       dispatch(dataThreads())
-      dispatch(userLogin())
     },[])
-    // console.log("cardHome",threads)
-    // const { getPost} = useFecthThread()
-    // useEffect(()=>{
-    //     getPost()
-    // },[])
-    
-    
-    // function hitungPanjangArray<T>(arr: T[]): number {
-        
-    //         return arr.length;
-    //     }
+ 
 
   return (
         <Box
@@ -111,8 +79,8 @@ export const CardHome = () => {
                     photo_profile={data?.user?.photo_profile}
                     reply={data?.numberOfReply}
                     likes={data?.likes}
+                    isLikes={data?.isLikes}
                      />
-                     
                      
                 </Box>
             ) 

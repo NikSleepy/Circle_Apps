@@ -39,8 +39,8 @@ export const useCreateThread = () => {
         e.preventDefault();
         try {
             const response = await api.post('/thread/post', data, config)
-            // console.log("data nih dari useState:", data)
-            // dispatch(STATE_THREAD(CardHome))
+            console.log("data nih dari useCreatThreads", response)
+
             dispatch(dataThreads())
             toast({
                 title:'success upload thread',
@@ -48,7 +48,7 @@ export const useCreateThread = () => {
                 duration:2000,
                 position:'top'
             })
-            return response
+            
         } catch (error) {
             toast({
                 title:`eror in post ${error}`,

@@ -13,7 +13,8 @@ const router = express.Router()
 router.post("/register", AuthController.register)//mengirim data register / create akun
 router.post("/login", AuthController.login)// mengirim data untuk di cek oleh BE ada usernya atau tidak
 
-router.get("/users",Auth.Auth, UserController.getUsers)// mendapat semua data user
+router.get("/users/all", Auth.Auth, UserController.getUserAll)// mendapat user semua user
+router.get("/users",Auth.Auth, UserController.getUsers)// mendapat data user yang belum di follow
 router.get("/users/client",Auth.Auth, UserController.userLogin)// mendapatkan data user login
 router.get("/users/:id", UserController.getUserById)// mengambil 1 data user by id
 router.put("/users/update/:id", UserController.updateUser)// mengupdate data user sesuai id

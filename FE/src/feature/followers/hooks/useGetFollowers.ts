@@ -1,10 +1,11 @@
-import  { useEffect, useState } from 'react'
-import { IFollowers } from '../../../assets/types/Type'
+import { useDispatch } from 'react-redux'
 import { api } from '../../../assets/libs/api'
+import { STATE_FOLLOWERS } from '../../../store/rootReducer'
+import { useEffect } from 'react'
+
 
 export const useGetFollowers = () => {
-    const [ followers, setFollowers ] = useState<IFollowers[]>([])
-
+    const dispatch = useDispatch()
     const token = sessionStorage.getItem('token')
     const config = {
       headers: { Authorization: `Bearer ${token}` }
@@ -13,19 +14,20 @@ export const useGetFollowers = () => {
         try {
             
             const response = await api.get('/followers',config)
-            setFollowers(response.data.data)
-            console.log('folowers', followers)
+            // setFollowers(response.data.data)
+            dispatch(STATE_FOLLOWERS(response.data.data))
+            // console.log('folowers', followers)
         } catch (error) {
             console.log("eror get followers")
         }
 
     }
-    useEffect(() => {
-        handleGet
-    },[])
-  return {
-    followers,
-    handleGet
 
+    useEffect(()=> {
+      handleGet()
+    }, [])
+
+  return {
+    handleGet
   }
 }
