@@ -24,6 +24,7 @@ router.post("/thread/post",Auth.Auth, UploadFiles.upload('image_thread'), Thread
 router.get("/thread",Auth.Auth, ThreadController.getThreads)// get all thred
 router.get("/thread/:id",Auth.Auth, ThreadController.getThreadById)// get thread by id
 router.delete("/thread/delete/:id", ThreadController.deleteThread) // delete thread
+router.get('/thread/user/byid', Auth.Auth, ThreadController.getAllThreadById)// get thread by user id
 
 router.post("/reply/post", Auth.Auth, ReplyController.createReplies)// post comment
 router.get("/reply", ReplyController.getAllReplies)// get comment

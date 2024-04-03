@@ -22,9 +22,9 @@ export default new class ThreadService {
             throw error 
         }
     }
+
     async getAllThread( req: Request, res: Response ):Promise<Response> {
         try {
-            // const getThread = await this.threadRepository.createQueryBuilder("thread").getMany();
             const user = res.locals.loginSession.obj.id
             const getThread = await this.threadRepository.find({
                 order: { created_at: "DESC" },
@@ -203,7 +203,89 @@ export default new class ThreadService {
         }
     }
 
+    async getAllThreadById( req:Request, res: Response):Promise<Response> {
 
+        try {
+            const user_id: number = res.locals.loginSession.obj.id
+            const thread = await this.threadRepository.find({
+                order: { created_at: "DESC" },
+                where:{
+                    user:{
+                        id:  user_id
+                    }
+                },
+                relations:['user','likes','reply'],
+                select:{
+                    user:{
+                        id:true,
+                        username:true,
+                        photo_profile:true,
+                        fullName:true
+                    },
+                    likes:{
+                        id:true,
+                        user:{
+                            username:true
+                        }
+                    },
+                    reply:{
+                        id:true,
+                        content:true
+                    }
+
+                }
+            })
+
+            const like = await this.likeRepository.find({
+                where:{
+                    user:{
+                        id:user_id
+                    }
+                },
+                relations:["thread","user"],
+                select:{
+                    id:true,
+                    thread:{
+                        id:true
+                    },
+                }
+            })
+
+            const Threads = thread.map((thread) => {
+                let fate = false;
+
+                like.map((items) => {
+                    if (thread?.id === items?.thread?.id){
+                        fate = true;
+                    }
+                })
+                
+
+                return {
+                    id: thread.id,
+                    content: thread.content,
+                    created_at: thread.created_at,
+                    image_thread: thread.image_thread,
+                    user: thread.user,
+                    numberOfReply: thread.reply.length,
+                    likes: thread.likes.length,
+                    isLikes: fate
+                }
+            })
+
+
+            return res.status(200).json({
+                message:"success get Thread by user id",
+                data:Threads
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                massage:"error to get Thread by user id",
+                error:error
+            })
+        }
+    }
 
     async deleteThread( id: number ) {
         try {
@@ -217,6 +299,5 @@ export default new class ThreadService {
             throw error
         }
     }
-
 
 }

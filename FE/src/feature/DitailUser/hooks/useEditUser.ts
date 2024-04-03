@@ -1,8 +1,8 @@
 // import React from 'react
 
 import { useState } from "react"
-import { API } from "../../../assets/libs/api"
-import { IEditPhotoProfile, IEditUser } from "../../../assets/types/Type"
+import { API } from "../../../libs/api"
+import { IEditPhotoProfile, IEditUser } from "../../../types/Type"
 import { RootState } from "../../../store/type"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"

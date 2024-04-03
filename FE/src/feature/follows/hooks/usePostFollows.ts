@@ -1,5 +1,5 @@
 import { useToast } from "@chakra-ui/react"
-import { api } from "../../../assets/libs/api";
+import { api } from "../../../libs/api";
 
 
 

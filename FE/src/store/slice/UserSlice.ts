@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { api as API} from "../../assets/libs/api"
-import { IProfile } from "../../assets/types/Type"
+import { api as API} from "../../libs/api"
+import { IProfile } from "../../types/Type"
 
 
 const config = {

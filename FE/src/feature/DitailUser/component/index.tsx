@@ -1,9 +1,9 @@
 import { Avatar, Box, Button, Center, Flex, HStack, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/type';
-import { Follows } from '../../../assets/components/Follows';
-import { ButtonBack } from '../../../assets/atom/ButtonBack';
+import { ButtonBack } from '../../../components/ButtonBack';
 import { useNavigate } from 'react-router-dom';
+import { ContentDetail } from './ContentDetail';
 
 export const MyProfile = () => {
     const boxBg = useColorModeValue("#262626 !important", "#111c44 !important");
@@ -95,10 +95,9 @@ export const MyProfile = () => {
           </HStack>
 
 
-          <Follows/>
-
           
         </Flex>
+          <ContentDetail/>
 
        
   </Box>

@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { api } from "../../../assets/libs/api"
+import { api } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
 // import { useDispatch } from "react-redux"

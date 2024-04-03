@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { api } from "../../../assets/libs/api"
+import { api } from "../../../libs/api"
 import {  useToast } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 

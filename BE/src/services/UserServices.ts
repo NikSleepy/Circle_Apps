@@ -174,9 +174,7 @@ export default new class UserService {
     async updateUser( data: object, id: string) {
         try {
             const id_string = { id : id}
-            console.log(data, id_string)
             const updateUser = await this.UserRepository.createQueryBuilder().update(User).set(data).where(id_string).execute();
-            console.log('success', updateUser)
             return {
                 message: "Success to update user",
                 data: updateUser

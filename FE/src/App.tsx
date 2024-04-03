@@ -2,14 +2,14 @@
 
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import { Register } from './assets/pages/Register'
-import { Login } from './assets/pages/Login'
-import { SearchPages } from './assets/pages/SearchPages'
-import { Home } from './assets/pages/Home'
-import { FollowPages } from './assets/pages/FollowPages'
-import { DetailThreadPages } from './assets/pages/DetailThreadPages'
-import { DetailUserLogin } from './assets/pages/DetailUserLogin'
-import { EditUserPages } from './assets/pages/EditUserPages'
+import { Register } from './feature/auth/component/Register'
+import { Login } from './feature/auth/component/Login'
+import { SearchPages } from './pages/SearchPages'
+import { Home } from './pages/Home'
+import { FollowPages } from './pages/FollowPages'
+import { DetailThreadPages } from './pages/DetailThreadPages'
+import { DetailUserLogin } from './pages/DetailUserLogin'
+import { EditUserPages } from './pages/EditUserPages'
 
 
 function App() {

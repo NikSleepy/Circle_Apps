@@ -30,7 +30,6 @@ export default new class ThreadController {
     }
     
     getThreads( req: Request, res: Response ) {
-
         ThreadService.getAllThread(req,res)
 
     }
@@ -44,6 +43,10 @@ export default new class ThreadController {
         } catch (erorr) {
             throw erorr
         }
+    }
+
+    async getAllThreadById(req:Request, res:Response){
+        ThreadService.getAllThreadById( req, res)
     }
 
     async deleteThread( req: Request, res: Response ):Promise<Response> {

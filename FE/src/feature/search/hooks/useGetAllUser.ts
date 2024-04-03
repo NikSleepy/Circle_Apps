@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { api } from '../../../assets/libs/api'
+import { api } from '../../../libs/api'
 import { STATE_USER_ALL } from '../../../store/rootReducer'
 
 export const useGetAllUser = () => {

@@ -1,5 +1,5 @@
 // import { useEffect } from "react"
-import { api } from "../../../assets/libs/api"
+import { api } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { STATE_USERALL } from "../../../store/rootReducer"
 

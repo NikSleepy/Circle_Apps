@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
-import { api } from "../../../assets/libs/api"
+import { api } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { dataThreads } from "../../../store/slice"
 import { Action, ThunkDispatch } from "@reduxjs/toolkit"

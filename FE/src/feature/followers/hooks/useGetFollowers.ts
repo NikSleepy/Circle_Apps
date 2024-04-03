@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { api } from '../../../assets/libs/api'
+import { api } from '../../../libs/api'
 import { STATE_FOLLOWERS } from '../../../store/rootReducer'
 import { useEffect } from 'react'
 
