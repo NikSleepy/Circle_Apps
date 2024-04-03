@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { useGetAllUser } from '../hooks/useGetAllUser'
 
 export const Search = () => {
+  const user = useSelector((state:RootState)=> state.user.data)
   const [ state, setState ] = useState('')
   const {searchFollow } = useGetAllUser()
   const follows = useSelector((state:RootState) => state.userAll)
@@ -40,7 +41,7 @@ export const Search = () => {
         <Flex>
             <InputGroup m={'10px'} size={'lg'} gap={3}>
                 <InputLeftElement pointerEvents='none' >
-                    <Avatar src="https://cdn.pixabay.com/photo/2020/10/11/19/51/cat-5646889_640.jpg" size={'sm'} />
+                    <Avatar src={user?.photo_profile} size={'sm'} />
                 </InputLeftElement>
                 <Input type='text' placeholder='Search'  onChange={handleChange}/>
                 <Button

@@ -7,12 +7,9 @@ import { dataThreads } from '../../../store/slice'
 export const useThreadLikes = () => {
 
 
-
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
 
- 
-   
- 
+
     const token = sessionStorage.getItem('token')
 
     const config = {
@@ -25,8 +22,8 @@ export const useThreadLikes = () => {
             }
             const response = await api.post('/thread/like',data, config)
             console.log(response.data)
-            dispatch(dataThreads())
-
+            dispatch(dataThreads());
+            
         } catch (error){
             console.log("error in post like",error)
         }

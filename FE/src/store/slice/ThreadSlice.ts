@@ -87,6 +87,7 @@ const initialThreadByIdState: IThreadById = {
     image_thread: '',
     numberOfReply: 0,
     likes:0,
+    isLikes:false,
     reply:[{
         id: 0,
         content: '',

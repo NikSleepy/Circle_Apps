@@ -2,6 +2,8 @@ import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { api } from "../../../assets/libs/api"
+import { useDispatch } from "react-redux"
+import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
 // import { useDispatch } from "react-redux"
 // import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
 
@@ -13,6 +15,7 @@ interface ITypes {
 
 export const useReply = () => {
     const { id } = useParams();
+    const dispatch = useDispatch()
     const token = sessionStorage.getItem('token');
     const toast = useToast();
     const config = {
@@ -61,9 +64,20 @@ export const useReply = () => {
         }
     }
 
+    const getThreadById = async () => {
+        try {
+            const response = await api.get(`/thread/${id}`,config)
+            dispatch(STATE_THREAD_BY_ID(response.data.data))
+            console.log("useRelpy", response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return {
         handleChange,
         handleChangeFile,
-        handleSubmit
+        handleSubmit,
+        getThreadById
     }
 }

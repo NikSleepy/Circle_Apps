@@ -7,6 +7,7 @@ import { RootState } from "../../store/type";
 import { useDispatch } from "react-redux";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { userLogin } from "../../store/slice/UserSlice";
+import { useNavigate } from "react-router-dom";
 
 
 export const ProfileHome = () => {
@@ -15,9 +16,10 @@ export const ProfileHome = () => {
   const secondaryText = useColorModeValue("#686868", "#686868");
 
 
-  
+  const navigate = useNavigate()
   const user = useSelector((state: RootState) => state.user.data)
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
+  
   useEffect(() => {
     dispatch(userLogin())
   },[])
@@ -78,6 +80,7 @@ export const ProfileHome = () => {
             _hover={{ color: 'black', bg:'white'}}
             h={'30px'}
             border={'1px solid'}
+            onClick={()=> navigate('/edit')}
             >
               Edit Profile
             </Button>

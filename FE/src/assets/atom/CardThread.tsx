@@ -31,15 +31,6 @@ export const CardPost = (  items  : Thread ) => {
         const timeConvert = date.toLocaleString('id-ID', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})
         return timeConvert
     }
-
-    // const follow = () => {
-    //     if (!like){
-    //         setLike(true)
-    //     } else {
-    //         setLike(false)
-    //     }
-    // }
-
    
     
   return (

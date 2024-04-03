@@ -111,7 +111,7 @@ export default new class ThreadService {
 
     }
 
-    async getThreadById( id: number) {
+    async getThreadById( id: number, user_id : number) {
         try {
             
             // const getThread = await this.threadRepository.createQueryBuilder("thread").where(id).getOneOrFail();
@@ -150,22 +150,52 @@ export default new class ThreadService {
 
             })
 
-            const ThreadId = {
-                id: getThread.id,
-                content: getThread.content,
-                created_at: getThread.created_at,
-                image_thread: getThread.image_thread,
-                user: getThread.user,
-                reply: getThread.reply,
-                numberOfReply: getThread.reply.length,
-                likes: getThread.likes.length
+            const likes = await this.likeRepository.find({
+                where:{
+                    thread:{
+                        id:id
+                    },
+                    user:{
+                        id:user_id
+                    }
+                },
+                relations:["thread","user"],
+                select:{
+                    id:true,
+                    user:{
+                        id:true
+                    },
+                    thread:{
+                        id:true
+                    }
+                }
+            })
 
-            }
+
+            let islake = false
+
+            likes.map((items)=> {
+                if ( items.user.id === user_id) {
+                    islake = true
+                }
+            })
             
+            const data = {
+                        id: getThread.id,
+                        content: getThread.content,
+                        created_at: getThread.created_at,
+                        image_thread: getThread.image_thread,
+                        user: getThread.user,
+                        reply: getThread.reply,
+                        numberOfReply: getThread.reply.length,
+                        likes: getThread.likes.length,
+                        isLikes:islake
+                    }
+
             
             return {
                 message: "Success to get thread",
-                data: ThreadId
+                data: data
             }
             
         } catch (erorr) {
@@ -178,7 +208,6 @@ export default new class ThreadService {
     async deleteThread( id: number ) {
         try {
             
-            // const deleteThread = await this.threadRepository.createQueryBuilder().delete().from(Thread).where(id).execute();
             const deleteThread = await this.threadRepository.delete(id)
             return {
                 message: "Success to delete thread",

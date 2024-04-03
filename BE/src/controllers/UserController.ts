@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import UserServices from "../services/UserServices"
 import { updateUserSchema } from "../utils/validator/UserValidator"
+import Cloudinary from "../libs/Cloudinary";
 
 export default new class UserController {
     
@@ -25,16 +26,32 @@ export default new class UserController {
     }
 
     async updateUser( req: Request, res: Response ):Promise<Response> {
+        const id = res.locals.loginSession.obj.id
+        const data = req.body
         try {
-            const id = req.params
-            const data = req.body
-            const { error, value } = updateUserSchema.validate(data)
-            if (!value) return res.status(400).json(error.details[0].message)
+            
+            data.photo_profile = res.locals.filename
+            
+            if (data.photo_profile) {
+                try {
+                    const cloudinary = await (await Cloudinary.destination(data.photo_profile))
+                    data.photo_profile = cloudinary
+                    
+                } catch (error) {
+                    return res.status(500).json({
+                        message:'error upload clodinary'
+                    })
+                }
+            }
 
+            // data.photo_profile = img
             const response = await UserServices.updateUser(data, id);
             return res.status(200).json(response)
         } catch (error) {
-            throw error
+            throw res.status(500).json({
+                message:'error update user',
+                error:error
+            })
         }
     }
 

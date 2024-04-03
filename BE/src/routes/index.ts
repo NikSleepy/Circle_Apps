@@ -17,12 +17,12 @@ router.get("/users/all", Auth.Auth, UserController.getUserAll)// mendapat user s
 router.get("/users",Auth.Auth, UserController.getUsers)// mendapat data user yang belum di follow
 router.get("/users/client",Auth.Auth, UserController.userLogin)// mendapatkan data user login
 router.get("/users/:id", UserController.getUserById)// mengambil 1 data user by id
-router.put("/users/update/:id", UserController.updateUser)// mengupdate data user sesuai id
+router.put("/users/update/", Auth.Auth,UploadFiles.upload('photo_profile'), UserController.updateUser)// mengupdate data user sesuai id
 router.delete("/users/delete/:id", UserController.deleteUser)//menghapus data user sesuai id 
 
 router.post("/thread/post",Auth.Auth, UploadFiles.upload('image_thread'), ThreadController.createThread)// post thread
 router.get("/thread",Auth.Auth, ThreadController.getThreads)// get all thred
-router.get("/thread/:id", ThreadController.getThreadById)// get thread by id
+router.get("/thread/:id",Auth.Auth, ThreadController.getThreadById)// get thread by id
 router.delete("/thread/delete/:id", ThreadController.deleteThread) // delete thread
 
 router.post("/reply/post", Auth.Auth, ReplyController.createReplies)// post comment

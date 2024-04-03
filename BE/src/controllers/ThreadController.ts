@@ -37,8 +37,9 @@ export default new class ThreadController {
 
     async getThreadById( req: Request, res: Response):Promise<Response> {
         try {
+            const user_id = res.locals.loginSession.obj.id
             const id = parseInt(req.params.id)
-            const response = await ThreadService.getThreadById(id);
+            const response = await ThreadService.getThreadById(id , user_id);
             return res.status(200).json(response)
         } catch (erorr) {
             throw erorr

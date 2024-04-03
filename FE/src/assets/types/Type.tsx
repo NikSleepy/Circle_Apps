@@ -25,6 +25,7 @@ export interface IThreadById {
         created_at: string,
         image_thread: string,
         numberOfReply: number,
+        isLikes:boolean,
         likes: number,
         reply:  {
             id: number;
@@ -71,3 +72,16 @@ export interface IFollowers {
     followers:boolean
 
   }
+
+export interface IEditUser {
+    username:string,
+    fullName:string,
+    description:string,
+}
+
+export interface IEditPhotoProfile {
+    photo_profile: File | null | string,
+}
+export interface IEditPhotoCover {
+    photo_cover: File | null | string
+}

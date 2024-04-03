@@ -3,12 +3,6 @@
 import { Box, Text } from '@chakra-ui/react'
 import { CardPost } from '../atom/CardThread';
 import { CreatePost } from '../atom/CreatePost';
-// import { useFecthThread } from '../../feature/threads/hooks/useFecthThread';
-// import { useDispatch } from 'react-redux';
-// import { api } from '../libs/api';
-// import { STATE_THREAD } from '../../store/rootReducer';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../store/type';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/type';
