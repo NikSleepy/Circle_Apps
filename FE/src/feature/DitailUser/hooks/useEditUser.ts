@@ -8,6 +8,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { Action, ThunkDispatch } from "@reduxjs/toolkit"
 import { userLogin } from "../../../store/slice/UserSlice"
+import { useToast } from "@chakra-ui/react"
 
 export const useEditUser = () => {
   const user = useSelector((state: RootState) => state.user.data)
@@ -24,14 +25,12 @@ export const useEditUser = () => {
   // const [ cover, setCover ] = useState<IEditPhotoCover>({
   //   photo_cover:null
   // })
-
-  console.log("datd", data, profile)
+  const toast = useToast()
  
 
 
     const editUser = async() => {
         try {
-            console.log('mulai post')
           const formData = new FormData()
 
             formData.append('username', data.username)
@@ -39,7 +38,6 @@ export const useEditUser = () => {
             formData.append('description', data.description)
 
             if ( profile.photo_profile !== null ){
-              console.log("pake gambar")
               formData.append('photo_profile', profile.photo_profile)
             }
 
@@ -47,8 +45,25 @@ export const useEditUser = () => {
             //   formData.append('photo_cover', cover.photo_cover);
             // }
 
-            const response = await API.put('/users/update', formData)
-            console.log('response',response)
+            await API.put('/users/update', formData)
+            .then(res => {
+                toast({
+                  title: 'Update Success',
+                  description: `Update Profile ${user.username} Success`,
+                  status: 'success',
+                  duration:4000,
+                  isClosable: true,
+                  position: 'top',
+              })
+              return res
+            })
+            .catch(function (eror) {
+              editUser();
+              console.log(eror)
+            })
+
+
+
             dispatch(userLogin())
   
         } catch (error) {

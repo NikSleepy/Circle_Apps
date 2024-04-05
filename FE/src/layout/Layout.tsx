@@ -23,19 +23,10 @@ export const Layout = ({children}:{children:React.ReactNode}) => {
 
 
         <Box 
-        // w={{ base:'100%', md:'100%', lg:'700px'}}
-        // w={'100%'} 
-        // h={'100%'}
-        w={'100ch'}
+          w={'100vh'}
         >
-            
-
-        {children}
-            
-          {/* <Outlet/> */}
-
+          {children}
         </Box>
-
 
         <Box  display={{base:'none', sm:'none',md:'block',lg:'block'}} borderLeft={'1px solid #b2b2b2'} >
           <RightSideBar/>

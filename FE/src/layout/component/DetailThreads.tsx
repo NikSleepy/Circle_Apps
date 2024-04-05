@@ -8,7 +8,7 @@ import { PostReplys } from "../../feature/threads/component/CreateReplys"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store/type"
 import { useReply } from "../../feature/threads/hooks/useReply"
-import { api } from "../../libs/api"
+import { Api } from "../../libs/api"
 
 
 
@@ -26,17 +26,12 @@ export const DetailThreads = () => {
         return timeConvert
     }
 
-    const token = sessionStorage.getItem('token')
-
-    const config = {
-        headers: { Authorization: `Bearer ${token}`}
-    }
     const handleLikes =  async (id: number) => {
         try{
             const data = {
                 thread:id
             }
-            const response = await api.post('/thread/like',data, config)
+            const response = await Api.post('/thread/like',data)
             console.log(response.data)
             getThreadById();            
         } catch (error){

@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
-import { api } from "../../../libs/api"
+import { API } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { dataThreads } from "../../../store/slice"
 import { Action, ThunkDispatch } from "@reduxjs/toolkit"
@@ -22,11 +22,6 @@ export const useCreateThread = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>()
     
 
-    const token = sessionStorage.getItem('token')
-    const config = {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data"}
-    }
-
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
         setData((prev) => ({ ...prev, content: e.target.value}))
     }
@@ -38,7 +33,7 @@ export const useCreateThread = () => {
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await api.post('/thread/post', data, config)
+            const response = await API.post('/thread/post', data)
             console.log("data nih dari useCreatThreads", response)
 
             dispatch(dataThreads())

@@ -7,8 +7,6 @@ export const usePostFollows = () => {
 
     const toast = useToast();
 
-
-    
     const handleSubmit = async(id:number) => {
         try{
             const response = await api.post(`/user/following/${id}`, null, {

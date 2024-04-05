@@ -13,13 +13,11 @@ export const NavHome = () => {
 const { isOpen,onOpen, onClose } = useDisclosure()
 
 const token = sessionStorage.getItem('token')
-// const user = window.localStorage.getItem('user')
 
 
 const logout = () => {
     sessionStorage.removeItem('token')
     
-
 }
 
 

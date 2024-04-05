@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { api } from "../../../libs/api"
 import {  useToast } from "@chakra-ui/react"
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 
 export const useLogin = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const toast = useToast()
     const [ data, setData ] = useState({
         username:"",
@@ -33,22 +33,10 @@ export const useLogin = () => {
                     position: 'top',
                 })
             })
-
+           
             sessionStorage.setItem('token', response.token)
 
-            if ( sessionStorage.getItem('token')) {
-                navigate('/') 
-            }
-
-            toast({
-                title: 'Login Success',
-                description: "welcome bro",
-                status: 'success',
-                duration:4000,
-                isClosable: true,
-                position: 'top',
-            
-            })
+            window.location.href = '/'
 
            
 

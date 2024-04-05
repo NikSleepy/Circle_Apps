@@ -1,11 +1,10 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { api } from "../../../libs/api"
+import { Api } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
-// import { useDispatch } from "react-redux"
-// import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
+
 
 interface ITypes {
     thread:number,
@@ -16,11 +15,8 @@ interface ITypes {
 export const useReply = () => {
     const { id } = useParams();
     const dispatch = useDispatch()
-    const token = sessionStorage.getItem('token');
     const toast = useToast();
-    const config = {
-        headers: { Authorization: `Bearer ${token}`}
-    }
+
 
     const [ data, setData ] = useState<ITypes>({
         thread: Number(id),
@@ -41,18 +37,32 @@ export const useReply = () => {
     const handleSubmit = async ( e: React.FormEvent ) => {
         e.preventDefault();
         try {
-             await api.post('/reply/post', data, config)
-            // console.log(data)
+             await Api.post('/reply/post', data).then(()=> {
+                toast({
+                    title:`success upload reply `,
+                    duration:2000,
+                    position:'top',
+                    status:'success'
+                })
+             })
+             .catch(()=>{
+                toast({
+                    title:`error upload reply `,
+                    duration:2000,
+                    position:'top',
+                    status:'error'
+                })
+             })
             
-            toast({
-                title:`success upload reply `,
-                duration:2000,
-                position:'top',
-                status:'success'
-            })
-            // dispatch(STATE_THREAD_BY_ID())
-            // window.location.reload()
+
+
+            setData({
+                thread: Number(id),
+                content: "",
+                file_reply: null
+            });
             
+            getThreadById();
 
         } catch (error) {
             toast({
@@ -66,7 +76,7 @@ export const useReply = () => {
 
     const getThreadById = async () => {
         try {
-            const response = await api.get(`/thread/${id}`,config)
+            const response = await Api.get(`/thread/${id}`)
             dispatch(STATE_THREAD_BY_ID(response.data.data))
             console.log("useRelpy", response.data)
         } catch (error) {
