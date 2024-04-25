@@ -36,7 +36,7 @@ export const useLogin = () => {
            
             sessionStorage.setItem('token', response.token)
 
-            window.location.href = '/'
+            window.location.href = '/home'
 
            
 

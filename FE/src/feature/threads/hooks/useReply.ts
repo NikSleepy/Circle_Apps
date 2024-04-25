@@ -78,7 +78,7 @@ export const useReply = () => {
         try {
             const response = await Api.get(`/thread/${id}`)
             dispatch(STATE_THREAD_BY_ID(response.data.data))
-            console.log("useRelpy", response.data)
+            
         } catch (error) {
             console.log(error)
         }

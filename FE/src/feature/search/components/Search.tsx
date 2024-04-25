@@ -15,7 +15,6 @@ export const Search = () => {
   const follows = useSelector((state:RootState) => state.userAll)
 
   const filter = state ? follows?.filter((data) => data.username.toLowerCase().includes(state.toLowerCase())): follows;
-  // console.log(filter)
   const handleChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value)
   }

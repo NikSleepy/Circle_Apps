@@ -8,15 +8,10 @@ import { RootState } from '../../../store/type'
 export const Followers = () => {
     const followers = useSelector((state: RootState)=> state.followers)
   
-    // const { handleGet } = useGetFollowers()
-    // console.log("di followers", followers)
-    // useEffect(() => {
-    //     handleGet()
-    // },[followers])
+
 
   return (
     <Box>
-      {/* <Text>bang</Text> */}
         {followers?.map((items) => (
             <CardUserFollow 
             key={items.id}

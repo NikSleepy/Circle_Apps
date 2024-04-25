@@ -13,8 +13,7 @@ export const useGetFollowings = () => {
     const followers = async () => {
       try {
         const response = await Api.get('/followings')
-        // setFollowings(response.data.data)
-        // console.log("response di following",response.data.data)
+
         dispatch(STATE_FOLLOW(response.data.data))
         
       } 
@@ -22,7 +21,6 @@ export const useGetFollowings = () => {
         console.log(error);
       }
     }
-    // console.log(follows)
 
 
     useEffect(()=> {

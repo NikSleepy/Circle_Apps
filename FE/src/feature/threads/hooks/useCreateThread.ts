@@ -33,8 +33,7 @@ export const useCreateThread = () => {
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await API.post('/thread/post', data)
-            console.log("data nih dari useCreatThreads", response)
+            await API.post('/thread/post', data).catch(()=> handleSubmit(e))
 
             dispatch(dataThreads())
             toast({

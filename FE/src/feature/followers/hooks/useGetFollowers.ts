@@ -11,9 +11,8 @@ export const useGetFollowers = () => {
         try {
             
             const response = await Api.get('/followers')
-            // setFollowers(response.data.data)
             dispatch(STATE_FOLLOWERS(response.data.data))
-            // console.log('folowers', followers)
+            
         } catch (error) {
             console.log("eror get followers")
         }

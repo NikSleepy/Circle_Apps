@@ -7,14 +7,9 @@ import { RootState } from '../../../store/type'
 // import { useEffect } from 'react'
 
 export const Followings = () => {
-    // const {  followers } = useGetFollowings()
     const followings = useSelector((state:RootState) => state.follow)
-    // const data = useSelector((state:RootState) => state.follows)
-    // console.log("data di folow redux", followings)  
-    // useEffect(() => {
-    //     followers()
-    // },[followings]);
-    
+
+
   return (
     <Box>
       {/* <Text>bang</Text> */}

@@ -32,33 +32,6 @@ export const CreatePost = ( ) => {
   //   }
   // });
 
-  // console.log(formik.values.image)
- // ==================== use State ==============================
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const { name, value } = e.target;
-    //   setFile((prevFile) => ({ ...prevFile, [name]: value }));
-    // }
-  //   const [ file, setFile ] = useState<IFrom>(
-  //     {
-  //       content:"",
-  //       image_thread: null,
-  //     }
-  //   )
-  
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault()
-  //   try {
-  //     const response = await api.post('/thread/post', file, config)
-  //     console.log(response);
-  //     console.log(file);
-      
-      
-      
-  //   } catch (error) {
-  //     console.log(error);
-      
-  //   }
-  // }
   
 
   const { handleChange, handleSubmit, handleChangeFile } = useCreateThread()

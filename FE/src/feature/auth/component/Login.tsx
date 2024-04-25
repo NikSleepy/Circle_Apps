@@ -19,7 +19,7 @@ export const Login = () => {
 
 
         <Flex p={'10px'}>
-            <Link href={'/'} display={'flex'} gap={3}>
+            <Link href={'/home'} display={'flex'} gap={3}>
                 <BiArrowBack  size={30}/>
                 <Text fontSize={'xl'} fontWeight={'bold'}>Back</Text>
             </Link>

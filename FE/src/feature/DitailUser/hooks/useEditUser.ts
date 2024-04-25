@@ -56,6 +56,7 @@ export const useEditUser = () => {
                   position: 'top',
               })
               return res
+              
             })
             .catch(function (eror) {
               editUser();

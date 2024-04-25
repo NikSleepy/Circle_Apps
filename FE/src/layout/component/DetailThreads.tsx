@@ -1,6 +1,5 @@
 import { Avatar, Box, Flex, Text, Image, Button } from "@chakra-ui/react"
 import { useEffect, } from "react"
-import { BiArrowBack } from "react-icons/bi"
 import { FaHeart } from "react-icons/fa"
 import { LiaComment } from "react-icons/lia"
 import { Link } from "react-router-dom"
@@ -9,6 +8,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store/type"
 import { useReply } from "../../feature/threads/hooks/useReply"
 import { Api } from "../../libs/api"
+import { ButtonBack } from "../../components/ButtonBack"
 
 
 
@@ -18,7 +18,6 @@ export const DetailThreads = () => {
 
     const threadById = useSelector((state: RootState) => state.threadById)
 
-    console.log("dari tsx detailthread",threadById)
 
     const convertTime = ( time:string ) => {
         const date = new Date(time)
@@ -31,9 +30,10 @@ export const DetailThreads = () => {
             const data = {
                 thread:id
             }
-            const response = await Api.post('/thread/like',data)
-            console.log(response.data)
-            getThreadById();            
+            
+            await Api.post('/thread/like',data)
+            getThreadById();      
+
         } catch (error){
             console.log("error in post like",error)
         }
@@ -46,12 +46,7 @@ export const DetailThreads = () => {
 
   return (
     <Box>
-        <Link to={'/'} >
-            <Flex p={'10px'} gap={3}  display={{ base: 'none',sm: 'none' , md:'flex', lg:'flex', xl:'flex'}}>
-                    <BiArrowBack  size={30}/>
-                    <Text fontSize={'xl'} fontWeight={'bold'}>Back</Text>
-            </Flex>
-          </Link>
+        <ButtonBack/>
 
         <Box 
         

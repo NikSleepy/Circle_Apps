@@ -29,7 +29,7 @@ const logout = () => {
                 
                 <Text fontSize={'5xl'} fontWeight={'bold'} color='#04a51e' mb={'20px'}>circle</Text>
                 
-                <Link to={'/'} >
+                <Link to={'/home'} >
                     <Flex fontSize={'lg'} display={'flex'} gap={3} my={2}>
 
                      <IoIosHome size={25} color='white'/>
