@@ -28,7 +28,7 @@ export const MyProfile = () => {
         /> 
         :
         <Image
-          src="https://i.ibb.co/xmP2pS6/Profile.png"
+          src="/image/BGCARD.jpeg"
           objectFit={'cover'}
           w={'100%'}
           h={'150px'}

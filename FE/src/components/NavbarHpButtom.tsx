@@ -4,6 +4,7 @@ import { FaRegPlusSquare } from 'react-icons/fa'
 import { IoIosHome } from 'react-icons/io'
 import { MdPersonSearch } from 'react-icons/md'
 import { PiHeartStraight } from 'react-icons/pi'
+import { Link } from 'react-router-dom'
 
 export const NavbarHp = () => {
   return (
@@ -14,11 +15,21 @@ export const NavbarHp = () => {
     borderTop={'1px solid #b2b2b2'}
     >
         <Flex gap={50} justifyContent={'center'} alignItems={'center'} p={'10px'} >
+          <Link to={'/home'}>
             <IoIosHome size={25} color='white'/>
+          </Link>
+          <Link to={'/search'}>  
             <MdPersonSearch size={25} color='white'/>
+          </Link>
+          <Link to={'/home'}>
             <FaRegPlusSquare size={25} color='white'/>
+          </Link>
+          <Link to={'/follow'}>
             <PiHeartStraight size={25} color='white'/>
+          </Link>
+          <Link to={'/myprofile'}>
             <CgProfile size={25} color='white'/>
+          </Link>
         </Flex>
 
     </Box>

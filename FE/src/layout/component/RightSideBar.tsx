@@ -1,7 +1,7 @@
 
 import { Box } from '@chakra-ui/react'
 import { Follwer } from '../../feature/follows/component/SugestForYou'
-import { ProfileHome } from '../../feature/follows/component/ProfileHome'
+import { ProfileHome } from '../../feature/DitailUser/component/ProfileHome'
 import { CreateDev } from '../../feature/follows/component/CreateDev'
 
 export const RightSideBar = () => {

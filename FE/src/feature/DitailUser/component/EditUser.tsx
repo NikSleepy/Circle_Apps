@@ -18,7 +18,7 @@ export const EditUser = () => {
 
     <Box justifyContent={'center'} alignItems={'center'} p={6}>
         <form>
-        <Image src={user?.photo_cover ? user.photo_cover : "https://i.ibb.co/xmP2pS6/Profile.png" } rounded={8} w={'full'} h={'200px'}/>
+        <Image src={user?.photo_cover ? user.photo_cover : "/image/BGCARD.jpeg" } rounded={8} w={'full'} h={'200px'}/>
         <Box display={'flex'} justifyContent={'center'}>
             <Avatar src={user?.photo_profile} w={'150px'} h={'150px'} rounded={'full'} mt={'-80px'} border={'3px solid #1D1D1D'}/>
             <FormLabel ml={'-20px'} mt={'20px'} htmlFor='photo' zIndex={999} >

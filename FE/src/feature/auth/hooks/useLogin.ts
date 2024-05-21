@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { api } from "../../../libs/api"
 import {  useToast } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 // import { useNavigate } from "react-router-dom"
 
 
@@ -11,6 +12,7 @@ export const useLogin = () => {
         username:"",
         password:""
     })
+    const navigate = useNavigate();
 
     
 
@@ -36,7 +38,8 @@ export const useLogin = () => {
            
             sessionStorage.setItem('token', response.token)
 
-            window.location.href = '/home'
+            // window.location.href = '/home'
+            navigate('/home')
 
            
 

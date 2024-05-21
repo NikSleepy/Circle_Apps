@@ -13,20 +13,7 @@ export default new class FollewerService {
             const data = parseInt(id.id)
             const user_id= res.locals.loginSession.obj.id
 
-            // console.log(data)
-            // console.log(user_id)
-
-            //validate data
-            // const { error, value } = followingSchema.validate(req.body);
-
-            // if (error) {
-            //     return res.status(400).json({
-            //         code: 400,
-            //         message: 'Invalid input. Please provide a valid user_id.'
-            //     });
-            // }
-            // console.log("user yg mau di follow",data)
-            // console.log("user login",user_id)
+    
 
             const user = await this.UserRepository.findOne({
                 where: {
@@ -36,7 +23,6 @@ export default new class FollewerService {
                     followings: true
                 }
             });
-            // console.log("user login",user)
 
             const userToFollow = await this.UserRepository.findOne({
                 where: {
@@ -49,7 +35,6 @@ export default new class FollewerService {
                     message:"can't following my self"
                 })
             }
-            // console.log("user to follow",userToFollow)
 
             if (!user || !userToFollow) {
                 return res.status(404).json({
@@ -104,9 +89,6 @@ export default new class FollewerService {
                 },
             })
 
-            // const isFollowed =  user.followers.some( (followers) => followers.id === user_id)
-
-            // console.log(isFollowed)
             const followings = user.followings.map((item) => {
 
                 let a = false;
@@ -160,7 +142,6 @@ export default new class FollewerService {
                     followers:true
                 }
             })
-            // console.log("followers",user)
 
             if (!user) {
                 return res.status(404).json({
@@ -213,9 +194,6 @@ export default new class FollewerService {
 
                 }
             })
-            // console.log()
-            
-            // const Alluser = await this.UserRepository.find()
 
             return res.status(200).json({
                 message:'get Followings Success',

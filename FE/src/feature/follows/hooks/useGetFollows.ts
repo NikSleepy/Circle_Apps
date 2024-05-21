@@ -10,7 +10,12 @@ export  const useGetFollows = () => {
 
     const follow = async () => {
       try {
-        const response = await Api.get('/users')
+        const token = sessionStorage.getItem("token")
+        const response = await Api.get('/users', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         dispatch(STATE_USERALL(response.data.data))
         
       } 

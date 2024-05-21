@@ -16,7 +16,7 @@ export const ContentDetail = () => {
   return (
     <Box 
     w={'100%'}
-    display={{ base: 'none',sm: 'none' , md:'block', lg:'block', xl:'block'}}
+    display={{ base: 'none',sm: 'block' , md:'block', lg:'block', xl:'block'}}
     >   
           <Tabs variant={'unStyled'} align='center'  isFitted >
             <TabList>
