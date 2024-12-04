@@ -10,7 +10,7 @@ import { FollowPages } from './pages/FollowPages'
 import { DetailThreadPages } from './pages/DetailThreadPages'
 import { DetailUserLogin } from './pages/DetailUserLogin'
 import { EditUserPages } from './pages/EditUserPages'
-import { FirstLook } from './layout/component/FristLook'
+// import { FirstLook } from './layout/component/FristLook'
 
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path='/' element={ <FirstLook/>} />
-      <Route path='/home' element={ <Home/> }/>
+      <Route path='/' element={ <Home/>} />
+      {/* <Route path='/home' element={ <Home/> }/> */}
       <Route path='/search' element={ <SearchPages/> }/>
       <Route path='/follow' element={ <FollowPages/> }/>
       <Route path='/thread/:id' element={ <DetailThreadPages/> }/>

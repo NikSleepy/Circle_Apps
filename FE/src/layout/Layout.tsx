@@ -24,17 +24,20 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
       <Box display={'flex'}>
         <Box
-          w={'40vh'}
+          w={'30vw'}
           display={{ base: 'none', sm: 'none', md: 'block', lg: 'block' }}
           h={'100vh'}
         >
           <NavHome />
         </Box>
 
-        <Box w={'100vh'} borderX={'1px solid #b2b2b2'}>{children}</Box>
+        <Box w={'100vw'} borderX={'1px solid #b2b2b2'}>{children}</Box>
 
         <Box
           display={{ base: 'none', sm: 'none', md: 'block', lg: 'block' }}
+          w={'40vw'}
+          h={'auto'}
+          
         >
           <RightSideBar />
         </Box>

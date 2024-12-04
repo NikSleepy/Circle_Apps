@@ -39,7 +39,7 @@ export const useLogin = () => {
             sessionStorage.setItem('token', response.token)
 
             // window.location.href = '/home'
-            navigate('/home')
+            navigate('/')
 
            
 

@@ -21,7 +21,7 @@ export const NavbarHp = () => {
           <Link to={'/search'}>  
             <MdPersonSearch size={25} color='white'/>
           </Link>
-          <Link to={'/home'}>
+          <Link to={'/'}>
             <FaRegPlusSquare size={25} color='white'/>
           </Link>
           <Link to={'/follow'}>

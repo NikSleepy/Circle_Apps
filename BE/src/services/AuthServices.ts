@@ -60,21 +60,22 @@ export default new (class AuthService {
       const checkUsername = await this.AuthRepository.findOne({
         where: { username: value.username },
       });
+
+      //chacking username
       if (!checkUsername) {
-        // throw new Error ( `Username ${value.username} not found` )
         return res.status(404).json({
           error: `Username not found`,
         });
       }
+      
       const comparePassword = await bcrypt.compare(
         value.password,
         checkUsername.password
       );
 
       if (!comparePassword) {
-        // throw new Error ( `Password not match` )
         return res.status(400).json({
-          error: `Password not match`,
+          error: `Invalid Password`,
         });
       }
 

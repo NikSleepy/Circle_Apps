@@ -1,78 +1,114 @@
-import { Avatar, Button, Flex, FormLabel, Input } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Image,
+  Input,
+  useToast,
+} from '@chakra-ui/react';
 
-import { SlPicture } from 'react-icons/sl'
-import { useCreateThread } from '../hooks/useCreateThread'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../store/type'
+import { SlPicture } from 'react-icons/sl';
+// import { useCreateThread } from '../hooks/useCreateThread';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/type';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import { dataThreads } from '../../../store/slice';
+import { API } from '../../../libs/api';
+interface ITypes {
+  content: string;
+  image_thread: File | null;
+}
 
+export const CreatePost = ({ onClose }: { onClose: () => void }) => {
+  // const { handleChange, handleSubmit, handleChangeFile, img } =
+  //   useCreateThread();
+  const user = useSelector((state: RootState) => state.user.data);
 
-export const CreatePost = ( ) => {
-  
-  //================= use formik ======================
-  // const token = sessionStorage.getItem('token')
-  // const config = {
-  //   headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
-  // }
+  const toast = useToast();
+  const [img, setImg] = useState<string>('');
+  const [data, setData] = useState<ITypes>({
+    content: '',
+    image_thread: null,
+  });
+  const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>();
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     content:"",
-  //     image:"",
-      
-  //   }, onSubmit: async () => {
-  //     try {
-        
-  //       await api.post('/thread/post', formik.values, config)
-        
-        
-  //     } catch (error) {
-  //       console.log(error);
-        
-  //     }
-  //   }
-  // });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData((prev) => ({ ...prev, content: e.target.value }));
+  };
 
-  
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData((prev) => ({ ...prev, image_thread: e.target.files![0] }));
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImg(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-  const { handleChange, handleSubmit, handleChangeFile } = useCreateThread()
-  const user = useSelector((state: RootState) => state.user.data)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await API.post('/thread/post', data).catch(() => handleSubmit(e));
+
+      dispatch(dataThreads());
+      toast({
+        title: 'success upload thread',
+        status: 'success',
+        duration: 2000,
+        position: 'top',
+      });
+
+      onClose();
+    } catch (error) {
+      toast({
+        title: `eror in post ${error}`,
+        status: 'error',
+        duration: 4000,
+        position: 'top',
+      });
+    }
+  };
 
   return (
-    <form 
-    // onSubmit={handleSubmit}
-    onSubmit={handleSubmit}
-     >         
-      <Flex 
-          p={'3vh'}  
-          gap={'2vh'} 
-          w={'100%'}>
-          <Avatar
-              src={`${user.photo_profile}`}/>
-          <Input 
-          name='content' 
-          type="text" 
-          placeholder="What is Happening!? " 
-          border={'none'} 
-          // onChange={formik.handleChange} 
-          // value={formik.values.content}
-          // onChange={(e)=> setFile((prevFile)=>({...prevFile, content: e.target.value}))} 
-          onChange={handleChange}
-          ></Input>
+    <form onSubmit={handleSubmit}>
+      <Flex p={'3vh'} gap={'2vh'} w={'100%'}>
+        <Avatar src={`${user.photo_profile}`} />
 
-          <FormLabel htmlFor="image">
-              <SlPicture size={38} color="#005e0e"/>
-          </FormLabel>
-          <Input 
-          type="file" 
-          id="image"
-          name='image' 
-          // onChange={(e) => { formik.setFieldValue('image', e.target.files![0]) }} 
-          // onChange={(e)=> setFile((prevFile)=>({...prevFile, image_thread: e.target.files![0]}))}
-          onChange={handleChangeFile}
-          accept='image/jpg, image/jpeg, image/png'
-          hidden/>  
-          <Button bg={'#005e0e'} type='submit'>Post</Button>
+        <Box w={'100%'} gap={'2vh'} display={'flex'} flexDirection={'column'}>
+          {img && <Image src={img} alt="img" w={'50%'} />}
+          <Flex gap={'2vh'} >
+            <Input
+              name="content"
+              type="text"
+              placeholder="What is Happening!? "
+              border={'none'}
+              onChange={handleChange}
+            ></Input>
+
+            <FormLabel htmlFor="image">
+              <SlPicture size={38} color="#005e0e" />
+            </FormLabel>
+            <Input
+              type="file"
+              id="image"
+              name="image"
+              onChange={handleChangeFile}
+              accept="image/jpg, image/jpeg, image/png"
+              hidden
+            />
+            <Button bg={'#005e0e'} type="submit">
+              Post
+            </Button>
+          </Flex>
+        </Box>
       </Flex>
     </form>
-  )
-}
+  );
+};
