@@ -1,38 +1,29 @@
-import {
-  Box,
-  Flex,
-  Avatar,
-  Text,
-  Image,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
-import { LiaComment } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
-import { useThreadLikes } from '../hooks/useThreadLikes';
+import { LiaComment } from 'react-icons/lia';
+import { useUserByThread } from '../hooks/useUserByThread';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-interface Thread {
+interface IData {
   id: number;
   content: string;
   image_thread: string;
   created_at: string;
-  user: number;
-  username: string;
-  fullName: string;
-  photo_profile: string;
-  reply: number;
-  likes: number;
-  isLikes: boolean;
-  user_id: number;
+  numberOfReply: number;
+  Likes: number;
+  isLike: boolean;
+  user: {
+    id: number;
+    username: string;
+    fullName: string;
+    photo_profile: string;
+  };
+  refresh: () => void;
 }
 
-export const CardPost = (items: Thread) => {
-  const { handleLikes } = useThreadLikes();
+export const CardThreadUserByThread = (items: IData) => {
+  const { handleLikes } = useUserByThread();
 
   const convertTime = (time: string) => {
     const date = new Date(time);
@@ -46,27 +37,31 @@ export const CardPost = (items: Thread) => {
     return timeConvert;
   };
 
+  // console.log(items);
   return (
-    <Box display="flex" borderBottom={'1px solid #b2b2b2'} p="3vh" pb={'1vh'}>
-      <Flex mr={'10px'}>
-        <Avatar src={items?.photo_profile} />
-      </Flex>
+    <Box
+      pt={'10px'}
+      display="flex"
+      borderBottom={'1px solid #b2b2b2'}
+      pb={'1vh'}
+      w={'100%'}
+    >
+      <Avatar src={items?.user.photo_profile} />
 
       <Box w="90%" ml="10px">
         <Box
           display={{ base: 'grid', sm: 'flex' }}
           gap={{ base: '0px', sm: '5px' }}
           mb="5px"
-          // bg={'red'}
         >
           <Box
             display={{ base: 'grid', sm: 'flex' }}
             gap={{ base: '0px', sm: '5px' }}
           >
-            <Link to={`/user/thread/${items?.user_id}`}>{items?.username}</Link>
+            <Text fontWeight={'bold'}>{items?.user.username} </Text>
             <Text color="#909090">
-              @{items?.fullName} <span>&bull;</span>{' '}
-              {convertTime(items?.created_at)}
+              @{items?.user.fullName} <span>&bull;</span>{' '}
+              {convertTime(items?.created_at)}{' '}
             </Text>
           </Box>
           <Box ml="auto" position="relative">
@@ -74,31 +69,40 @@ export const CardPost = (items: Thread) => {
               <MenuButton>
                 <BsThreeDotsVertical />
               </MenuButton>
-              <MenuList ml={-200} color={'black'}>
-                <MenuItem onClick={() => alert('Laporkan clicked')}>
+              <MenuList ml={-200} color={'black'} >
+                <MenuItem  onClick={() => alert('Laporkan clicked')}>
                   Report
                 </MenuItem>
-                <MenuItem onClick={() => alert('Delete clicked')}>
+                {/* <MenuItem onClick={() => alert('Delete clicked')}>
                   Delete
-                </MenuItem>
+                </MenuItem> */}
               </MenuList>
             </Menu>
           </Box>
         </Box>
 
-        <Text fontSize={'sm'}>{items?.content}</Text>
+        <Text fontSize={'sm'} textAlign={'start'}>
+          {items?.content}
+        </Text>
 
-        <Image src={items?.image_thread} w={'70%'} my={5} borderRadius={10} />
-
+        <Box display={'flex'}>
+          <Image src={items?.image_thread} w={'70%'} my={5} borderRadius={10} />
+        </Box>
         <Flex mt="7px" ml={-19}>
-          <Button colorScheme="#262626" onClick={() => handleLikes(items.id)}>
-            {items.isLikes ? (
+          <Button
+            colorScheme="#262626"
+            onClick={() => {
+              handleLikes(items.id);
+              items.refresh();
+            }}
+          >
+            {items.isLike ? (
               <FaHeart size={20} color="red" />
             ) : (
               <FaHeart size={20} />
             )}
             <Text color="#909090" ml={'5px'} mr={'20px'}>
-              {items?.likes}{' '}
+              {items?.Likes}{' '}
             </Text>
           </Button>
           <Button colorScheme="#262626">
@@ -106,7 +110,7 @@ export const CardPost = (items: Thread) => {
               <Flex>
                 <LiaComment size={20} />
                 <Text color="#909090" ml={'5px'}>
-                  {items?.reply} Replies
+                  {items?.numberOfReply} Replies
                 </Text>
               </Flex>
             </Link>

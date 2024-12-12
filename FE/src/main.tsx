@@ -1,11 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux'
-import { store } from './store/rootReducer.ts'
+import { Provider } from 'react-redux';
+import { store } from './store/rootReducer.ts';
 
 const theme = extendTheme({
   styles: {
@@ -15,8 +15,7 @@ const theme = extendTheme({
       },
     },
   },
-})
-
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -27,5 +26,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Provider>
       </ChakraProvider>
     </Router>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

@@ -1,40 +1,38 @@
-
 // import { Api } from '../../../libs/api'
-import { useDispatch } from 'react-redux'
-import { STATE_FOLLOW } from '../../../store/rootReducer'
-import { useEffect } from 'react'
-import { api } from '../../../libs/api'
-
+import { useDispatch } from 'react-redux';
+import { STATE_FOLLOW } from '../../../store/rootReducer';
+import { useEffect } from 'react';
+import { api } from '../../../libs/api';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const useGetFollowings = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
-    const dispatch = useDispatch()
+  const followers = async () => {
+    try {
+      const response = await api.get('/followings', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const token = sessionStorage.getItem('token')
-
-
-    const followers = async () => {
-      try {
-        const response = await api.get('/followings', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-
-        dispatch(STATE_FOLLOW(response.data.data))
-        
-      } 
-      catch (error) {
-        console.log(error);
+      dispatch(STATE_FOLLOW(response.data.data));
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === 401) {
+        navigate('/login');
       }
     }
+  };
 
-
-    useEffect(()=> {
-      followers()
-    },[])
+  useEffect(() => {
+    followers();
+  }, []);
 
   return {
     followers,
-  }
-}
+  };
+};

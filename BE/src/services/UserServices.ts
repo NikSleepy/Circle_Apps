@@ -3,10 +3,15 @@ import { User } from '../entity/User';
 import { AppDataSource } from '../data-source';
 import { Request, Response } from 'express';
 import { it } from 'node:test';
+import { Thread } from '../entity/Thread';
+import { Like } from '../entity/Like';
+import { number } from 'joi';
 
 export default new (class UserService {
   private readonly UserRepository: Repository<User> =
     AppDataSource.getRepository(User);
+    private readonly likeRepository: Repository<Like> =
+    AppDataSource.getRepository(Like);
 
   async getUserAll(req: Request, res: Response) {
     try {
@@ -147,6 +152,88 @@ export default new (class UserService {
       return {
         message: 'Success to get user',
         data: getuser,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getUserByThread(id: any, user_login: any) {
+    try {
+      // const getuser = await this.UserRepository.createQueryBuilder('user').where(username).getOneOrFail();
+      const getuser = await this.UserRepository.findOne({
+        where: {
+          id: id.user_id,
+        },
+        relations: ['followings', 'followers', 'threads.reply', 'threads.likes', 'reply', 'threads.user'],
+      })
+
+      const like = await this.likeRepository.find({
+        where: {
+          user: {
+            id: user_login,
+          },
+          
+        },
+        relations: ['thread'],
+      })
+      const dataThreads = getuser.threads.map((item) => {
+        let islike = false;
+        like.forEach((items) => {
+          
+          if (items.thread.id == item.id) {
+            // console.log(items.thread.id, user_login)
+            islike = true;
+          }
+        })
+
+        return {
+          id: item.id,
+          content: item.content,
+          image_thread: item.image_thread,
+          created_at: item.created_at,
+          numberOfReply: item.reply.length,
+          Likes: item.likes.length,
+          isLike: islike,
+          user: {
+            id: item.user.id,
+            username: item.user.username,
+            fullName: item.user.fullName,
+            photo_profile: item.user.photo_profile,
+          }
+        }
+      })
+      
+      const sortedThreads = dataThreads.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      let isFollow = false;
+
+      getuser.followers.forEach((item) => {
+        if (item.id == user_login) {
+          isFollow = true;
+        }
+      })
+      
+
+      const data = {
+        user: {
+          id: getuser.id,
+          username: getuser.username,
+          fullName: getuser.fullName,
+          photo_profile: getuser.photo_profile,
+          followings: getuser.followings.length,
+          followers: getuser.followers.length,
+          photo_cover: getuser.photo_cover,
+          description: getuser.description,
+          isFollow: isFollow
+        },
+        threads: sortedThreads,
+        followings: getuser.followings,
+        followers: getuser.followers
+      }
+      return {
+        message: 'Success to get user',
+        data: data,
       };
     } catch (error) {
       throw error;

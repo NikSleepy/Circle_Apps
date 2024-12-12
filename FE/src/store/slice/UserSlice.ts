@@ -4,11 +4,11 @@ import { IProfile } from '../../types/Type';
 
 export const userLogin = createAsyncThunk('user/fecthByIdStatus', async () => {
   try {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const response = await Api.get('users/client', {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log('dari slice', response.data);
+    // console.log('dari slice', response.data);
     return response.data[0];
   } catch (error) {
     console.log(error);

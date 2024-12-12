@@ -92,7 +92,7 @@ export const CreatePost = ({ onClose }: { onClose: () => void }) => {
               onChange={handleChange}
             ></Input>
 
-            <FormLabel htmlFor="image">
+            <FormLabel htmlFor="image" >
               <SlPicture size={38} color="#005e0e" />
             </FormLabel>
             <Input

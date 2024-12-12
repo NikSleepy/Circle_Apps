@@ -1,7 +1,7 @@
 import {
   Avatar,
   Box,
-  Button,
+  // Button,
   Flex,
   HStack,
   Image,
@@ -13,15 +13,16 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/type';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../../store/slice/UserSlice';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '../../../store/rootReducer';
+import { EditProfileModal } from './ModalEditProfile';
 
 export const ProfileHome = () => {
   const boxBg = useColorModeValue('#262626 !important', '#111c44 !important');
   const mainText = useColorModeValue('white', 'white');
   const secondaryText = useColorModeValue('#686868', '#686868');
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.data);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -72,9 +73,9 @@ export const ProfileHome = () => {
               mt="-38px"
               borderRadius="50%"
             />
-            <Box ml={'auto'} mt={'-20px'}>
-              <Button
-                ml={'150px'}
+            <Box w={'150px'} ml={'150px'} mt={'-20px'}>
+              {/* <Button
+                ml={''}
                 w={'150px'}
                 bg={'none'}
                 color={'white'}
@@ -84,7 +85,8 @@ export const ProfileHome = () => {
                 onClick={() => navigate('/edit')}
               >
                 Edit Profile
-              </Button>
+              </Button> */}
+              <EditProfileModal/>
             </Box>
           </Box>
           <Text fontWeight="600" color={mainText} fontSize="xl">

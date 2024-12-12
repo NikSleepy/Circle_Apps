@@ -17,6 +17,7 @@ router.get('/users/all', Auth.Auth, UserController.getUserAll); // mendapat user
 router.get('/users', Auth.Auth, UserController.getUsers); // mendapat data user yang belum di follow
 router.get('/users/client', Auth.Auth, UserController.userLogin); // mendapatkan data user login
 router.get('/users/:id', UserController.getUserById); // mengambil 1 data user by id
+router.post('/user/thread',Auth.Auth, UserController.getUserbyThread);
 router.put(
   '/users/update/',
   Auth.Auth,

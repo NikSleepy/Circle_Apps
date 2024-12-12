@@ -24,10 +24,10 @@ import { Link } from 'react-router-dom';
 export const NavHome = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const logout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
   };
 
   return (
@@ -35,8 +35,8 @@ export const NavHome = () => {
       flexDirection={'column'}
       justifyContent={'space-between'}
       p={5}
-      h={'100vh'}
-      w={'100%'}
+      h={'auto'}
+      w={'auto'}
       position={'fixed'}
     >
       <Box h={'100%'} >

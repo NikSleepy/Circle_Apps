@@ -1,10 +1,17 @@
-import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, IconButton, InputGroup, InputRightElement, Text } from '@chakra-ui/react';
 import { InputDataProfile } from '../../../components/InputDataProfile';
 // import { BiArrowBack } from 'react-icons/bi';
 import { useLogin } from '../hooks/useLogin';
+import { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
   const { handleChange, handleSubmit } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Box bg={'#1d1d1d'} color={'white'} h={'100vh'}>
@@ -31,23 +38,35 @@ export const Login = () => {
           </Text>
 
           <form
-            // onSubmit={formik.handleSubmit}
             onSubmit={handleSubmit}
           >
             <InputDataProfile
               name="username"
               type="text"
+              // pattern='[a-zA-Z0-9]*'
               placeholder="username"
-              // onChange={formik.handleChange}
+              h={'40px'}
+              bg={'#1D1D1D'}
               onChange={handleChange}
             />
-            <InputDataProfile
-              name="password"
-              type="password"
-              placeholder="password"
-              // onChange={formik.handleChange}
-              onChange={handleChange}
-            />
+            <InputGroup >
+              <InputDataProfile
+                name="password"
+                type={showPassword ? 'text' : 'password'} // Toggle type here
+                placeholder="password"
+                bg={'#1D1D1D'}
+                h={'40px'}
+                onChange={handleChange}
+              />
+              <InputRightElement display={'flex'} alignItems={'center'}  h={'full'}>
+                <IconButton
+                  variant=""
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  icon={showPassword ? <FaRegEye color='#04a51e'  /> : <FaRegEyeSlash color='#04a51e'/>}
+                  onClick={togglePasswordVisibility}
+                />
+              </InputRightElement>
+            </InputGroup>
             <Button
               w={'100%'}
               borderRadius={'20px'}
@@ -61,7 +80,7 @@ export const Login = () => {
 
           <Flex gap={2}>
             <Text>Don't have a account ?</Text>
-            <Link href={'/register'}>
+            <Link to={'/register'}>
               {' '}
               <Text color="#04a51e"> register</Text>{' '}
             </Link>

@@ -20,14 +20,21 @@ export default new (class AuthService {
         where: { username: reqBody.username },
       });
       if (checkUsername > 0) {
-        return `Username ${reqBody.username} already exist`;
+        return {
+          status: 400,
+          message: `Username ${reqBody.username} already exist`,
+
+        }
       }
 
       const checkEmail = await this.AuthRepository.count({
         where: { email: reqBody.email },
       });
       if (checkEmail > 0) {
-        return `Email ${reqBody.email} already exist`;
+        return {
+          status: 400,
+          message: `Email ${reqBody.email} already exist`,
+        }
       }
 
       const hashedPassword = await bcrypt.hash(reqBody.password, 10);
@@ -87,7 +94,7 @@ export default new (class AuthService {
       });
 
       const token = jwt.sign({ obj }, process.env.SECRET_KEY, {
-        expiresIn: '3h',
+        expiresIn: '1d',
       });
 
       return res.status(200).json({

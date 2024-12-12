@@ -5,7 +5,7 @@ import { Api } from '../../libs/api';
 // console.log(config)
 export const dataThreads = createAsyncThunk('thread/fetchThreads', async () => {
   try {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (!token) {
       console.log('not have a token');
     } else {
@@ -14,7 +14,6 @@ export const dataThreads = createAsyncThunk('thread/fetchThreads', async () => {
             Authorization: `Bearer `+ token
         }
       });
-      // console.log("respone",response.data.data);
       return response.data.data;
     }
   } catch (error) {
@@ -25,6 +24,7 @@ export const dataThreads = createAsyncThunk('thread/fetchThreads', async () => {
 const initialThread: initialStateThread = {
   thread: [],
 };
+
 
 const threadSlice = createSlice({
   name: 'thread',

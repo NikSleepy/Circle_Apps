@@ -1,12 +1,17 @@
-import { Box, Flex, Text, Link, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, InputGroup, InputRightElement, IconButton } from '@chakra-ui/react';
 import { InputDataProfile } from '../../../components/InputDataProfile';
 // import { BiArrowBack } from 'react-icons/bi';
 import { useRegister } from '../hooks/useRegister';
+import { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const Register = () => {
-
-
   const { handleChange, handleSubmit } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Box bg={'#1d1d1d'} color={'white'} h={'100vh'}>
@@ -31,15 +36,13 @@ export const Register = () => {
             Create Akun Circle
           </Text>
 
-          <form
-            // onSubmit={formik.handleSubmit}
-            onSubmit={handleSubmit}
-          >
+          <form onSubmit={handleSubmit}>
             <InputDataProfile
               name="username"
               type="text"
               placeholder="username"
-              //  onChange={formik.handleChange}
+              bg={'#1D1D1D'}
+              isRequired
               onChange={handleChange}
             />
 
@@ -47,7 +50,8 @@ export const Register = () => {
               name="fullName"
               type="text"
               placeholder="Full Name"
-              //  onChange={formik.handleChange}
+              bg={'#1D1D1D'}
+              isRequired
               onChange={handleChange}
             />
 
@@ -55,17 +59,39 @@ export const Register = () => {
               name="email"
               type="email"
               placeholder="Email"
-              // onChange={formik.handleChange}
+              bg={'#1D1D1D'}
+              isRequired
               onChange={handleChange}
             />
 
-            <InputDataProfile
-              name="password"
-              type="password"
-              placeholder="password"
-              //  onChange={formik.handleChange}
-              onChange={handleChange}
-            />
+            <InputGroup>
+              <InputDataProfile
+                name="password"
+                type={showPassword ? 'text' : 'password'} // Toggle type here
+                placeholder="password"
+                bg={'#1D1D1D'}
+                h={'40px'}
+                onChange={handleChange}
+              />
+              <InputRightElement
+                display={'flex'}
+                alignItems={'center'}
+                h={'full'}
+              >
+                <IconButton
+                  variant=""
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  icon={
+                    showPassword ? (
+                      <FaRegEye color="#04a51e" />
+                    ) : (
+                      <FaRegEyeSlash color="#04a51e" />
+                    )
+                  }
+                  onClick={togglePasswordVisibility}
+                />
+              </InputRightElement>
+            </InputGroup>
 
             <Button
               w={'100%'}
@@ -81,7 +107,7 @@ export const Register = () => {
 
           <Flex gap={2}>
             <Text>Don't have a account ?</Text>
-            <Link href={'/login'}>
+            <Link to={'/login'}>
               {' '}
               <Text color="#04a51e"> Login</Text>{' '}
             </Link>

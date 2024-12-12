@@ -14,7 +14,7 @@ import { AppDispatch } from '../../store/rootReducer';
 export const CardHome = () => {
   const navigate = useNavigate();
 
-  if (!sessionStorage.getItem('token')) {
+  if (!localStorage.getItem('token')) {
     navigate('/login');
   }
 
@@ -45,19 +45,6 @@ export const CardHome = () => {
           Home
         </Text>
 
-        {/* <Box
-          borderBottom={'1px solid #b2b2b2'}
-          display={{
-            base: 'none',
-            sm: 'block',
-            md: 'block',
-            lg: 'block',
-            xl: 'block',
-          }}
-        >
-          <CreatePost />
-        </Box> */}
-
         {/* bagian card */}
 
         {threads?.map((data, index) => {
@@ -75,6 +62,7 @@ export const CardHome = () => {
                 reply={data?.numberOfReply}
                 likes={data?.likes}
                 isLikes={data?.isLikes}
+                user_id={data?.user?.id}
               />
             </Box>
           );

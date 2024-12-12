@@ -22,6 +22,17 @@ export default new (class UserController {
     }
   }
 
+  async getUserbyThread(req: Request, res: Response): Promise<Response> {
+    try {
+      const user_id = req.body;
+      const user_login = res.locals.loginSession.obj.id;
+      const response = await UserServices.getUserByThread(user_id,user_login);
+      return res.status(200).json(response);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async updateUser(req: Request, res: Response): Promise<Response> {
     const id = res.locals.loginSession.obj.id;
     const data = req.body;

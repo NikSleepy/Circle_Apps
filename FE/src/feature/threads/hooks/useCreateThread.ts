@@ -38,8 +38,17 @@ export const useCreateThread = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (data.image_thread && !['image/jpeg', 'image/png', 'image/gif'].includes(data.image_thread.type)) {
+      toast({
+        title: 'Only image files (JPEG, PNG, GIF) are allowed',
+        status: 'error',
+        duration: 3000,
+        position: 'top',
+      });
+      return; // Stop the submission
+    }
     try {
-      await API.post('/thread/post', data).catch(() => handleSubmit(e));
+      await API.post('/thread/post', data)
 
       dispatch(dataThreads());
       setData({

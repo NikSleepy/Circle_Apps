@@ -4,7 +4,7 @@ import { ProfileHome } from '../../feature/DitailUser/component/ProfileHome';
 import { CreateDev } from '../../feature/follows/component/CreateDev';
 
 export const RightSideBar = () => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   return (
     <Box

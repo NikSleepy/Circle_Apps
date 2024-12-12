@@ -1,9 +1,10 @@
 import { useToast } from "@chakra-ui/react"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Api } from "../../../libs/api"
 import { useDispatch } from "react-redux"
 import { STATE_THREAD_BY_ID } from "../../../store/rootReducer"
+import { AxiosError } from "axios"
 
 
 interface ITypes {
@@ -16,6 +17,7 @@ export const useReply = () => {
     const { id } = useParams();
     const dispatch = useDispatch()
     const toast = useToast();
+    const navigate = useNavigate();
 
 
     const [ data, setData ] = useState<ITypes>({
@@ -80,7 +82,10 @@ export const useReply = () => {
             dispatch(STATE_THREAD_BY_ID(response.data.data))
             
         } catch (error) {
-            console.log(error)
+            const axiosError = error as AxiosError;
+            if(axiosError.response?.status === 401) {
+                navigate('/login')
+            }
         }
     }
 

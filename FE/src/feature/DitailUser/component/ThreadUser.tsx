@@ -4,7 +4,7 @@ import { CardUserThread } from '../../../components/CardUserThread'
 
 export const ThreadUser = () => {
     const thread = useSelector((state:RootState)=> state.threadUser)
-
+    // console.log("dari detail user",thread)
   return (
     <>
         {thread.map((items)=> (
