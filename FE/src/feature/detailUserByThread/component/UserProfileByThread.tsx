@@ -60,7 +60,7 @@ export const UserProfileByThread = () => {
 
   useEffect(() => {
     userByThread(Number(id));
-  }, [fetchagain]);
+  }, [fetchagain, id]);
 
   return (
     <Box>

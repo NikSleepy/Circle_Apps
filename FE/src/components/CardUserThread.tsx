@@ -1,8 +1,12 @@
-import { Avatar, Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import { LiaComment } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
 import { useThreadLikes } from '../feature/threads/hooks/useThreadLikes';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { RootState } from '../store/type';
+import { useSelector } from 'react-redux';
+import { useDeleteThread } from '../feature/threads/hooks/useDeleteThread';
 interface IData {
   data: {
     id: number;
@@ -23,6 +27,9 @@ interface IData {
 
 export const CardUserThread = (items: IData) => {
   const { handleLikes } = useThreadLikes();
+  const {deleteThread} = useDeleteThread();
+  const user = useSelector((state: RootState) => state.user.data);
+
 
   const convertTime = (time: string) => {
     const date = new Date(time);
@@ -52,12 +59,35 @@ export const CardUserThread = (items: IData) => {
           gap={{ base: '0px', sm: '5px' }}
           mb="5px"
         >
-          <Text fontWeight={'bold'}>{items?.data.user.username} </Text>
-          <Text color="#909090">
-            @{items?.data.user.fullName} <span>&bull;</span>{' '}
-            {convertTime(items?.data.created_at)}{' '}
-          </Text>
+          <Box
+            display={{ base: 'grid', sm: 'flex' }}
+            gap={{ base: '0px', sm: '5px' }}
+          >
+            <Link to={`/user/thread/${items?.data.user.id}`}>{items?.data.user.username}</Link>
+            <Text color="#909090">
+              @{items?.data.user.username} <span>&bull;</span>{' '}
+              {convertTime(items?.data.created_at)}
+            </Text>
+          </Box>
+          <Box ml="auto" position="relative">
+            <Menu>
+              <MenuButton>
+                <BsThreeDotsVertical />
+              </MenuButton>
+              <MenuList ml={-200} color={'black'}>
+                <MenuItem onClick={() => alert('Laporkan clicked')}>
+                  Report
+                </MenuItem>
+                {user?.id === items?.data.user.id && (
+                  <MenuItem onClick={() => deleteThread(items?.data.id)}>
+                    Delete
+                  </MenuItem>
+                )}
+              </MenuList>
+            </Menu>
+          </Box>
         </Box>
+        
 
         <Text fontSize={'sm'} textAlign={'start'}>
           {items?.data.content}

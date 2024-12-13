@@ -15,6 +15,9 @@ import { LiaComment } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
 import { useThreadLikes } from '../hooks/useThreadLikes';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/type';
+import { useDeleteThread } from '../hooks/useDeleteThread';
 
 interface Thread {
   id: number;
@@ -33,6 +36,8 @@ interface Thread {
 
 export const CardPost = (items: Thread) => {
   const { handleLikes } = useThreadLikes();
+  const { deleteThread } = useDeleteThread();
+  const user = useSelector((state: RootState) => state.user.data);
 
   const convertTime = (time: string) => {
     const date = new Date(time);
@@ -63,7 +68,7 @@ export const CardPost = (items: Thread) => {
             display={{ base: 'grid', sm: 'flex' }}
             gap={{ base: '0px', sm: '5px' }}
           >
-            <Link to={`/user/thread/${items?.user_id}`}>{items?.username}</Link>
+            <Link to={user.username !== items.username ? `/user/thread/${items?.user_id}`: `/myprofile`}>{items?.username}</Link>
             <Text color="#909090">
               @{items?.fullName} <span>&bull;</span>{' '}
               {convertTime(items?.created_at)}
@@ -78,9 +83,11 @@ export const CardPost = (items: Thread) => {
                 <MenuItem onClick={() => alert('Laporkan clicked')}>
                   Report
                 </MenuItem>
-                <MenuItem onClick={() => alert('Delete clicked')}>
-                  Delete
-                </MenuItem>
+                {user?.id === items?.user_id && (
+                  <MenuItem onClick={() => deleteThread(items?.id)}>
+                    Delete
+                  </MenuItem>
+                )}
               </MenuList>
             </Menu>
           </Box>

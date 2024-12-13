@@ -4,12 +4,15 @@ import { AppDataSource } from '../data-source';
 import { Request, Response } from 'express';
 import { array } from 'joi';
 import { Like } from '../entity/Like';
+import { User } from '../entity/User';
 
 export default new (class ThreadService {
   private readonly threadRepository: Repository<Thread> =
     AppDataSource.getRepository(Thread);
   private readonly likeRepository: Repository<Like> =
     AppDataSource.getRepository(Like);
+  private readonly userRepository: Repository<User> =
+    AppDataSource.getRepository(User);
 
   async createThread(data: object) {
     try {
@@ -255,13 +258,22 @@ export default new (class ThreadService {
     }
   }
 
-  async deleteThread(id: number) {
+  async deleteThread(thread_id: number, user_id: number) {
     try {
-      const deleteThread = await this.threadRepository.delete(id);
-      return {
-        message: 'Success to delete thread',
-        data: deleteThread,
-      };
+      const thread = await this.threadRepository.findOne({ where: { id: thread_id }, relations: ['user'], select: { user: { id: true } } });
+
+      if (thread.user.id == user_id) {
+        await this.threadRepository.delete(thread_id);
+        return {
+          message: 'Success to delete thread',
+        };
+      } else {
+        return {
+          message: 'Failed to delete thread',
+        };
+      }
+
+      // const deleteThread = await this.threadRepository.delete(id);
     } catch (error) {
       throw error;
     }

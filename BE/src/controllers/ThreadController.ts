@@ -47,8 +47,9 @@ export default new (class ThreadController {
 
   async deleteThread(req: Request, res: Response): Promise<Response> {
     try {
-      const id = parseInt(req.params.id);
-      const response = await ThreadService.deleteThread(id);
+      const user_id = res.locals.loginSession.obj.id;
+      const thread_id = parseInt(req.params.id);
+      const response = await ThreadService.deleteThread(thread_id, user_id);
       return res.status(200).json(response);
     } catch (error) {
       throw error;

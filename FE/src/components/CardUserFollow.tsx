@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../store/type';
 import { userLogin } from '../store/slice/UserSlice';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 interface Followers {
   id: number;
   fullName: string;
@@ -25,6 +27,8 @@ export const CardUserFollow = (props: Followers) => {
   // console.log("dari followings",props)
 
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, Action>>();
+  const user = useSelector((state: RootState) => state.user.data);
+
 
   const handleFollowButtonClick = async () => {
     try {
@@ -45,7 +49,8 @@ export const CardUserFollow = (props: Followers) => {
 
       <Box fontSize={'sm'} textAlign={'start'}>
         <Box pl={1}>
-          <Text>{props.username}</Text>
+        <Link to={user.username !== props.username ? `/user/thread/${props?.id}`: `/myprofile`}>{props?.username}</Link>
+
         </Box>
         <Box>
           <Text color={'#686868'}>@{props.fullName}</Text>

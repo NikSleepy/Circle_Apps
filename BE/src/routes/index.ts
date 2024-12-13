@@ -34,7 +34,7 @@ router.post(
 ); // post thread
 router.get('/thread', Auth.Auth, ThreadController.getThreads); // get all thred
 router.get('/thread/:id', Auth.Auth, ThreadController.getThreadById); // get thread by id
-router.delete('/thread/delete/:id', ThreadController.deleteThread); // delete thread
+router.delete('/thread/delete/:id',Auth.Auth, ThreadController.deleteThread); // delete thread
 router.get('/thread/user/byid', Auth.Auth, ThreadController.getAllThreadById); // get thread by user id
 
 router.post('/reply/post', Auth.Auth, ReplyController.createReplies); // post comment

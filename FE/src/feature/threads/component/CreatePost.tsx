@@ -18,14 +18,14 @@ import { useDispatch } from 'react-redux';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { dataThreads } from '../../../store/slice';
 import { API } from '../../../libs/api';
+import { useThreadUser } from '../../DitailUser/hooks/useThreadUser';
 interface ITypes {
   content: string;
   image_thread: File | null;
 }
 
 export const CreatePost = ({ onClose }: { onClose: () => void }) => {
-  // const { handleChange, handleSubmit, handleChangeFile, img } =
-  //   useCreateThread();
+  const { threadUser } = useThreadUser();
   const user = useSelector((state: RootState) => state.user.data);
 
   const toast = useToast();
@@ -58,6 +58,7 @@ export const CreatePost = ({ onClose }: { onClose: () => void }) => {
       await API.post('/thread/post', data).catch(() => handleSubmit(e));
 
       dispatch(dataThreads());
+      threadUser();
       toast({
         title: 'success upload thread',
         status: 'success',
